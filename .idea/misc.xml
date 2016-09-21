@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
   <component name="CheckstyleConfigurable">
     <option name="suppFilterFilename" value="" />
     <option name="suppCommentFilter" value="false" />
@@ -19,6 +20,8 @@
     <option name="pathToUserRulesConfiguration" value="" />
     <option name="pathToJarWithRules" value="" />
   </component>
+=======
+>>>>>>> c286768286ec16676215e82e3e393d6770e8150f
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
