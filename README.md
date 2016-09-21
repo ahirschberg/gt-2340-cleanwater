@@ -1,1 +1,2 @@
-# TODO: write the code.
+# TODO: Make Money
+# TODO: Get turnt
