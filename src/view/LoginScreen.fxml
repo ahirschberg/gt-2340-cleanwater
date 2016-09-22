@@ -8,22 +8,26 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginScreenController">
    <top>
-      <Label prefHeight="34.0" prefWidth="305.0" text="Welcome to the Clean Water reporting System" BorderPane.alignment="CENTER" />
+      <Label alignment="CENTER" prefHeight="34.0" prefWidth="358.0" text="Welcome to the Clean Water Reporting System" textAlignment="CENTER" BorderPane.alignment="CENTER" />
    </top>
    <left>
-      <VBox prefHeight="236.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER_LEFT" prefHeight="197.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Username" />
-            <TextField />
+            <TextField fx:id="usernameField" />
             <Label text="Password" />
-            <PasswordField />
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <PasswordField fx:id="passwordField" />
+            <Text fx:id="message" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="580.0" spacing="10.0">
                <children>
-                  <Button defaultButton="true" mnemonicParsing="false" text="Login" />
-                  <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="101.0" text="New User" />
+                  <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="101.0" text="Register" />
+                  <Text boundsType="LOGICAL_VERTICAL_CENTER" strokeType="OUTSIDE" strokeWidth="0.0" text="-or-" textAlignment="CENTER" wrappingWidth="38.48681640625" />
+                  <Button defaultButton="true" mnemonicParsing="false" text="Login" onAction="#onLoginSelected" />
                </children>
             </HBox>
          </children>
