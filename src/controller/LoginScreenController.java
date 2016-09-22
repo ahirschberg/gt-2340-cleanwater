@@ -34,7 +34,8 @@ public class LoginScreenController {
     public void onLoginSelected() {
         byte[] token = null;
         if (usernameField.getText().equals("user") && passwordField.getText().equals("pass")) {
-             token = generateToken(usernameField.getText(), passwordField.getText());
+            token = generateToken(usernameField.getText(), passwordField.getText());
+            message.setText("Login successful.");
         } else {
             message.setText("Username or password incorrect.");
         }
