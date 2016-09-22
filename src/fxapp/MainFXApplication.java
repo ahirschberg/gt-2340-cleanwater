@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.User;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -16,7 +17,8 @@ import java.util.logging.Logger;
  */
 public class MainFXApplication extends Application  {
     private BorderPane rootLayout;
-    private static final Logger LOGGER = Logger.getLogger("MainFXApplication");
+    public static final Logger LOGGER = Logger.getLogger("MainFXApplication");
+    private User loggedInUser;
 
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -34,6 +36,7 @@ public class MainFXApplication extends Application  {
 
             // Give the controller access to the main app.
             LoginScreenController controller = loader.getController();
+            controller.registerMainApp(this);
 
             // Set the Main App title
             mainScreen.setTitle("Login");
@@ -48,6 +51,12 @@ public class MainFXApplication extends Application  {
             //error on load, so log it
             LOGGER.log(Level.SEVERE, "Failed to find the fxml file for LoginScreen!!");
             e.printStackTrace();
+        }
+    }
+
+    public void notifyLoginAttempt(byte[] token) {
+        if (token != null) {
+            loggedInUser = new User(token);
         }
     }
 }
