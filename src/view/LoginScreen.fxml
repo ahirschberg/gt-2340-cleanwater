@@ -10,12 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginScreenController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginScreenController">
    <top>
       <Label alignment="CENTER" prefHeight="34.0" prefWidth="358.0" text="Welcome to the Clean Water Reporting System" textAlignment="CENTER" BorderPane.alignment="CENTER" />
    </top>
-   <left>
+   <bottom>
       <VBox alignment="CENTER_LEFT" prefHeight="197.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Username" />
@@ -25,9 +24,9 @@
             <Text fx:id="message" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0" />
             <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="580.0" spacing="10.0">
                <children>
-                  <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="101.0" text="Register" />
+                  <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onRegisterPressed" prefHeight="26.0" prefWidth="101.0" text="Register" />
                   <Text boundsType="LOGICAL_VERTICAL_CENTER" strokeType="OUTSIDE" strokeWidth="0.0" text="-or-" textAlignment="CENTER" wrappingWidth="38.48681640625" />
-                  <Button defaultButton="true" mnemonicParsing="false" text="Login" onAction="#onLoginSelected" />
+                  <Button defaultButton="true" mnemonicParsing="false" onAction="#onLoginSelected" text="Login" />
                </children>
             </HBox>
          </children>
@@ -35,5 +34,5 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-   </left>
+   </bottom>
 </BorderPane>

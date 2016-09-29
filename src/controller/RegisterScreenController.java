@@ -35,11 +35,22 @@ public class RegisterScreenController {
     }
     
     @FXML
-    public void onConfirmPressed() {
+    public void onRegisterSelected() {
     	String username = usernameField.getText();
     	String password = passwordField.getText();
     	String confirmPassword = confirmPasswordField.getText();
+    	if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+    		errorMessage.setText("Required field left blank.");
+    	} else if (!password.equals(confirmPassword)) {
+    		errorMessage.setText("Password fields do not match.");
+    	} else {
+    		//TODO: Register user
+    	}
     }
 
+    @FXML
+    public void onLoginSelected() {
+    	main.setLoginScene();
+    }
 
 }

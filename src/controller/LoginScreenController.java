@@ -36,6 +36,11 @@ public class LoginScreenController {
             message.setText("Username or password incorrect.");
         }
     }
+    
+    @FXML
+    public void onRegisterPressed() {
+    	main.setRegisterScene();
+    }
 
 
 }
