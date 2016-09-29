@@ -8,9 +8,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.Token;
 import model.User;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,6 +30,7 @@ public class MainFXApplication extends Application  {
     private Stage activeScreen;
     private Scene logoutScene;
     private Scene loginScene;
+    private HashMap<Token, User> registeredUsers;
     private Scene registerScene;
 
     public static void main(String[] args) throws Exception {
@@ -89,9 +94,27 @@ public class MainFXApplication extends Application  {
         }
     }
 
-    public void notifyLoginAttempt(byte[] token) {
+    public void loginWithCredentials(String user, String password) {
+        Token token = generateToken(user, password);
         if (token != null) {
-            loggedInUser = new User(token);
+            loggedInUser = registeredUsers.get(token);
         }
+    }
+
+    public void notifyRegistration(User registered, String user, String password) {
+        Token token = generateToken(user, password);
+        registeredUsers.put(token, registered);
+    }
+
+    // Simulate a secure login system
+    private Token generateToken(String user, String password) {
+        byte[] token = null;
+        try {
+            token = java.security.MessageDigest.getInstance("SHA-1").digest((user + password).getBytes());
+        } catch (NoSuchAlgorithmException e) {
+            MainFXApplication.LOGGER.log(Level.SEVERE, "No algorithm detected for token.");
+            e.printStackTrace();
+        }
+        return new Token(token);
     }
 }
