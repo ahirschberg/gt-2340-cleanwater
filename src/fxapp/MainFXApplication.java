@@ -2,6 +2,7 @@ package fxapp;
 
 import controller.LoginScreenController;
 import controller.LogoutScreenController;
+import controller.RegisterScreenController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -19,11 +20,13 @@ import java.util.logging.Logger;
 public class MainFXApplication extends Application  {
     private BorderPane loginLayout;
     private BorderPane logoutLayout;
+    private BorderPane registerLayout;
     public static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private User loggedInUser;
     private Stage activeScreen;
     private Scene logoutScene;
     private Scene loginScene;
+    private Scene registerScene;
 
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -33,18 +36,21 @@ public class MainFXApplication extends Application  {
     }
     
     public void setLogoutScene() {
-        setScene(logoutScene);
-        activeScreen.setTitle("Cleanwater");
+        setScene(logoutScene, "Logout");
     }
     
     public void setLoginScene() {
-        setScene(loginScene);
-        activeScreen.setTitle("Login");
+        setScene(loginScene, "Login");
     }
     
-    private void setScene(Scene s) {
+    public void setRegisterScene() {
+    	setScene(registerScene, "Register New User");
+    }
+    
+    private void setScene(Scene s, String title) {
         activeScreen.hide();
         activeScreen.setScene(s);
+        activeScreen.setTitle(title);
         activeScreen.show();
     }
 
@@ -54,20 +60,26 @@ public class MainFXApplication extends Application  {
             // Load root layout from fxml file.
             FXMLLoader loginLoader = new FXMLLoader();
             FXMLLoader logoutLoader = new FXMLLoader();
+            FXMLLoader registerLoader = new FXMLLoader();
             loginLoader.setLocation(MainFXApplication.class.getResource("../view/LoginScreen.fxml"));
             logoutLoader.setLocation(MainFXApplication.class.getResource("../view/LogoutScreen.fxml"));
+            registerLoader.setLocation(MainFXApplication.class.getResource("../view/RegisterScreen.fxml"));
             loginLayout = loginLoader.load();
             logoutLayout = logoutLoader.load();
+            registerLayout = registerLoader.load();
 
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
             LogoutScreenController logout = logoutLoader.getController();
+            RegisterScreenController register = registerLoader.getController();
             controller.registerMainApp(this);
             logout.registerMainApp(this);
+            register.registerMainApp(this);
 
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);
             logoutScene = new Scene(logoutLayout);
+            registerScene = new Scene(registerLayout);
             
             setLoginScene();
         } catch (IOException e) {
