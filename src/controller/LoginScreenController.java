@@ -42,6 +42,11 @@ public class LoginScreenController {
         }
         main.notifyLoginAttempt(token);
     }
+    
+    @FXML
+    public void onRegisterPressed() {
+    	main.setRegisterScene();
+    }
 
     // Simulate a secure login system
     private byte[] generateToken(String user, String password) {

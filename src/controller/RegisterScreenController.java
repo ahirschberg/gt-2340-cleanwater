@@ -35,11 +35,15 @@ public class RegisterScreenController {
     }
     
     @FXML
-    public void onConfirmPressed() {
+    public void onRegisterSelected() {
     	String username = usernameField.getText();
     	String password = passwordField.getText();
     	String confirmPassword = confirmPasswordField.getText();
     }
 
+    @FXML
+    public void onLoginSelected() {
+    	main.setLoginScene();
+    }
 
 }
