@@ -7,9 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.Token;
 import model.User;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +27,7 @@ public class MainFXApplication extends Application  {
     private Stage activeScreen;
     private Scene logoutScene;
     private Scene loginScene;
+    private HashMap<Token, User> registeredUsers;
 
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -77,9 +81,9 @@ public class MainFXApplication extends Application  {
         }
     }
 
-    public void notifyLoginAttempt(byte[] token) {
+    public void notifyLoginAttempt(Token token) {
         if (token != null) {
-            loggedInUser = new User(token);
+            loggedInUser = registeredUsers.get(token);
         }
     }
 }
