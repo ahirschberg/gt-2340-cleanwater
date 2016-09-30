@@ -8,12 +8,10 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterScreenController">
-   <top>
-      <Label alignment="CENTER" prefHeight="34.0" prefWidth="358.0" text="Register New User" textAlignment="CENTER" BorderPane.alignment="CENTER" />
-   </top>
    <center>
       <VBox alignment="CENTER_LEFT" prefHeight="197.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
@@ -27,8 +25,6 @@
             <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="580.0" spacing="10.0">
                <children>
                   <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onRegisterSelected" prefHeight="26.0" prefWidth="101.0" text="Register" />
-                  <Text boundsType="LOGICAL_VERTICAL_CENTER" strokeType="OUTSIDE" strokeWidth="0.0" text="-or-" textAlignment="CENTER" wrappingWidth="38.48681640625" />
-                  <Button defaultButton="true" mnemonicParsing="false" onAction="#onLoginSelected" text="Login" />
                </children>
             </HBox>
          </children>
@@ -37,4 +33,18 @@
          </padding>
       </VBox>
    </center>
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="                               " />
+            <Label alignment="CENTER" prefHeight="34.0" prefWidth="358.0" text="Register New User" textAlignment="CENTER" />
+            <Label text="                     " />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onLoginSelected" text="Back to Login">
+               <font>
+                  <Font size="9.5" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </top>
 </BorderPane>
