@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import model.Token;
+import model.User;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
@@ -44,7 +46,7 @@ public class RegisterScreenController {
     	} else if (!password.equals(confirmPassword)) {
     		errorMessage.setText("Password fields do not match.");
     	} else {
-    		//TODO: Register user
+    	    main.notifyRegistration(new User(username), Token.fromCredentials(username, password));
     	}
     }
 

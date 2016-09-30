@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import model.Token;
 
 public class LoginScreenController {
     private MainFXApplication main;
@@ -28,15 +29,13 @@ public class LoginScreenController {
 
     @FXML
     public void onLoginSelected() {
-        byte[] token = null;
-        if (usernameField.getText().equals("user") && passwordField.getText().equals("pass")) {
-            main.loginWithCredentials(usernameField.getText(), passwordField.getText());
+        if (main.notifyLogin(Token.fromCredentials(usernameField.getText(), passwordField.getText()))) {
             main.setLogoutScene();
         } else {
             message.setText("Username or password incorrect.");
         }
     }
-    
+
     @FXML
     public void onRegisterPressed() {
     	main.setRegisterScene();
