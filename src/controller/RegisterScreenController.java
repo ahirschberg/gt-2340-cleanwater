@@ -47,6 +47,7 @@ public class RegisterScreenController {
     		errorMessage.setText("Password fields do not match.");
     	} else {
     	    main.notifyRegistration(new User(username), Token.fromCredentials(username, password));
+            main.setLoginScene();
     	}
     }
 
