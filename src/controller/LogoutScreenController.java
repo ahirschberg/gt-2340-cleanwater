@@ -30,4 +30,9 @@ public class LogoutScreenController {
    public void onLogoutPressed() {
        main.setLoginScene();
    }
+   
+   @FXML
+   public void onProfileEdit() {
+       main.setUserInfoScene();
+   }
 }

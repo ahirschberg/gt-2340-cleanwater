@@ -13,7 +13,10 @@
          </BorderPane.margin>
       </Label>
    </top>
+   <bottom>
+      <Button mnemonicParsing="false" onAction="#onLogoutPressed" text="Log Out" translateY="-35.0" BorderPane.alignment="CENTER" />
+   </bottom>
    <center>
-      <Button mnemonicParsing="false" onAction="#onLogoutPressed" text="Log Out" BorderPane.alignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#onProfileEdit" text="Edit Profile" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

@@ -3,6 +3,7 @@ package fxapp;
 import controller.LoginScreenController;
 import controller.LogoutScreenController;
 import controller.RegisterScreenController;
+import controller.UserInfoScreenController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -26,6 +27,7 @@ public class MainFXApplication extends Application  {
     private BorderPane loginLayout;
     private BorderPane logoutLayout;
     private BorderPane registerLayout;
+    private BorderPane userInfoLayout;
     public static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private User loggedInUser;
     private Stage activeScreen;
@@ -33,6 +35,7 @@ public class MainFXApplication extends Application  {
     private Scene loginScene;
     private Map<Token, User> registeredUsers;
     private Scene registerScene;
+    private Scene userInfoScene;
 
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -43,15 +46,19 @@ public class MainFXApplication extends Application  {
     }
     
     public void setLogoutScene() {
-        setScene(logoutScene, "Logout");
+        setScene(logoutScene, "Cleanwater - Water Reporting System");
     }
     
     public void setLoginScene() {
-        setScene(loginScene, "Login");
+        setScene(loginScene, "Cleanwater - Login");
     }
     
     public void setRegisterScene() {
-    	setScene(registerScene, "Register New User");
+    	setScene(registerScene, "Cleanwater - Register New User");
+    }
+    
+    public void setUserInfoScene() {
+        setScene(userInfoScene, "Cleanwater - Edit Profile");
     }
     
     private void setScene(Scene s, String title) {
@@ -68,25 +75,31 @@ public class MainFXApplication extends Application  {
             FXMLLoader loginLoader = new FXMLLoader();
             FXMLLoader logoutLoader = new FXMLLoader();
             FXMLLoader registerLoader = new FXMLLoader();
+            FXMLLoader userInfoLoader = new FXMLLoader();
             loginLoader.setLocation(MainFXApplication.class.getResource("../view/LoginScreen.fxml"));
             logoutLoader.setLocation(MainFXApplication.class.getResource("../view/LogoutScreen.fxml"));
             registerLoader.setLocation(MainFXApplication.class.getResource("../view/RegisterScreen.fxml"));
+            userInfoLoader.setLocation(MainFXApplication.class.getResource("../view/UserInfoScreen.fxml"));
             loginLayout = loginLoader.load();
             logoutLayout = logoutLoader.load();
             registerLayout = registerLoader.load();
+            userInfoLayout = userInfoLoader.load();
 
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
             LogoutScreenController logout = logoutLoader.getController();
             RegisterScreenController register = registerLoader.getController();
+            UserInfoScreenController userInfo = userInfoLoader.getController();
             controller.registerMainApp(this);
             logout.registerMainApp(this);
             register.registerMainApp(this);
+            userInfo.registerMainApp(this);
 
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);
             logoutScene = new Scene(logoutLayout);
             registerScene = new Scene(registerLayout);
+            userInfoScene = new Scene(userInfoLayout);
             
             setLoginScene();
         } catch (IOException e) {

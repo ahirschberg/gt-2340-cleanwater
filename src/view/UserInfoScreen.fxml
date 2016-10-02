@@ -31,7 +31,7 @@
                <children>
                   <TextField fx:id="cityField" />
                   <TextField fx:id="stateField" />
-                  <TextField fx:id="zipField" />
+                  <TextField fx:id="countryField" />
                </children>
             </HBox>
             <Label text="Organization" />

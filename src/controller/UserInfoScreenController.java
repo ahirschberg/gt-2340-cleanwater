@@ -42,7 +42,7 @@ public class UserInfoScreenController {
     }
     
     @FXML
-    public void onSaveProfile() {
+    public void onProfileSaved() {
         
     }
 

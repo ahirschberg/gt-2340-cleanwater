@@ -32,6 +32,7 @@ public class LoginScreenController {
         if (main.notifyLogin(Token.fromCredentials(usernameField.getText(), passwordField.getText()))) {
             main.setLogoutScene();
         } else {
+            main.setLogoutScene(); //TODO: track registered users
             message.setText("Username or password incorrect.");
         }
     }
