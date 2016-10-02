@@ -91,6 +91,12 @@ public class MainFXApplication extends Application  {
             registerLayout = registerLoader.load();
             userInfoLayout = userInfoLoader.load();
 
+            // Show the scene containing the root layout.
+            loginScene = new Scene(loginLayout);
+            logoutScene = new Scene(logoutLayout);
+            registerScene = new Scene(registerLayout);
+            userInfoScene = new Scene(userInfoLayout);
+            
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
             LogoutScreenController logout = logoutLoader.getController();
@@ -100,12 +106,6 @@ public class MainFXApplication extends Application  {
             logout.registerMainApp(this);
             register.registerMainApp(this);
             userInfoScreenController.registerMainApp(this);
-
-            // Show the scene containing the root layout.
-            loginScene = new Scene(loginLayout);
-            logoutScene = new Scene(logoutLayout);
-            registerScene = new Scene(registerLayout);
-            userInfoScene = new Scene(userInfoLayout);
             
             setLoginScene();
         } catch (IOException e) {
