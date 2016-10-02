@@ -29,8 +29,6 @@ public class UserInfoScreenController {
     @FXML
     private TextField countryField;
     @FXML
-    private TextField zipField;
-    @FXML
     private TextField orgField;
 
     @FXML
@@ -41,9 +39,25 @@ public class UserInfoScreenController {
         this.main = main;
     }
     
+    public void setUserInfo(User user) {
+        String address =
+                streetField.getText()
+                + "\n"
+                + cityField.getText()
+                + ", "
+                + stateField.getText()
+                + "\n"
+                + countryField.getText();
+        user.setProfile(
+                nameField.getText(),
+                emailField.getText(),
+                address,
+                orgField.getText());
+    }
+    
     @FXML
     public void onProfileSaved() {
-        
+        //TODO: setUserInfo(currently logged in user)
     }
 
     @FXML
