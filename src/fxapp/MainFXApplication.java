@@ -28,6 +28,7 @@ public class MainFXApplication extends Application  {
     private BorderPane logoutLayout;
     private BorderPane registerLayout;
     private BorderPane userInfoLayout;
+    private UserInfoScreenController userInfoScreenController;
     public static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private User loggedInUser;
     private Stage activeScreen;
@@ -36,6 +37,10 @@ public class MainFXApplication extends Application  {
     private Map<Token, User> registeredUsers;
     private Scene registerScene;
     private Scene userInfoScene;
+    
+    public User getActiveUser() {
+        return loggedInUser;
+    }
 
     public static void main(String[] args) throws Exception {
         launch(args);
@@ -58,6 +63,7 @@ public class MainFXApplication extends Application  {
     }
     
     public void setUserInfoScene() {
+        userInfoScreenController.initFields();
         setScene(userInfoScene, "Cleanwater - Edit Profile");
     }
     
@@ -89,11 +95,11 @@ public class MainFXApplication extends Application  {
             LoginScreenController controller = loginLoader.getController();
             LogoutScreenController logout = logoutLoader.getController();
             RegisterScreenController register = registerLoader.getController();
-            UserInfoScreenController userInfo = userInfoLoader.getController();
+            userInfoScreenController = userInfoLoader.getController();
             controller.registerMainApp(this);
             logout.registerMainApp(this);
             register.registerMainApp(this);
-            userInfo.registerMainApp(this);
+            userInfoScreenController.registerMainApp(this);
 
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);

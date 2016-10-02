@@ -12,13 +12,51 @@ public class User {
     //Profile
     private String name;
     private String email;
-    private String address;
+    private String street;
+    private String city;
+    private String state;
+    private String country;
     private String org;
     
-    public void setProfile(String newName, String newEmail, String newAddress, String newOrg) {
+    public String getName() {
+        return name;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public String getStreet() {
+        return street;
+    }
+    public String getCity() {
+        return city;
+    }
+    public String getState() {
+        return state;
+    }
+    public String getCountry() {
+        return country;
+    }
+    public String getOrg() {
+        return org;
+    }
+    
+    public String getAddress() {
+        return street
+        + "\n"
+        + city
+        + ", "
+        + state
+        + "\n"
+        + country;
+    }
+    
+    public void setProfile(String newName, String newEmail, String newStreet, String newCity, String newState, String newCountry, String newOrg) {
         this.name = newName;
         this.email = newEmail;
-        this.address = newAddress;
+        this.street = newStreet;
+        this.city = newCity;
+        this.state = newState;
+        this.country = newCountry;
         this.org = newOrg;
     }
     

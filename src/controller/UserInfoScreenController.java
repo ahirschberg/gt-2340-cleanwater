@@ -39,25 +39,27 @@ public class UserInfoScreenController {
         this.main = main;
     }
     
-    public void setUserInfo(User user) {
-        String address =
-                streetField.getText()
-                + "\n"
-                + cityField.getText()
-                + ", "
-                + stateField.getText()
-                + "\n"
-                + countryField.getText();
-        user.setProfile(
-                nameField.getText(),
-                emailField.getText(),
-                address,
-                orgField.getText());
+    public void initFields() {
+        User active = main.getActiveUser();
+        nameField.setText(active.getName());
+        emailField.setText(active.getEmail());
+        streetField.setText(active.getStreet());
+        cityField.setText(active.getCity());
+        stateField.setText(active.getState());
+        countryField.setText(active.getCountry());
+        orgField.setText(active.getOrg());
     }
     
     @FXML
     public void onProfileSaved() {
-        //TODO: setUserInfo(currently logged in user)
+        main.getActiveUser().setProfile(
+                nameField.getText(),
+                emailField.getText(),
+                streetField.getText(),
+                cityField.getText(),
+                stateField.getText(),
+                countryField.getText(),
+                orgField.getText());
     }
 
     @FXML
