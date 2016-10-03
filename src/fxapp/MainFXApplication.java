@@ -21,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by jster on 9/20/2016.
+ * Created by jeremy on 9/20/2016.
  */
 public class MainFXApplication extends Application  {
     private BorderPane loginLayout;
