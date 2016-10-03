@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -19,10 +20,16 @@
             <Label text="Username" translateY="-20.0" />
             <TextField fx:id="usernameField" translateY="-20.0" />
             <Label text="Password" translateY="-20.0" />
-            <PasswordField fx:id="passwordField" translateY="-20.0" />
+            <PasswordField fx:id="passwordField" translateY="-20.0">
+               <tooltip>
+                  <Tooltip text="Make secure with at least 6 characters" />
+               </tooltip></PasswordField>
             <Label text="Confirm Password" translateY="-15.0" />
-            <PasswordField fx:id="confirmPasswordField" translateY="-10.0" />
-            <ComboBox fx:id="permissionBox" prefWidth="150.0" />
+            <PasswordField fx:id="confirmPasswordField" translateY="-10.0">
+               <tooltip>
+                  <Tooltip text="Passwords must match" />
+               </tooltip></PasswordField>
+            <ComboBox fx:id="permissionBox" prefWidth="150.0" promptText="User Access" />
             <Text fx:id="errorMessage" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0" />
             <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="580.0" spacing="10.0">
                <children>
@@ -38,14 +45,23 @@
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="                               " />
-            <Label alignment="CENTER" prefHeight="34.0" prefWidth="358.0" text="Register New User" textAlignment="CENTER" />
-            <Label text="                     " />
-            <Button cancelButton="true" mnemonicParsing="false" onAction="#onLoginSelected" text="Back to Login">
+            <Label />
+            <Label alignment="CENTER" prefHeight="34.0" prefWidth="559.0" text="Register New User" textAlignment="CENTER">
                <font>
-                  <Font size="9.5" />
-               </font>
-            </Button>
+                  <Font size="18.0" />
+               </font></Label>
+            <VBox prefHeight="100.0" prefWidth="170.0">
+               <children>
+                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onLoginSelected" prefHeight="29.0" prefWidth="113.0" text="Back to Login" textAlignment="CENTER">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
          </children>
       </HBox>
    </top>
