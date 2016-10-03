@@ -1,9 +1,13 @@
 package model;
 
 /**
- * Created by alex on 9/29/16.
+ * Admin User model.
  */
 public class Admin extends Manager {
+    /**
+     * Initialize an admin
+     * @param username the username of the admin
+     */
     public Admin(String username) {
         super(username);
     }

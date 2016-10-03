@@ -34,11 +34,18 @@ public class UserInfoScreenController {
     @FXML
     public void initialize() {
     }
-    
+
+    /**
+     * Registers the main application with this controller
+     * @param main the main application
+     */
     public void registerMainApp(MainFXApplication main) {
         this.main = main;
     }
-    
+
+    /**
+     * Initialize the fields to the data stored in the user's record
+     */
     public void initFields() {
         User active = main.getActiveUser();
         nameField.setText(active.getName());
@@ -49,7 +56,10 @@ public class UserInfoScreenController {
         countryField.setText(active.getCountry());
         orgField.setText(active.getOrg());
     }
-    
+
+    /**
+     * Called when the user selects the save button
+     */
     @FXML
     public void onProfileSaved() {
         main.getActiveUser().setProfile(
@@ -62,6 +72,9 @@ public class UserInfoScreenController {
                 orgField.getText());
     }
 
+    /**
+     * Called when the user cancels their profile changes
+     */
     @FXML
     public void onCancel() {
         main.setLogoutScene();

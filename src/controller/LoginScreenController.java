@@ -19,14 +19,18 @@ public class LoginScreenController {
     @FXML
     private Text message;
 
-    @FXML
-    public void initialize() {
-    }
-    
+    /**
+     * Gives the controller a reference to the main app
+     * @param main the main app
+     */
     public void registerMainApp(MainFXApplication main) {
         this.main = main;
     }
 
+    /**
+     * Called when the user selects the login button
+     * Notifies the main app of the login attempt.
+     */
     @FXML
     public void onLoginSelected() {
         if (main.notifyLogin(Token.fromCredentials(usernameField.getText(), passwordField.getText()))) {
@@ -36,9 +40,13 @@ public class LoginScreenController {
         }
     }
 
+    /**
+     * Called when the user presses the register button
+     * Switches to the new user registration UI
+     */
     @FXML
     public void onRegisterPressed() {
-    	main.setRegisterScene();
+        main.setRegisterScene();
     }
 
 

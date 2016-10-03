@@ -22,16 +22,16 @@ public class RegisterScreenController {
 
     @FXML
     private TextField usernameField;
-    
+
     @FXML
     private PasswordField passwordField;
-    
+
     @FXML
     private PasswordField confirmPasswordField;
 
     @FXML
     private Text errorMessage;
-    
+
     @FXML
     private ComboBox permissionBox;
 
@@ -39,42 +39,54 @@ public class RegisterScreenController {
     public void initialize() {
         permissionBox.getItems().addAll("User", "Worker", "Manager", "Admin");
     }
-    
+
+    /**
+     * Registers the main application with this controller
+     * @param main the main application
+     */
     public void registerMainApp(MainFXApplication main) {
         this.main = main;
     }
-    
+
+    /**
+     * When the user attempts to register, validate their input and notify the main
+     * app of the registration
+     */
     @FXML
     public void onRegisterSelected() {
-    	String username = usernameField.getText();
-    	String password = passwordField.getText();
-    	String confirmPassword = confirmPasswordField.getText();
-    	if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-    		errorMessage.setText("Required field left blank.");
-    	} else if (!password.equals(confirmPassword)) {
-    		errorMessage.setText("Password fields do not match.");
-    	} else {
-    	    //Create account with appropriate permissions
-    	    String perms = (String) permissionBox.getSelectionModel().getSelectedItem();
-    	    User newUser;
-    	    if (perms.equals("User")) {
-    	        newUser = new User(username);
-    	    } else if (perms.equals("Worker")) {
-    	        newUser = new Worker(username);
-    	    } else if (perms.equals("Manager")) {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        String confirmPassword = confirmPasswordField.getText();
+        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            errorMessage.setText("Required field left blank.");
+        } else if (!password.equals(confirmPassword)) {
+            errorMessage.setText("Password fields do not match.");
+        } else {
+            //Create account with appropriate permissions
+            String perms = (String) permissionBox.getSelectionModel().getSelectedItem();
+            User newUser;
+            if (perms.equals("User")) {
+                newUser = new User(username);
+            } else if (perms.equals("Worker")) {
+                newUser = new Worker(username);
+            } else if (perms.equals("Manager")) {
                 newUser = new Manager(username);
             } else {
                 newUser = new Admin(username);
             }
-    	    
-    	    main.notifyRegistration(newUser, Token.fromCredentials(username, password));
+
+            main.notifyRegistration(newUser, Token.fromCredentials(username, password));
             main.setLoginScene();
-    	}
+        }
     }
 
+    /**
+     * When the user selects the login button, take them back
+     * to the login screen.
+     */
     @FXML
     public void onLoginSelected() {
-    	main.setLoginScene();
+        main.setLoginScene();
     }
 
 }

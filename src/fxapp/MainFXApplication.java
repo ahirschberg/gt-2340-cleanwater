@@ -13,21 +13,15 @@ import model.Token;
 import model.User;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by jster on 9/20/2016.
+ * The main controller for the JavaFX application
  */
 public class MainFXApplication extends Application  {
-    private BorderPane loginLayout;
-    private BorderPane logoutLayout;
-    private BorderPane registerLayout;
-    private BorderPane userInfoLayout;
     private UserInfoScreenController userInfoScreenController;
     public static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private User loggedInUser;
@@ -37,36 +31,56 @@ public class MainFXApplication extends Application  {
     private Map<Token, User> registeredUsers;
     private Scene registerScene;
     private Scene userInfoScene;
-    
+
+    /**
+     * Gets the active user
+     * @return logged in user
+     */
     public User getActiveUser() {
         return loggedInUser;
     }
 
-    public static void main(String[] args) throws Exception {
+    /**
+     * Start the application
+     * @param args command line arguments
+     */
+    public static void main(String[] args) {
         launch(args);
     }
     public void start(Stage primaryStage) {
         this.registeredUsers = new HashMap<>();
         initRootLayout(primaryStage);
     }
-    
+
+    /**
+     * Set scene to logout controls
+     */
     public void setLogoutScene() {
         setScene(logoutScene, "Cleanwater - Water Reporting System");
     }
-    
+
+    /**
+     * Set scene to login controls
+     */
     public void setLoginScene() {
         setScene(loginScene, "Cleanwater - Login");
     }
-    
+
+    /**
+     * Set scene to registration controls
+     */
     public void setRegisterScene() {
-    	setScene(registerScene, "Cleanwater - Register New User");
+        setScene(registerScene, "Cleanwater - Register New User");
     }
-    
+
+    /**
+     * Set scene to profile controls
+     */
     public void setUserInfoScene() {
         userInfoScreenController.initFields();
         setScene(userInfoScene, "Cleanwater - Edit Profile");
     }
-    
+
     private void setScene(Scene s, String title) {
         activeScreen.hide();
         activeScreen.setScene(s);
@@ -86,17 +100,17 @@ public class MainFXApplication extends Application  {
             logoutLoader.setLocation(MainFXApplication.class.getResource("../view/LogoutScreen.fxml"));
             registerLoader.setLocation(MainFXApplication.class.getResource("../view/RegisterScreen.fxml"));
             userInfoLoader.setLocation(MainFXApplication.class.getResource("../view/UserInfoScreen.fxml"));
-            loginLayout = loginLoader.load();
-            logoutLayout = logoutLoader.load();
-            registerLayout = registerLoader.load();
-            userInfoLayout = userInfoLoader.load();
+            BorderPane loginLayout = loginLoader.load();
+            BorderPane logoutLayout = logoutLoader.load();
+            BorderPane registerLayout = registerLoader.load();
+            BorderPane userInfoLayout = userInfoLoader.load();
 
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);
             logoutScene = new Scene(logoutLayout);
             registerScene = new Scene(registerLayout);
             userInfoScene = new Scene(userInfoLayout);
-            
+
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
             LogoutScreenController logout = logoutLoader.getController();
@@ -106,7 +120,7 @@ public class MainFXApplication extends Application  {
             logout.registerMainApp(this);
             register.registerMainApp(this);
             userInfoScreenController.registerMainApp(this);
-            
+
             setLoginScene();
         } catch (IOException e) {
             //error on load, so log it
@@ -115,11 +129,21 @@ public class MainFXApplication extends Application  {
         }
     }
 
+    /**
+     * Notifies that a user is attempting to log in
+     * @param token the user's unique identifying information
+     * @return true if the user's token is valid, false otherwise
+     */
     public boolean notifyLogin(Token token) {
         loggedInUser = registeredUsers.get(token);
         return loggedInUser != null;
     }
 
+    /**
+     * Notifies that a user has registered
+     * @param registered the user to add to the database
+     * @param token the user's unique identifying information
+     */
     public void notifyRegistration(User registered, Token token) {
         registeredUsers.put(token, registered);
         System.out.println(registeredUsers);
