@@ -2,37 +2,31 @@ package controller;
 
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
 
 public class LogoutScreenController {
     private MainFXApplication main;
-    
-    @FXML
-    public void initialize() {
-    }
 
+    /**
+     * Registers the main application with this controller
+     * @param main the main application
+     */
     public void registerMainApp(MainFXApplication main) {
         this.main = main;
     }
-    
-    public void show() {
-        main.setLogoutScene();
+
+    /**
+     * Called when the user presses the logout button.
+     */
+    @FXML
+    public void onLogoutPressed() {
+        main.setLoginScene();
     }
 
-   @FXML
-   public void onLogoutPressed() {
-       main.setLoginScene();
-   }
-   
-   @FXML
-   public void onProfileEdit() {
-       main.setUserInfoScene();
-   }
+    /**
+     * Called when the user presses the edit profile button
+     */
+    @FXML
+    public void onProfileEdit() {
+        main.setUserInfoScene();
+    }
 }
