@@ -1,1 +1,1 @@
-Repo for M4. Login/Logout.
+Group 21 (Legally Drunk) Clean Water Crowdsourcing App Repo
