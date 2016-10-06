@@ -70,6 +70,7 @@ public class UserInfoScreenController {
                 stateField.getText(),
                 countryField.getText(),
                 orgField.getText());
+                main.setLogoutScene();
     }
 
     /**

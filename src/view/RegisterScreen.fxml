@@ -29,7 +29,7 @@
                <tooltip>
                   <Tooltip text="Passwords must match" />
                </tooltip></PasswordField>
-            <ComboBox fx:id="permissionBox" prefWidth="150.0" promptText="User Access" />
+            <ComboBox fx:id="permissionBox" prefWidth="150.0" promptText="Please Choose" />
             <Text fx:id="errorMessage" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0" />
             <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="580.0" spacing="10.0">
                <children>
