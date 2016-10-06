@@ -61,6 +61,8 @@ public class RegisterScreenController {
             errorMessage.setText("Required field left blank.");
         } else if (!password.equals(confirmPassword)) {
             errorMessage.setText("Password fields do not match.");
+        } else if (permissionBox.getSelectionModel().isEmpty()) {
+            errorMessage.setText("Choose an access level");
         } else {
             //Create account with appropriate permissions
             String perms = (String) permissionBox.getSelectionModel().getSelectedItem();
