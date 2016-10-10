@@ -1,9 +1,6 @@
 package fxapp;
 
-import controller.LoginScreenController;
-import controller.LogoutScreenController;
-import controller.RegisterScreenController;
-import controller.UserInfoScreenController;
+import controller.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -31,6 +28,7 @@ public class MainFXApplication extends Application  {
     private Map<Token, User> registeredUsers;
     private Scene registerScene;
     private Scene userInfoScene;
+    private Scene submitWaterSourceScene;
 
     /**
      * Gets the active user
@@ -51,6 +49,7 @@ public class MainFXApplication extends Application  {
         this.registeredUsers = new HashMap<>();
         initRootLayout(primaryStage);
     }
+    public void setSubmitWaterReportScene() { setScene(submitWaterSourceScene, "Submit Water Source Report");}
 
     /**
      * Set scene to logout controls
@@ -96,30 +95,36 @@ public class MainFXApplication extends Application  {
             FXMLLoader logoutLoader = new FXMLLoader();
             FXMLLoader registerLoader = new FXMLLoader();
             FXMLLoader userInfoLoader = new FXMLLoader();
+            FXMLLoader submitWaterSourceLoader = new FXMLLoader();
             loginLoader.setLocation(MainFXApplication.class.getResource("../view/LoginScreen.fxml"));
             logoutLoader.setLocation(MainFXApplication.class.getResource("../view/LogoutScreen.fxml"));
             registerLoader.setLocation(MainFXApplication.class.getResource("../view/RegisterScreen.fxml"));
             userInfoLoader.setLocation(MainFXApplication.class.getResource("../view/UserInfoScreen.fxml"));
+            submitWaterSourceLoader.setLocation(MainFXApplication.class.getResource("../view/SubmitWaterSourceScreen.fxml"));
             BorderPane loginLayout = loginLoader.load();
             BorderPane logoutLayout = logoutLoader.load();
             BorderPane registerLayout = registerLoader.load();
             BorderPane userInfoLayout = userInfoLoader.load();
+            BorderPane submitWaterSourceLayout = submitWaterSourceLoader.load();
 
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);
             logoutScene = new Scene(logoutLayout);
             registerScene = new Scene(registerLayout);
             userInfoScene = new Scene(userInfoLayout);
+            submitWaterSourceScene = new Scene(submitWaterSourceLayout);
 
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
             LogoutScreenController logout = logoutLoader.getController();
             RegisterScreenController register = registerLoader.getController();
             userInfoScreenController = userInfoLoader.getController();
+            SubmitWaterSourceController wsController = submitWaterSourceLoader.getController();
             controller.registerMainApp(this);
             logout.registerMainApp(this);
             register.registerMainApp(this);
             userInfoScreenController.registerMainApp(this);
+            wsController.registerMainApp(this);
 
             setLoginScene();
         } catch (IOException e) {
