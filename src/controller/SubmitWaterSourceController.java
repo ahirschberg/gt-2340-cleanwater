@@ -2,6 +2,7 @@ package controller;
 
 
 import fxapp.MainFXApplication;
+import javafx.fxml.FXML;
 
 public class SubmitWaterSourceController {
     private MainFXApplication main;
@@ -14,5 +15,6 @@ public class SubmitWaterSourceController {
         this.main = main;
     }
 
-
+    @FXML
+    public void onBackPressed() { main.setLogoutScene();}
 }

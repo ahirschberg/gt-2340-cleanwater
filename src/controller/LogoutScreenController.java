@@ -29,4 +29,7 @@ public class LogoutScreenController {
     public void onProfileEdit() {
         main.setUserInfoScene();
     }
+
+    @FXML
+    public void openSubmitCleanWaterReport() { main.setSubmitWaterReportScene();}
 }
