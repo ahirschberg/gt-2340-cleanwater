@@ -49,9 +49,9 @@ public class SourceReportScreenController {
         String waterCondition = waterConditionBox.getSelectionModel().getSelectedItem();
         if (location.isEmpty()) {
             errorMessage.setText("Location Field was left empty");
-        } else if (waterType.isEmpty()) {
+        } else if (waterType == null) {
             errorMessage.setText("Please enter a water type");
-        } else if (waterCondition.isEmpty()) {
+        } else if (waterCondition == null) {
             errorMessage.setText("Please enter a water condition");
         } else {
             main.getReportManager().addReport(new Report(location, waterType, waterCondition, reportNum));
