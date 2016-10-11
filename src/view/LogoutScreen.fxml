@@ -45,4 +45,11 @@
    <center>
       <Canvas height="200.0" width="200.0" BorderPane.alignment="CENTER" />
    </center>
+   <left>
+      <Button mnemonicParsing="false" onAction="#onSubmitSourceReport" text="Submit Water Source Report" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </left>
 </BorderPane>
