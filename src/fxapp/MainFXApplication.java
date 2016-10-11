@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.Report;
 import model.Token;
 import model.User;
 
@@ -29,6 +30,7 @@ public class MainFXApplication extends Application  {
     private Scene registerScene;
     private Scene userInfoScene;
     private Scene sourceReportScene;
+    private ReportManager reportManager;
 
     /**
      * Gets the active user
@@ -47,6 +49,7 @@ public class MainFXApplication extends Application  {
     }
     public void start(Stage primaryStage) {
         this.registeredUsers = new HashMap<>();
+        this.reportManager = new ReportManager();
         initRootLayout(primaryStage);
     }
 
@@ -157,5 +160,7 @@ public class MainFXApplication extends Application  {
         System.out.println(registeredUsers);
     }
 
-
+    public ReportManager getReportManager() {
+        return this.reportManager;
+    }
 }
