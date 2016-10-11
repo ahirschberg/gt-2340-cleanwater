@@ -14,6 +14,7 @@ import model.*;
  */
 public class SourceReportScreenController {
     private MainFXApplication main;
+    private int reportNum = 1;
 
     @FXML
     private TextField waterLocationField;
@@ -48,19 +49,19 @@ public class SourceReportScreenController {
         String waterCondition = waterConditionBox.getSelectionModel().getSelectedItem();
         if (location.isEmpty()) {
             errorMessage.setText("Location Field was left empty");
-        } else if (waterType.isEmpty()) {
+        } else if (waterType == null) {
             errorMessage.setText("Please enter a water type");
-        } else if (waterCondition.isEmpty()) {
+        } else if (waterCondition == null) {
             errorMessage.setText("Please enter a water condition");
         } else {
-            main.getReportManager().addReport(new Report(location, waterType, waterCondition));
+            main.getReportManager().addReport(new Report(location, waterType, waterCondition, reportNum));
+            reportNum++;
             main.setLogoutScene();
         }
     }
 
     /**
-     * When the user selects the login button, take them back
-     * to the login screen.
+     * Take the user back to the home page
      */
     @FXML
     public void onHomeSelected() {

@@ -29,8 +29,10 @@ public class MainFXApplication extends Application  {
     private Map<Token, User> registeredUsers;
     private Scene registerScene;
     private Scene userInfoScene;
+    private Scene viewReportsScene;
     private Scene sourceReportScene;
     private ReportManager reportManager;
+    private  ViewReportsScreenController viewReports;
 
     /**
      * Gets the active user
@@ -86,6 +88,11 @@ public class MainFXApplication extends Application  {
         setScene(sourceReportScene, "Cleanwater - Submit Source Report");
     }
 
+    public void setViewReportsScene() {
+        viewReports.setReportsList();
+        setScene(viewReportsScene, "Cleanwater - View Source Reports");
+    }
+
     private void setScene(Scene s, String title) {
         activeScreen.hide();
         activeScreen.setScene(s);
@@ -102,16 +109,19 @@ public class MainFXApplication extends Application  {
             FXMLLoader registerLoader = new FXMLLoader();
             FXMLLoader userInfoLoader = new FXMLLoader();
             FXMLLoader sourceReportLoader = new FXMLLoader();
+            FXMLLoader viewReportsLoader = new FXMLLoader();
             loginLoader.setLocation(MainFXApplication.class.getResource("../view/LoginScreen.fxml"));
             logoutLoader.setLocation(MainFXApplication.class.getResource("../view/LogoutScreen.fxml"));
             registerLoader.setLocation(MainFXApplication.class.getResource("../view/RegisterScreen.fxml"));
             userInfoLoader.setLocation(MainFXApplication.class.getResource("../view/UserInfoScreen.fxml"));
             sourceReportLoader.setLocation(MainFXApplication.class.getResource("../view/SourceReportScreen.fxml"));
+            viewReportsLoader.setLocation(MainFXApplication.class.getResource("../view/ViewReportsScreen.fxml"));
             BorderPane loginLayout = loginLoader.load();
             BorderPane logoutLayout = logoutLoader.load();
             BorderPane registerLayout = registerLoader.load();
             BorderPane userInfoLayout = userInfoLoader.load();
             BorderPane sourceReportLayout = sourceReportLoader.load();
+            BorderPane viewReportsLayout = viewReportsLoader.load();
 
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);
@@ -119,6 +129,7 @@ public class MainFXApplication extends Application  {
             registerScene = new Scene(registerLayout);
             userInfoScene = new Scene(userInfoLayout);
             sourceReportScene = new Scene(sourceReportLayout);
+            viewReportsScene = new Scene(viewReportsLayout);
 
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
@@ -126,11 +137,14 @@ public class MainFXApplication extends Application  {
             RegisterScreenController register = registerLoader.getController();
             userInfoScreenController = userInfoLoader.getController();
             SourceReportScreenController sourceReport = sourceReportLoader.getController();
+           viewReports = viewReportsLoader.getController();
             controller.registerMainApp(this);
             logout.registerMainApp(this);
             register.registerMainApp(this);
             userInfoScreenController.registerMainApp(this);
             sourceReport.registerMainApp(this);
+            viewReports.registerMainApp(this);
+
 
             setLoginScene();
         } catch (IOException e) {
