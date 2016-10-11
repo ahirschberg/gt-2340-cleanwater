@@ -7,11 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import model.Admin;
-import model.Manager;
-import model.Token;
-import model.User;
-import model.Worker;
+import model.*;
 
 /**
  * Created by hankg_000 on 10/10/2016.
@@ -23,10 +19,10 @@ public class SourceReportScreenController {
     private TextField waterLocationField;
 
     @FXML
-    private ComboBox waterTypeBox;
+    private ComboBox<String> waterTypeBox;
 
     @FXML
-    private ComboBox waterConditionBox;
+    private ComboBox<String> waterConditionBox;
 
     @FXML
     private Text errorMessage;
@@ -48,14 +44,16 @@ public class SourceReportScreenController {
     @FXML
     public void onSubmitSelected() {
         String location = waterLocationField.getText();
+        String waterType = waterTypeBox.getSelectionModel().getSelectedItem();
+        String waterCondition = waterConditionBox.getSelectionModel().getSelectedItem();
         if (location.isEmpty()) {
             errorMessage.setText("Location Field was left empty");
-        } else if (waterTypeBox.getSelectionModel().isEmpty()) {
+        } else if (waterType.isEmpty()) {
             errorMessage.setText("Please enter a water type");
-        } else if (waterConditionBox.getSelectionModel().isEmpty()) {
+        } else if (waterCondition.isEmpty()) {
             errorMessage.setText("Please enter a water condition");
         } else {
-            //missing report submission functionality
+            main.getReportManager().addReport(new Report(location, waterType, waterCondition));
             main.setLogoutScene();
         }
     }
