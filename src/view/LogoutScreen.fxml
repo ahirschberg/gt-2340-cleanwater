@@ -52,4 +52,11 @@
          </font>
       </Button>
    </left>
+   <right>
+      <Button mnemonicParsing="false" onAction="#onViewSourceReports" text="View Water Availability" textAlignment="CENTER" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </right>
 </BorderPane>

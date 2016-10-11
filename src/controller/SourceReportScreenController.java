@@ -59,8 +59,7 @@ public class SourceReportScreenController {
     }
 
     /**
-     * When the user selects the login button, take them back
-     * to the login screen.
+     * Take the user back to the home page
      */
     @FXML
     public void onHomeSelected() {

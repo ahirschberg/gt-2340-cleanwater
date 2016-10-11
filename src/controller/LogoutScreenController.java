@@ -34,4 +34,9 @@ public class LogoutScreenController {
     public void onSubmitSourceReport() {
         main.setSourceReportScene();
     }
+
+    @FXML
+    public void onViewSourceReports() {
+        main.setViewReportsScene();
+    }
 }

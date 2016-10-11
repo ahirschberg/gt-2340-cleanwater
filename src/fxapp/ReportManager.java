@@ -21,4 +21,15 @@ public class ReportManager {
     public Iterator<Report> getReports() {
         return reports.iterator();
     }
+
+    public String toString() {
+        String temp = "";
+        int i = 0;
+        while(i < reports.size()) {
+            temp += reports.get(i).getLocation() + ", " + reports.get(i).getWaterType()
+                    + ", " + reports.get(i).getWaterCondition() + "\n";
+            i++;
+        }
+        return temp;
+    }
 }
