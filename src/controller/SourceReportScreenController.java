@@ -14,6 +14,7 @@ import model.*;
  */
 public class SourceReportScreenController {
     private MainFXApplication main;
+    private int reportNum = 1;
 
     @FXML
     private TextField waterLocationField;
@@ -53,7 +54,8 @@ public class SourceReportScreenController {
         } else if (waterCondition.isEmpty()) {
             errorMessage.setText("Please enter a water condition");
         } else {
-            main.getReportManager().addReport(new Report(location, waterType, waterCondition));
+            main.getReportManager().addReport(new Report(location, waterType, waterCondition, reportNum));
+            reportNum++;
             main.setLogoutScene();
         }
     }

@@ -26,8 +26,8 @@ public class ReportManager {
         String temp = "";
         int i = 0;
         while(i < reports.size()) {
-            temp += reports.get(i).getLocation() + ", " + reports.get(i).getWaterType()
-                    + ", " + reports.get(i).getWaterCondition() + "\n";
+            temp += reports.get(i).getLocation() + ", " + reports.get(i).getWaterType() + ", "
+                    + reports.get(i).getWaterCondition() + " " + reports.get(i).getReportNum() + "\n";
             i++;
         }
         return temp;

@@ -4,11 +4,13 @@ public class Report {
     String location;
     String waterType;
     String waterCondition;
+    int reportNum;
 
-    public Report(String location, String waterType, String waterCondition) {
+    public Report(String location, String waterType, String waterCondition, int reportNum) {
         this.location = location;
         this.waterType = waterType;
         this.waterCondition = waterCondition;
+        this.reportNum = reportNum;
     }
 
     public String getLocation() {
@@ -23,7 +25,10 @@ public class Report {
         return waterCondition;
     }
 
+    public int getReportNum() { return reportNum; }
+
     public String toString() {
-        return String.format("<Water Report at %s: %s, %s", getLocation(), getWaterType(), getWaterCondition());
+        return String.format("<Water Report at %s: %s, %s", getLocation(), getWaterType(),
+                getWaterCondition(), getReportNum());
     }
 }
