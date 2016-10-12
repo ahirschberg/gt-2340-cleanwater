@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.Report;
 import model.Token;
 import model.User;
 
@@ -17,14 +16,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The main controller for the JavaFX application
+ * The main controller for the JavaFX application.
  */
 public class MainFXApplication extends Application  {
     private UserInfoScreenController userInfoScreenController;
     public static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private User loggedInUser;
     private Stage activeScreen;
-    private Scene logoutScene;
+    private Scene mainScene;
     private Scene loginScene;
     private Map<Token, User> registeredUsers;
     private Scene registerScene;
@@ -56,10 +55,10 @@ public class MainFXApplication extends Application  {
     }
 
     /**
-     * Set scene to logout controls
+     * Set scene to main controls
      */
-    public void setLogoutScene() {
-        setScene(logoutScene, "Cleanwater - Water Reporting System");
+    public void setMainScene() {
+        setScene(mainScene, "Cleanwater - Water Reporting System");
     }
 
     /**
@@ -84,10 +83,16 @@ public class MainFXApplication extends Application  {
         setScene(userInfoScene, "Cleanwater - Edit Profile");
     }
 
+    /**
+     * Set scene to source report controls
+     */
     public void setSourceReportScene() {
         setScene(sourceReportScene, "Cleanwater - Submit Source Report");
     }
 
+    /**
+     * Set scene to report view
+     */
     public void setViewReportsScene() {
         viewReports.setReportsList();
         setScene(viewReportsScene, "Cleanwater - View Source Reports");
@@ -125,7 +130,7 @@ public class MainFXApplication extends Application  {
 
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);
-            logoutScene = new Scene(logoutLayout);
+            mainScene = new Scene(logoutLayout);
             registerScene = new Scene(registerLayout);
             userInfoScene = new Scene(userInfoLayout);
             sourceReportScene = new Scene(sourceReportLayout);
@@ -133,7 +138,7 @@ public class MainFXApplication extends Application  {
 
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
-            LogoutScreenController logout = logoutLoader.getController();
+            MainScreenController logout = logoutLoader.getController();
             RegisterScreenController register = registerLoader.getController();
             userInfoScreenController = userInfoLoader.getController();
             SourceReportScreenController sourceReport = sourceReportLoader.getController();
@@ -174,6 +179,10 @@ public class MainFXApplication extends Application  {
         System.out.println(registeredUsers);
     }
 
+    /**
+     * Returns the ReportManager instance
+     * @return the ReportManager associated with this instance
+     */
     public ReportManager getReportManager() {
         return this.reportManager;
     }

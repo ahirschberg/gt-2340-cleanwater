@@ -17,6 +17,9 @@ import model.Worker;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 
+/**
+ * Handles the registration screen of the app.
+ */
 public class RegisterScreenController {
     private MainFXApplication main;
 
@@ -33,7 +36,7 @@ public class RegisterScreenController {
     private Text errorMessage;
 
     @FXML
-    private ComboBox permissionBox;
+    private ComboBox<String> permissionBox;
 
     @FXML
     public void initialize() {
@@ -57,7 +60,9 @@ public class RegisterScreenController {
         String username = usernameField.getText();
         String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
-        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        if (username.isEmpty()
+                || password.isEmpty()
+                || confirmPassword.isEmpty()) {
             errorMessage.setText("Required field left blank.");
         } else if (!password.equals(confirmPassword)) {
             errorMessage.setText("Password fields do not match.");
@@ -65,7 +70,7 @@ public class RegisterScreenController {
             errorMessage.setText("Choose an access level");
         } else {
             //Create account with appropriate permissions
-            String perms = (String) permissionBox.getSelectionModel().getSelectedItem();
+            String perms = permissionBox.getSelectionModel().getSelectedItem();
             User newUser;
             if (perms.equals("User")) {
                 newUser = new User(username);

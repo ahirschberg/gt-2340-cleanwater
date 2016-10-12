@@ -2,17 +2,12 @@ package controller;
 
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-import model.Token;
 import model.User;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-
+/**
+ * Handles the user profile screen of the app.
+ */
 public class UserInfoScreenController {
     private MainFXApplication main;
 
@@ -70,7 +65,7 @@ public class UserInfoScreenController {
                 stateField.getText(),
                 countryField.getText(),
                 orgField.getText());
-                main.setLogoutScene();
+                main.setMainScene();
     }
 
     /**
@@ -78,7 +73,7 @@ public class UserInfoScreenController {
      */
     @FXML
     public void onCancel() {
-        main.setLogoutScene();
+        main.setMainScene();
     }
 
 }
