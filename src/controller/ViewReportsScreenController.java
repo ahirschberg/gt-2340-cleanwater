@@ -2,14 +2,14 @@ package controller;
 
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.text.Text;
 import model.*;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
- * Created by hankg_000 on 10/11/2016.
+ * Handles the report viewer screen.
  */
 public class ViewReportsScreenController {
     private MainFXApplication main;
@@ -30,9 +30,13 @@ public class ViewReportsScreenController {
         this.main = main;
     }
 
+    /**
+     * Updates the reports list with stringified reports.
+     */
     public void setReportsList() {
+        Stream<Report> reports = main.getReportManager().getReports();
         reportsList.getItems().clear();
-        reportsList.getItems().addAll(main.getReportManager().toString());
+        reportsList.getItems().addAll(reports.map(Report::toString).collect(Collectors.toList()));
     }
 
     /**
@@ -40,6 +44,6 @@ public class ViewReportsScreenController {
      */
     @FXML
     public void onHomeSelected() {
-        main.setLogoutScene();
+        main.setMainScene();
     }
 }

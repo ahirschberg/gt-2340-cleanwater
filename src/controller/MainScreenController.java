@@ -3,7 +3,10 @@ package controller;
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
 
-public class LogoutScreenController {
+/**
+ * Handles the main screen of the app.
+ */
+public class MainScreenController {
     private MainFXApplication main;
 
     /**

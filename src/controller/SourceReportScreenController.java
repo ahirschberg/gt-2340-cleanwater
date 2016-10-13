@@ -2,15 +2,13 @@ package controller;
 
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import model.*;
 
 /**
- * Created by hankg_000 on 10/10/2016.
+ * Handles the source report screen of the app.
  */
 public class SourceReportScreenController {
     private MainFXApplication main;
@@ -56,7 +54,7 @@ public class SourceReportScreenController {
         } else {
             main.getReportManager().addReport(new Report(location, waterType, waterCondition, reportNum));
             reportNum++;
-            main.setLogoutScene();
+            main.setMainScene();
         }
     }
 
@@ -65,6 +63,6 @@ public class SourceReportScreenController {
      */
     @FXML
     public void onHomeSelected() {
-        main.setLogoutScene();
+        main.setMainScene();
     }
 }
