@@ -10,6 +10,7 @@ import model.Token;
 import model.User;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -52,6 +53,11 @@ public class MainFXApplication extends Application  {
         this.registeredUsers = new HashMap<>();
         this.reportManager = new ReportManager();
         initRootLayout(primaryStage);
+        try {
+            new DatabaseManager().init();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
