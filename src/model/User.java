@@ -3,11 +3,16 @@ package model;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+import java.io.Serializable;
+import java.util.Map;
+
 /**
  * Created by jster on 9/20/2016.
  */
 public class User {
     private String username;
+    private Token token;
+    private PermissionLevel permissionLevel;
 
     //Profile
     private String name;
@@ -17,7 +22,10 @@ public class User {
     private String state;
     private String country;
     private String org;
-    
+
+    public String getUsername() {
+        return this.username;
+    }
     public String getName() {
         return name;
     }
@@ -39,6 +47,7 @@ public class User {
     public String getOrg() {
         return org;
     }
+    public Token getToken() { return token; }
     
     public String getAddress() {
         return street
@@ -60,7 +69,9 @@ public class User {
         this.org = newOrg;
     }
     
-    public User(String username) {
+    public User(String username, Token token, PermissionLevel permissionLevel) {
         this.username = username;
+        this.token = token;
+        this.permissionLevel = permissionLevel;
     }
 }

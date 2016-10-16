@@ -26,13 +26,13 @@ public class MainFXApplication extends Application  {
     private Stage activeScreen;
     private Scene mainScene;
     private Scene loginScene;
-    private Map<Token, User> registeredUsers;
     private Scene registerScene;
     private Scene userInfoScene;
     private Scene viewReportsScene;
     private Scene sourceReportScene;
     private ReportManager reportManager;
     private  ViewReportsScreenController viewReports;
+    private DatabaseManager databaseManager;
 
     /**
      * Gets the active user
@@ -50,13 +50,12 @@ public class MainFXApplication extends Application  {
         launch(args);
     }
     public void start(Stage primaryStage) {
-        this.registeredUsers = new HashMap<>();
         this.reportManager = new ReportManager();
         initRootLayout(primaryStage);
         try {
-            new DatabaseManager().init();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            this.databaseManager = new DatabaseManager();
+        } catch (ClassNotFoundException cne) {
+            cne.printStackTrace();
         }
     }
 
@@ -171,18 +170,21 @@ public class MainFXApplication extends Application  {
      * @return true if the user's token is valid, false otherwise
      */
     public boolean notifyLogin(Token token) {
-        loggedInUser = registeredUsers.get(token);
+        loggedInUser = null;
+        try {
+            loggedInUser = databaseManager.getUser(token);
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
         return loggedInUser != null;
     }
 
     /**
      * Notifies that a user has registered
      * @param registered the user to add to the database
-     * @param token the user's unique identifying information
      */
-    public void notifyRegistration(User registered, Token token) {
-        registeredUsers.put(token, registered);
-        System.out.println(registeredUsers);
+    public boolean notifyRegistration(User registered) {
+        return databaseManager.storeUser(registered);
     }
 
     /**
