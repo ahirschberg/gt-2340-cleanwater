@@ -28,8 +28,9 @@ public class MainFXApplication extends Application  {
     private Scene userInfoScene;
     private Scene viewReportsScene;
     private Scene sourceReportScene;
+    private Scene mapScene;
     private ReportManager reportManager;
-    private  ViewReportsScreenController viewReports;
+    private ViewReportsScreenController viewReports;
     private DatabaseManager databaseManager;
 
     /**
@@ -100,6 +101,13 @@ public class MainFXApplication extends Application  {
         viewReports.setReportsList();
         setScene(viewReportsScene, "Cleanwater - View Source Reports");
     }
+    
+    /**
+     * Set scene to water availability map
+     */
+    public void setMapScene() {
+        setScene(mapScene, "Cleanwater - Water Map");
+    }
 
     private void setScene(Scene s, String title) {
         activeScreen.hide();
@@ -113,46 +121,51 @@ public class MainFXApplication extends Application  {
         try {
             // Load root layout from fxml file.
             FXMLLoader loginLoader = new FXMLLoader();
-            FXMLLoader logoutLoader = new FXMLLoader();
+            FXMLLoader mainLoader = new FXMLLoader();
             FXMLLoader registerLoader = new FXMLLoader();
             FXMLLoader userInfoLoader = new FXMLLoader();
             FXMLLoader sourceReportLoader = new FXMLLoader();
             FXMLLoader viewReportsLoader = new FXMLLoader();
+            FXMLLoader mapLoader = new FXMLLoader();
             loginLoader.setLocation(MainFXApplication.class.getResource("../view/LoginScreen.fxml"));
-            logoutLoader.setLocation(MainFXApplication.class.getResource("../view/LogoutScreen.fxml"));
+            mainLoader.setLocation(MainFXApplication.class.getResource("../view/MainScreen.fxml"));
             registerLoader.setLocation(MainFXApplication.class.getResource("../view/RegisterScreen.fxml"));
             userInfoLoader.setLocation(MainFXApplication.class.getResource("../view/UserInfoScreen.fxml"));
             sourceReportLoader.setLocation(MainFXApplication.class.getResource("../view/SourceReportScreen.fxml"));
             viewReportsLoader.setLocation(MainFXApplication.class.getResource("../view/ViewReportsScreen.fxml"));
+            mapLoader.setLocation(MainFXApplication.class.getResource("../view/mapScreen.fxml"));
             BorderPane loginLayout = loginLoader.load();
-            BorderPane logoutLayout = logoutLoader.load();
+            BorderPane mainLayout = mainLoader.load();
             BorderPane registerLayout = registerLoader.load();
             BorderPane userInfoLayout = userInfoLoader.load();
             BorderPane sourceReportLayout = sourceReportLoader.load();
             BorderPane viewReportsLayout = viewReportsLoader.load();
+            BorderPane mapLayout = mapLoader.load();
 
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);
-            mainScene = new Scene(logoutLayout);
+            mainScene = new Scene(mainLayout);
             registerScene = new Scene(registerLayout);
             userInfoScene = new Scene(userInfoLayout);
             sourceReportScene = new Scene(sourceReportLayout);
             viewReportsScene = new Scene(viewReportsLayout);
+            mapScene = new Scene(mapLayout);
 
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
-            MainScreenController logout = logoutLoader.getController();
+            MainScreenController logout = mainLoader.getController();
             RegisterScreenController register = registerLoader.getController();
             userInfoScreenController = userInfoLoader.getController();
             SourceReportScreenController sourceReport = sourceReportLoader.getController();
-           viewReports = viewReportsLoader.getController();
+            viewReports = viewReportsLoader.getController();
+            MapScreenController map = mapLoader.getController();
             controller.registerMainApp(this);
             logout.registerMainApp(this);
             register.registerMainApp(this);
             userInfoScreenController.registerMainApp(this);
             sourceReport.registerMainApp(this);
             viewReports.registerMainApp(this);
-
+            map.registerMainApp(this);
 
             setLoginScene();
         } catch (IOException e) {
