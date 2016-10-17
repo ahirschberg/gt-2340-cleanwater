@@ -3,6 +3,7 @@ package controller;
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import model.Profile;
 import model.User;
 
 /**
@@ -42,7 +43,10 @@ public class UserInfoScreenController {
      * Initialize the fields to the data stored in the user's record
      */
     public void initFields() {
-        User active = main.getActiveUser();
+        Profile active = main.getActiveUser().getProfile();
+        if (active == null) {
+            active = new Profile();
+        }
         nameField.setText(active.getName());
         emailField.setText(active.getEmail());
         streetField.setText(active.getStreet());
@@ -58,14 +62,15 @@ public class UserInfoScreenController {
     @FXML
     public void onProfileSaved() {
         main.getActiveUser().setProfile(
-                nameField.getText(),
-                emailField.getText(),
-                streetField.getText(),
-                cityField.getText(),
-                stateField.getText(),
-                countryField.getText(),
-                orgField.getText());
-                main.setMainScene();
+                new Profile(
+                    nameField.getText(),
+                    emailField.getText(),
+                    streetField.getText(),
+                    cityField.getText(),
+                    stateField.getText(),
+                    countryField.getText(),
+                    orgField.getText()));
+        main.setMainScene();
     }
 
     /**

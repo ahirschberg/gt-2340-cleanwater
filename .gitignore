@@ -1,4 +1,6 @@
 out
 .idea
-*.iml
 .idea/*
+*.iml
+*.db
+lib/

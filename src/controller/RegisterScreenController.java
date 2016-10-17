@@ -2,20 +2,15 @@ package controller;
 
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import model.Admin;
-import model.Manager;
+import model.PermissionLevel;
 import model.Token;
 import model.User;
-import model.Worker;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
 
 /**
  * Handles the registration screen of the app.
@@ -70,20 +65,19 @@ public class RegisterScreenController {
             errorMessage.setText("Choose an access level");
         } else {
             //Create account with appropriate permissions
-            String perms = permissionBox.getSelectionModel().getSelectedItem();
-            User newUser;
-            if (perms.equals("User")) {
-                newUser = new User(username);
-            } else if (perms.equals("Worker")) {
-                newUser = new Worker(username);
-            } else if (perms.equals("Manager")) {
-                newUser = new Manager(username);
-            } else {
-                newUser = new Admin(username);
-            }
+            try {
+                PermissionLevel pl = PermissionLevel.values()[permissionBox.getSelectionModel().getSelectedIndex()];
+                User newUser = new User(username, Token.fromCredentials(username, password), pl);
 
-            main.notifyRegistration(newUser, Token.fromCredentials(username, password));
-            main.setLoginScene();
+                if (main.notifyRegistration(newUser)) {
+                    main.setLoginScene();
+                } else {
+                    errorMessage.setText("User already exists.");
+                }
+            } catch (NoSuchAlgorithmException nse) {
+                nse.printStackTrace();
+                errorMessage.setText("Hash algorithm not found. Cannot log in.");
+            }
         }
     }
 
