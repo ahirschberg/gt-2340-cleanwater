@@ -13,62 +13,26 @@ public class User {
     private String username;
     private Token token;
     private PermissionLevel permissionLevel;
+    private Profile profile;
 
-    //Profile
-    private String name;
-    private String email;
-    private String street;
-    private String city;
-    private String state;
-    private String country;
-    private String org;
+    public Token getToken() { return token; }
+
+    public PermissionLevel getPermissionLevel() {
+        return this.permissionLevel;
+    }
 
     public String getUsername() {
         return this.username;
     }
-    public String getName() {
-        return name;
+
+    public Profile getProfile() {
+        return this.profile;
     }
-    public String getEmail() {
-        return email;
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
-    public String getStreet() {
-        return street;
-    }
-    public String getCity() {
-        return city;
-    }
-    public String getState() {
-        return state;
-    }
-    public String getCountry() {
-        return country;
-    }
-    public String getOrg() {
-        return org;
-    }
-    public Token getToken() { return token; }
-    
-    public String getAddress() {
-        return street
-        + "\n"
-        + city
-        + ", "
-        + state
-        + "\n"
-        + country;
-    }
-    
-    public void setProfile(String newName, String newEmail, String newStreet, String newCity, String newState, String newCountry, String newOrg) {
-        this.name = newName;
-        this.email = newEmail;
-        this.street = newStreet;
-        this.city = newCity;
-        this.state = newState;
-        this.country = newCountry;
-        this.org = newOrg;
-    }
-    
+
     public User(String username, Token token, PermissionLevel permissionLevel) {
         this.username = username;
         this.token = token;

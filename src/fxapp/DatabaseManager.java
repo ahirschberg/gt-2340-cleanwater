@@ -6,13 +6,15 @@ import model.Token;
 import model.User;
 
 import java.sql.*;
+import java.util.Arrays;
+
 public class DatabaseManager {
     public void init() {
         try(Connection conn = getConnection()) {
             Statement stat = conn.createStatement();
             ResultSet rs = stat.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='users';");
             if (!rs.next()) {
-                conn.createStatement().executeUpdate("create table users (username string, token string UNIQUE);");
+                conn.createStatement().executeUpdate("create table users (username string, token string UNIQUE, permission integer);");
             }
             stat.close();
         } catch (SQLException e) {
@@ -34,9 +36,10 @@ public class DatabaseManager {
                     }
                 }
             }
-            try (PreparedStatement prep = conn.prepareStatement("insert into users values (?, ?);")) {
+            try (PreparedStatement prep = conn.prepareStatement("insert into users values (?, ?, ?);")) {
                 prep.setString(1, u.getUsername());
                 prep.setString(2, u.getToken().toString());
+                prep.setInt(3, u.getPermissionLevel().level);
                 prep.addBatch();
                 prep.executeBatch();
                 prep.close();
@@ -54,8 +57,13 @@ public class DatabaseManager {
             prep.setString(1, t.toString());
             ResultSet match = prep.executeQuery();
             if (match.next()) {
-                User u = new User(match.getString("username"), new Token(match.getString("token")), PermissionLevel.USER);
-                return u;
+                final int permissionLevelInt = match.getInt("permission");
+                PermissionLevel permissionLevel = Arrays // find first PermissionLevel with matching integer
+                        .stream(PermissionLevel.values())
+                        .filter((pl) -> pl.level == permissionLevelInt)
+                        .findFirst()
+                        .get();
+                return new User(match.getString("username"), new Token(match.getString("token")), permissionLevel);
             }
         }
         return null;
