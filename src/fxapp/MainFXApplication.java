@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  */
 public class MainFXApplication extends Application  {
     private UserInfoScreenController userInfoScreenController;
+    private MapScreenController mapScreenController;
     public static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private User loggedInUser;
     private Stage activeScreen;
@@ -106,6 +107,7 @@ public class MainFXApplication extends Application  {
      * Set scene to water availability map
      */
     public void setMapScene() {
+        mapScreenController.refreshMarkers();
         setScene(mapScene, "Cleanwater - Water Map");
     }
 
@@ -158,14 +160,14 @@ public class MainFXApplication extends Application  {
             userInfoScreenController = userInfoLoader.getController();
             SourceReportScreenController sourceReport = sourceReportLoader.getController();
             viewReports = viewReportsLoader.getController();
-            MapScreenController map = mapLoader.getController();
+            mapScreenController = mapLoader.getController();
             controller.registerMainApp(this);
             logout.registerMainApp(this);
             register.registerMainApp(this);
             userInfoScreenController.registerMainApp(this);
             sourceReport.registerMainApp(this);
             viewReports.registerMainApp(this);
-            map.registerMainApp(this);
+            mapScreenController.registerMainApp(this);
 
             setLoginScene();
         } catch (IOException e) {
