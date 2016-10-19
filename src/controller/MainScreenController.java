@@ -42,4 +42,7 @@ public class MainScreenController {
     public void onViewSourceReports() {
         main.setViewReportsScene();
     }
+
+    @FXML
+    public void onMapSelected() { main.setReportDetailsScene(); }
 }

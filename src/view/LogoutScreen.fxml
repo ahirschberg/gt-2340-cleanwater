@@ -53,10 +53,19 @@
       </Button>
    </left>
    <right>
-      <Button mnemonicParsing="false" onAction="#onViewSourceReports" text="View Water Availability" textAlignment="CENTER" BorderPane.alignment="CENTER">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="250.0" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onViewSourceReports" text="View Water Availability" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#onMapSelected" prefWidth="205.0" text="View Map">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
    </right>
 </BorderPane>
