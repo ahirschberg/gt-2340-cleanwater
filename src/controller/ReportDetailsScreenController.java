@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import model.Report;
 
+import java.util.Optional;
+
 /**
  * Created by hankg_000 on 10/18/2016.
  */
@@ -28,11 +30,12 @@ public class ReportDetailsScreenController {
      */
     public void setReportInfo() {
 
-        Report report = main.getReportManager().get(0); //TODO change report to report called
-        if (report == null) {
+        Optional<Report> reportMaybe = main.getReportManager().getReports().findFirst();
+        if (!reportMaybe.isPresent()) {
             reportTitle.setText("Report not found");
             return;
         }
+        Report report = reportMaybe.get();
         reportTitle.setText("Water report for " + report.getLocation());
         reportInfo.getItems().clear();
         reportInfo.getItems().addAll("Location: " + report.getLocation(), "Condition: " + report.getWaterCondition(),
