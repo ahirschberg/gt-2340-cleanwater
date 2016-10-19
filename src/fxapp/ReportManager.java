@@ -31,14 +31,4 @@ public class ReportManager {
     public Stream<Report> getReports() {
         return reports.stream();
     }
-
-    public Report get(int i) {
-        if (reports == null) {
-            return null;
-        }
-        if (i >= reports.size()) {
-            return null;
-        }
-        return reports.get(i);
-    }
 }
