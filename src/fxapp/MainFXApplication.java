@@ -135,7 +135,7 @@ public class MainFXApplication extends Application  {
             userInfoLoader.setLocation(MainFXApplication.class.getResource("../view/UserInfoScreen.fxml"));
             sourceReportLoader.setLocation(MainFXApplication.class.getResource("../view/SourceReportScreen.fxml"));
             viewReportsLoader.setLocation(MainFXApplication.class.getResource("../view/ViewReportsScreen.fxml"));
-            mapLoader.setLocation(MainFXApplication.class.getResource("../view/mapScreen.fxml"));
+            mapLoader.setLocation(MainFXApplication.class.getResource("../view/MapScreen.fxml"));
             BorderPane loginLayout = loginLoader.load();
             BorderPane mainLayout = mainLoader.load();
             BorderPane registerLayout = registerLoader.load();
