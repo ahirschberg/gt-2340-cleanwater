@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import model.Report;
 import model.Token;
+import netscape.javascript.JSObject;
 
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
@@ -19,7 +20,9 @@ import java.util.stream.Stream;
 
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
@@ -76,8 +79,13 @@ public class MapScreenController implements Initializable, MapComponentInitializ
                     + " ("
                     + r.getWaterCondition()
                     + ")");
-            
-            map.addMarker(new Marker(mo));
+            Marker mark = new Marker(mo);
+            map.addMarker(mark);
+            /*map.addUIEventHandler(mark,
+                    UIEventType.click,
+                    (JSObject obj) -> {
+                        //TODO: set report detail scene when branches are merged.
+                    });*/
             break; //TODO: remove when above todo is todone.
         }
     }
