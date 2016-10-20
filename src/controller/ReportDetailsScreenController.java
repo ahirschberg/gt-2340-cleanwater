@@ -25,14 +25,8 @@ public class ReportDetailsScreenController {
     /**
      * Sets the report info. Unfinished
      */
-    public void setReportInfo() {
+    public void setReportInfo(Report report) {
 
-        Optional<Report> reportMaybe = main.getReportManager().getReports().findFirst();
-        if (!reportMaybe.isPresent()) {
-            reportTitle.setText("Report not found");
-            return;
-        }
-        Report report = reportMaybe.get();
         reportTitle.setText("Water report for " + report.getLocation());
         reportInfo.getItems().clear();
         reportInfo.getItems().addAll("Location: " + report.getLocation(), "Condition: " + report.getWaterCondition(),
@@ -57,5 +51,5 @@ public class ReportDetailsScreenController {
     }
 
     @FXML
-    public void onMapSelected() { main.setMainScene();} //TODO change scene set to map page
+    public void onMapSelected() { main.setMapScene(); }
 }
