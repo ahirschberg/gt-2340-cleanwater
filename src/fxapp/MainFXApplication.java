@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import model.Report;
 import model.Token;
 import model.User;
 
@@ -116,8 +117,8 @@ public class MainFXApplication extends Application  {
     /**
      * Set scene to individual report details view
      */
-    public void setReportDetailsScene() {
-        reportDetails.setReportInfo();
+    public void setReportDetailsScene(Report report) {
+        reportDetails.setReportInfo(report);
         setScene(reportDetailsScene, "Cleanwater - View Individual Source Reports");
     }
 

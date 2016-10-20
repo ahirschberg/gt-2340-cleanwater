@@ -4,20 +4,22 @@ package model;
  * A water quality report.
  */
 public class Report {
-    String location;
-    String waterType;
-    String waterCondition;
-    int reportNum;
+
+    private double latitude;
+    private double longitude;
+    private String waterType;
+    private String waterCondition;
+    private int reportNum;
 
     /**
      * Creates a new report
-     * @param location the location the report pertains to
      * @param waterType the type of water source
      * @param waterCondition the quality of water source
      * @param reportNum the number of the report
      */
-    public Report(String location, String waterType, String waterCondition, int reportNum) {
-        this.location = location;
+    public Report(double latitude, double longitude, String waterType, String waterCondition, int reportNum) {
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.waterType = waterType;
         this.waterCondition = waterCondition;
         this.reportNum = reportNum;
@@ -28,7 +30,7 @@ public class Report {
      * @return location, as a string
      */
     public String getLocation() {
-        return location;
+        return latitude + "," + longitude;
     }
 
     /**
@@ -56,5 +58,21 @@ public class Report {
     public String toString() {
         return String.format("Water Report #%d at %s: %s, %s", getReportNum(), getLocation(), getWaterType(),
                 getWaterCondition());
+    }
+
+    /**
+     * Gets the latitude, as a double
+     * @return latitude
+     */
+    public double getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * Gets the longitude, as a double
+     * @return longitude
+     */
+    public double getLongitude() {
+        return longitude;
     }
 }

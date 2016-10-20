@@ -68,26 +68,15 @@ public class MapScreenController implements Initializable, MapComponentInitializ
     public void refreshMarkers() {
         LatLong center = new LatLong(33.7756, -84.3963);
         ReportManager rm = main.getReportManager();
-        Stream<Report> reports = rm.getReports();
-        for (Iterator<Report> reportIter = reports.iterator(); reportIter.hasNext();) {
-            Report r = reportIter.next();
+        Stream<Report> reportStream = rm.getReports();
+        reportStream.forEach(r -> {
             MarkerOptions mo = new MarkerOptions();
-            mo.position(center); //TODO: get latlong from reports and then use that here
-            mo.title(r.getLocation()
-                    + ": "
-                    + r.getWaterType()
-                    + " ("
-                    + r.getWaterCondition()
-                    + ")");
-            Marker mark = new Marker(mo);
-            map.addMarker(mark);
-            /*map.addUIEventHandler(mark,
-                    UIEventType.click,
-                    (JSObject obj) -> {
-                        //TODO: set report detail scene when branches are merged.
-                    });*/
-            break; //TODO: remove when above todo is todone.
-        }
+            mo.position(new LatLong(r.getLatitude(), r.getLongitude()));
+            mo.title(r.toString());
+            Marker marker = new Marker(mo);
+            map.addMarker(marker);
+            map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> main.setReportDetailsScene(r));
+        });
     }
 
     /**
