@@ -33,6 +33,8 @@ public class MainFXApplication extends Application  {
     private ReportManager reportManager;
     private ViewReportsScreenController viewReports;
     private DatabaseManager databaseManager;
+    private Scene reportDetailsScene;
+    private ReportDetailsScreenController reportDetails;
 
     /**
      * Gets the active user
@@ -111,6 +113,14 @@ public class MainFXApplication extends Application  {
         setScene(mapScene, "Cleanwater - Water Map");
     }
 
+    /**
+     * Set scene to individual report details view
+     */
+    public void setReportDetailsScene() {
+        reportDetails.setReportInfo();
+        setScene(reportDetailsScene, "Cleanwater - View Individual Source Reports");
+    }
+
     private void setScene(Scene s, String title) {
         activeScreen.hide();
         activeScreen.setScene(s);
@@ -129,6 +139,7 @@ public class MainFXApplication extends Application  {
             FXMLLoader sourceReportLoader = new FXMLLoader();
             FXMLLoader viewReportsLoader = new FXMLLoader();
             FXMLLoader mapLoader = new FXMLLoader();
+            FXMLLoader reportDetailsLoader = new FXMLLoader();
             loginLoader.setLocation(MainFXApplication.class.getResource("../view/LoginScreen.fxml"));
             mainLoader.setLocation(MainFXApplication.class.getResource("../view/MainScreen.fxml"));
             registerLoader.setLocation(MainFXApplication.class.getResource("../view/RegisterScreen.fxml"));
@@ -136,6 +147,7 @@ public class MainFXApplication extends Application  {
             sourceReportLoader.setLocation(MainFXApplication.class.getResource("../view/SourceReportScreen.fxml"));
             viewReportsLoader.setLocation(MainFXApplication.class.getResource("../view/ViewReportsScreen.fxml"));
             mapLoader.setLocation(MainFXApplication.class.getResource("../view/MapScreen.fxml"));
+            reportDetailsLoader.setLocation(MainFXApplication.class.getResource("../view/ReportDetailsScreen.fxml"));
             BorderPane loginLayout = loginLoader.load();
             BorderPane mainLayout = mainLoader.load();
             BorderPane registerLayout = registerLoader.load();
@@ -143,6 +155,7 @@ public class MainFXApplication extends Application  {
             BorderPane sourceReportLayout = sourceReportLoader.load();
             BorderPane viewReportsLayout = viewReportsLoader.load();
             BorderPane mapLayout = mapLoader.load();
+            BorderPane reportDetailsLayout = reportDetailsLoader.load();
 
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);
@@ -152,6 +165,7 @@ public class MainFXApplication extends Application  {
             sourceReportScene = new Scene(sourceReportLayout);
             viewReportsScene = new Scene(viewReportsLayout);
             mapScene = new Scene(mapLayout);
+            reportDetailsScene = new Scene(reportDetailsLayout);
 
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
@@ -161,6 +175,7 @@ public class MainFXApplication extends Application  {
             SourceReportScreenController sourceReport = sourceReportLoader.getController();
             viewReports = viewReportsLoader.getController();
             mapScreenController = mapLoader.getController();
+            reportDetails = reportDetailsLoader.getController();
             controller.registerMainApp(this);
             logout.registerMainApp(this);
             register.registerMainApp(this);
@@ -168,6 +183,8 @@ public class MainFXApplication extends Application  {
             sourceReport.registerMainApp(this);
             viewReports.registerMainApp(this);
             mapScreenController.registerMainApp(this);
+            reportDetails.registerMainApp(this);
+
 
             setLoginScene();
         } catch (IOException e) {
