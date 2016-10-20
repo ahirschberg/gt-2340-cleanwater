@@ -71,7 +71,7 @@ public class MapScreenController implements Initializable, MapComponentInitializ
         Stream<Report> reportStream = rm.getReports();
         reportStream.forEach(r -> {
             MarkerOptions mo = new MarkerOptions();
-            mo.position(center); //TODO: get latlong from reports and then use that here
+            mo.position(new LatLong(r.getLatitude(), r.getLongitude()));
             mo.title(r.toString());
             Marker marker = new Marker(mo);
             map.addMarker(marker);

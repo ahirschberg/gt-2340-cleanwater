@@ -4,6 +4,7 @@ package model;
  * A water quality report.
  */
 public class Report {
+
     private double latitude;
     private double longitude;
     private String waterType;
@@ -57,5 +58,21 @@ public class Report {
     public String toString() {
         return String.format("Water Report #%d at %s: %s, %s", getReportNum(), getLocation(), getWaterType(),
                 getWaterCondition());
+    }
+
+    /**
+     * Gets the latitude, as a double
+     * @return latitude
+     */
+    public double getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * Gets the longitude, as a double
+     * @return longitude
+     */
+    public double getLongitude() {
+        return longitude;
     }
 }
