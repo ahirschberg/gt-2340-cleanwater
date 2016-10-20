@@ -8,9 +8,6 @@ import model.Report;
 
 import java.util.Optional;
 
-/**
- * Created by hankg_000 on 10/18/2016.
- */
 public class ReportDetailsScreenController {
     private MainFXApplication main;
 

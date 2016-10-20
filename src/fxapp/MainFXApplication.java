@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  */
 public class MainFXApplication extends Application  {
     private UserInfoScreenController userInfoScreenController;
+    private MapScreenController mapScreenController;
     public static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private User loggedInUser;
     private Stage activeScreen;
@@ -28,8 +29,9 @@ public class MainFXApplication extends Application  {
     private Scene userInfoScene;
     private Scene viewReportsScene;
     private Scene sourceReportScene;
+    private Scene mapScene;
     private ReportManager reportManager;
-    private  ViewReportsScreenController viewReports;
+    private ViewReportsScreenController viewReports;
     private DatabaseManager databaseManager;
     private Scene reportDetailsScene;
     private ReportDetailsScreenController reportDetails;
@@ -102,6 +104,14 @@ public class MainFXApplication extends Application  {
         viewReports.setReportsList();
         setScene(viewReportsScene, "Cleanwater - View Source Reports");
     }
+    
+    /**
+     * Set scene to water availability map
+     */
+    public void setMapScene() {
+        mapScreenController.refreshMarkers();
+        setScene(mapScene, "Cleanwater - Water Map");
+    }
 
     /**
      * Set scene to individual report details view
@@ -123,43 +133,48 @@ public class MainFXApplication extends Application  {
         try {
             // Load root layout from fxml file.
             FXMLLoader loginLoader = new FXMLLoader();
-            FXMLLoader logoutLoader = new FXMLLoader();
+            FXMLLoader mainLoader = new FXMLLoader();
             FXMLLoader registerLoader = new FXMLLoader();
             FXMLLoader userInfoLoader = new FXMLLoader();
             FXMLLoader sourceReportLoader = new FXMLLoader();
             FXMLLoader viewReportsLoader = new FXMLLoader();
+            FXMLLoader mapLoader = new FXMLLoader();
             FXMLLoader reportDetailsLoader = new FXMLLoader();
             loginLoader.setLocation(MainFXApplication.class.getResource("../view/LoginScreen.fxml"));
-            logoutLoader.setLocation(MainFXApplication.class.getResource("../view/LogoutScreen.fxml"));
+            mainLoader.setLocation(MainFXApplication.class.getResource("../view/MainScreen.fxml"));
             registerLoader.setLocation(MainFXApplication.class.getResource("../view/RegisterScreen.fxml"));
             userInfoLoader.setLocation(MainFXApplication.class.getResource("../view/UserInfoScreen.fxml"));
             sourceReportLoader.setLocation(MainFXApplication.class.getResource("../view/SourceReportScreen.fxml"));
             viewReportsLoader.setLocation(MainFXApplication.class.getResource("../view/ViewReportsScreen.fxml"));
+            mapLoader.setLocation(MainFXApplication.class.getResource("../view/MapScreen.fxml"));
             reportDetailsLoader.setLocation(MainFXApplication.class.getResource("../view/ReportDetailsScreen.fxml"));
             BorderPane loginLayout = loginLoader.load();
-            BorderPane logoutLayout = logoutLoader.load();
+            BorderPane mainLayout = mainLoader.load();
             BorderPane registerLayout = registerLoader.load();
             BorderPane userInfoLayout = userInfoLoader.load();
             BorderPane sourceReportLayout = sourceReportLoader.load();
             BorderPane viewReportsLayout = viewReportsLoader.load();
+            BorderPane mapLayout = mapLoader.load();
             BorderPane reportDetailsLayout = reportDetailsLoader.load();
 
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);
-            mainScene = new Scene(logoutLayout);
+            mainScene = new Scene(mainLayout);
             registerScene = new Scene(registerLayout);
             userInfoScene = new Scene(userInfoLayout);
             sourceReportScene = new Scene(sourceReportLayout);
             viewReportsScene = new Scene(viewReportsLayout);
+            mapScene = new Scene(mapLayout);
             reportDetailsScene = new Scene(reportDetailsLayout);
 
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
-            MainScreenController logout = logoutLoader.getController();
+            MainScreenController logout = mainLoader.getController();
             RegisterScreenController register = registerLoader.getController();
             userInfoScreenController = userInfoLoader.getController();
             SourceReportScreenController sourceReport = sourceReportLoader.getController();
             viewReports = viewReportsLoader.getController();
+            mapScreenController = mapLoader.getController();
             reportDetails = reportDetailsLoader.getController();
             controller.registerMainApp(this);
             logout.registerMainApp(this);
@@ -167,6 +182,7 @@ public class MainFXApplication extends Application  {
             userInfoScreenController.registerMainApp(this);
             sourceReport.registerMainApp(this);
             viewReports.registerMainApp(this);
+            mapScreenController.registerMainApp(this);
             reportDetails.registerMainApp(this);
 
 

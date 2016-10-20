@@ -44,5 +44,7 @@ public class MainScreenController {
     }
 
     @FXML
-    public void onMapSelected() { main.setReportDetailsScene(); }
+    public void onViewMap() {
+        main.setMapScene();
+    }
 }

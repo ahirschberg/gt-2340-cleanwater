@@ -3,4 +3,6 @@ out
 .idea/*
 *.iml
 *.db
-lib/
+/bin/
+.classpath
+.project
