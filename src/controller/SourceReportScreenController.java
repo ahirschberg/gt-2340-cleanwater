@@ -15,7 +15,10 @@ public class SourceReportScreenController {
     private int reportNum = 1;
 
     @FXML
-    private TextField waterLocationField;
+    private TextField latitudeField;
+
+    @FXML
+    private TextField longitudeField;
 
     @FXML
     private ComboBox<String> waterTypeBox;
@@ -42,19 +45,35 @@ public class SourceReportScreenController {
 
     @FXML
     public void onSubmitSelected() {
-        String location = waterLocationField.getText();
+        String latString = latitudeField.getText();
+        String longString = longitudeField.getText();
+        double latitude = 0;
+        double longitude = 0;
         String waterType = waterTypeBox.getSelectionModel().getSelectedItem();
         String waterCondition = waterConditionBox.getSelectionModel().getSelectedItem();
-        if (location.isEmpty()) {
-            errorMessage.setText("Location Field was left empty");
-        } else if (waterType == null) {
-            errorMessage.setText("Please enter a water type");
-        } else if (waterCondition == null) {
-            errorMessage.setText("Please enter a water condition");
-        } else {
-            main.getReportManager().addReport(new Report(location, waterType, waterCondition, reportNum));
-            reportNum++;
-            main.setMainScene();
+
+        try {
+            latitude = Double.parseDouble(latString);
+            longitude = Double.parseDouble(longString);
+            if (latitude > 90.0 || latitude < -90.0) {
+                throw new Exception();
+            } else if (longitude > 180.0 || latitude < -180.0) {
+                throw new Exception();
+            }
+
+            if (latString == null || longString == null) {
+                errorMessage.setText("Latitude or Longitude was invalid");
+            } else if (waterType == null) {
+                errorMessage.setText("Please enter a water type");
+            } else if (waterCondition == null) {
+                errorMessage.setText("Please enter a water condition");
+            } else {
+                main.getReportManager().addReport(new Report(latitude, longitude, waterType, waterCondition, reportNum));
+                reportNum++;
+                main.setMainScene();
+            }
+        } catch (Exception e) {
+            errorMessage.setText("Latitude or Longitude was invalid");
         }
     }
 

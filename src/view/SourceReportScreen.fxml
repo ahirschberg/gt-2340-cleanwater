@@ -15,8 +15,23 @@
    <center>
       <VBox alignment="CENTER_LEFT" prefHeight="197.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Water Location" translateY="-20.0" />
-            <TextField fx:id="waterLocationField" translateY="-20.0" />
+            <Label text="Water Location (up to 6 decimal Places)" translateY="-20.0" />
+            <HBox prefHeight="25.0" prefWidth="580.0">
+               <children>
+                  <Label text="Latitude (Horizontal, -90 to 90)">
+                     <HBox.margin>
+                        <Insets right="100.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="Longitude (vertical -180 to 180)" />
+               </children>
+            </HBox>
+            <HBox prefHeight="26.0" prefWidth="580.0">
+               <children>
+                  <TextField fx:id="latitudeField" prefHeight="25.0" prefWidth="257.0" />
+                  <TextField fx:id="longitudeField" prefHeight="25.0" prefWidth="260.0" />
+               </children>
+            </HBox>
             <ComboBox fx:id="waterTypeBox" prefWidth="150.0" promptText="Type of Water" />
             <ComboBox fx:id="waterConditionBox" prefWidth="150.0" promptText="Condition of Water" />
             <Text fx:id="errorMessage" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0" />
