@@ -31,6 +31,7 @@ public class MainFXApplication extends Application  {
     private Scene viewReportsScene;
     private Scene sourceReportScene;
     private Scene mapScene;
+    private Scene qualityReportScene;
     private ReportManager reportManager;
     private ViewReportsScreenController viewReports;
     private DatabaseManager databaseManager;
@@ -90,7 +91,9 @@ public class MainFXApplication extends Application  {
         userInfoScreenController.initFields();
         setScene(userInfoScene, "Cleanwater - Edit Profile");
     }
-
+    public void setQualityReportScene() {
+        setScene(qualityReportScene, "Cleanwater - Submit quality report");
+    }
     /**
      * Set scene to source report controls
      */
@@ -140,6 +143,7 @@ public class MainFXApplication extends Application  {
             FXMLLoader sourceReportLoader = new FXMLLoader();
             FXMLLoader viewReportsLoader = new FXMLLoader();
             FXMLLoader mapLoader = new FXMLLoader();
+            FXMLLoader qualityReportLoader = new FXMLLoader();
             FXMLLoader reportDetailsLoader = new FXMLLoader();
             loginLoader.setLocation(MainFXApplication.class.getResource("../view/LoginScreen.fxml"));
             mainLoader.setLocation(MainFXApplication.class.getResource("../view/MainScreen.fxml"));
@@ -149,6 +153,7 @@ public class MainFXApplication extends Application  {
             viewReportsLoader.setLocation(MainFXApplication.class.getResource("../view/ViewReportsScreen.fxml"));
             mapLoader.setLocation(MainFXApplication.class.getResource("../view/MapScreen.fxml"));
             reportDetailsLoader.setLocation(MainFXApplication.class.getResource("../view/ReportDetailsScreen.fxml"));
+            qualityReportLoader.setLocation(MainFXApplication.class.getResource("../view/PurityReportScreen.fxml"));
             BorderPane loginLayout = loginLoader.load();
             BorderPane mainLayout = mainLoader.load();
             BorderPane registerLayout = registerLoader.load();
@@ -156,6 +161,7 @@ public class MainFXApplication extends Application  {
             BorderPane sourceReportLayout = sourceReportLoader.load();
             BorderPane viewReportsLayout = viewReportsLoader.load();
             BorderPane mapLayout = mapLoader.load();
+            BorderPane qualReportLayout = qualityReportLoader.load();
             BorderPane reportDetailsLayout = reportDetailsLoader.load();
 
             // Show the scene containing the root layout.
@@ -167,11 +173,13 @@ public class MainFXApplication extends Application  {
             viewReportsScene = new Scene(viewReportsLayout);
             mapScene = new Scene(mapLayout);
             reportDetailsScene = new Scene(reportDetailsLayout);
+            qualityReportScene = new Scene(qualReportLayout);
 
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
             MainScreenController logout = mainLoader.getController();
             RegisterScreenController register = registerLoader.getController();
+            QualityReportController qualityReport = qualityReportLoader.getController();
             userInfoScreenController = userInfoLoader.getController();
             SourceReportScreenController sourceReport = sourceReportLoader.getController();
             viewReports = viewReportsLoader.getController();
@@ -180,6 +188,7 @@ public class MainFXApplication extends Application  {
             controller.registerMainApp(this);
             logout.registerMainApp(this);
             register.registerMainApp(this);
+            qualityReport.registerMainApp(this);
             userInfoScreenController.registerMainApp(this);
             sourceReport.registerMainApp(this);
             viewReports.registerMainApp(this);

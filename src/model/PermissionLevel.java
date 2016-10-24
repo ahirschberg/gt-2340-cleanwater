@@ -14,4 +14,8 @@ public enum PermissionLevel {
     PermissionLevel(int level) {
         this.level = level;
     }
+
+    public int getLevel() {
+        return level;
+    }
 }
