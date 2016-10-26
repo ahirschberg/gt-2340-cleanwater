@@ -13,6 +13,11 @@ import java.util.stream.Stream;
  */
 public class ViewReportsScreenController {
     private MainFXApplication main;
+    /**
+     * Are purity reports being viewed
+     * or availability reports?
+     */
+    private boolean viewPurityReports;
 
     @FXML
     private ListView<String> reportsList;
@@ -20,6 +25,10 @@ public class ViewReportsScreenController {
     @FXML
     public void initialize() {
 
+    }
+    
+    public void showPurityReports(boolean show) {
+        viewPurityReports = show;
     }
 
     /**
@@ -34,7 +43,12 @@ public class ViewReportsScreenController {
      * Updates the reports list with stringified reports.
      */
     public void setReportsList() {
-        Stream<Report> reports = main.getReportManager().getSourceReports();
+        Stream<Report> reports;
+        if (viewPurityReports) {
+            //TODO: get purity reports
+        } else {
+            reports = main.getReportManager().getSourceReports();
+        }
         reportsList.getItems().clear();
         reportsList.getItems().addAll(reports.map(Report::toString).collect(Collectors.toList()));
     }
