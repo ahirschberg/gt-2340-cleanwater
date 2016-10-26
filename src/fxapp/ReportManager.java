@@ -1,5 +1,6 @@
 package fxapp;
 
+import model.PurityReport;
 import model.Report;
 
 import java.util.ArrayList;
@@ -10,9 +11,12 @@ import java.util.stream.Stream;
  * Manages reports.
  */
 public class ReportManager {
-    private List<Report> reports;
+    private List<Report> sourceReports;
+    private List<PurityReport> purityReports;
     public ReportManager() {
-        reports = new ArrayList<>();
+
+        sourceReports = new ArrayList<>();
+        purityReports = new ArrayList<>();
     }
 
     /**
@@ -20,15 +24,19 @@ public class ReportManager {
      * @param report the report to add
      */
     public void addReport(Report report) {
-        reports.add(report);
-        System.out.println(reports);
+        sourceReports.add(report);
+        System.out.println(sourceReports);
+    }
+    public void addPurityReport(PurityReport report){
+        purityReports.add(report);
+        System.out.println(purityReports);
     }
 
     /**
      * Returns all water reports
      * @return stream of all reports
      */
-    public Stream<Report> getReports() {
-        return reports.stream();
+    public Stream<Report> getSourceReports() {
+        return sourceReports.stream();
     }
 }

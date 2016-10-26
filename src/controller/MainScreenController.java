@@ -2,6 +2,8 @@ package controller;
 
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
+import model.PermissionLevel;
+import model.User;
 
 /**
  * Handles the main screen of the app.
@@ -46,5 +48,14 @@ public class MainScreenController {
     @FXML
     public void onViewMap() {
         main.setMapScene();
+    }
+
+    @FXML
+    public void onSubmitQualityReport() {
+        User currentUser = main.getActiveUser();
+        PermissionLevel permissionLevel = currentUser.getPermissionLevel();
+        if (permissionLevel == PermissionLevel.WORKER || permissionLevel == PermissionLevel.MANAGER) {
+            main.setQualityReportScene();
+        }
     }
 }
