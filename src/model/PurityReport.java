@@ -39,4 +39,9 @@ public class PurityReport {
     public double getLongitude() {
         return longitude;
     }
+    public double getVirusPPM() { return virusPPM; }
+    public double getContaminantPPM() { return contaminantPPM; }
+    public String toString() {
+        return String.format("Water Report #%d at %s: %s, %s", getReportNum(), getLocation(), virusPPM, contaminantPPM);
+    }
 }

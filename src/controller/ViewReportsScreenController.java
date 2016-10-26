@@ -34,7 +34,7 @@ public class ViewReportsScreenController {
      * Updates the reports list with stringified reports.
      */
     public void setReportsList() {
-        Stream<Report> reports = main.getReportManager().getReports();
+        Stream<Report> reports = main.getReportManager().getSourceReports();
         reportsList.getItems().clear();
         reportsList.getItems().addAll(reports.map(Report::toString).collect(Collectors.toList()));
     }

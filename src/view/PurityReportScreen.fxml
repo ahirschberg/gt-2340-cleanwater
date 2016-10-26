@@ -45,8 +45,8 @@
             </HBox>
             <HBox prefHeight="29.0" prefWidth="580.0">
                <children>
-                  <TextField />
-                  <TextField />
+                  <TextField fx:id="virusPPM" />
+                  <TextField fx:id="contaminantPPM" />
                </children>
             </HBox>
             <Text fx:id="errorMessage" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0" />

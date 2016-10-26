@@ -68,7 +68,7 @@ public class MapScreenController implements Initializable, MapComponentInitializ
     public void refreshMarkers() {
         LatLong center = new LatLong(33.7756, -84.3963);
         ReportManager rm = main.getReportManager();
-        Stream<Report> reportStream = rm.getReports();
+        Stream<Report> reportStream = rm.getSourceReports();
         reportStream.forEach(r -> {
             MarkerOptions mo = new MarkerOptions();
             mo.position(new LatLong(r.getLatitude(), r.getLongitude()));
