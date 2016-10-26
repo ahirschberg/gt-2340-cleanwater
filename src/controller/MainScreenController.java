@@ -47,7 +47,11 @@ public class MainScreenController {
     
     @FXML
     public void onViewPurityReports() {
-        main.setViewPurityScene();
+        User currentUser = main.getActiveUser();
+        PermissionLevel permissionLevel = currentUser.getPermissionLevel();
+        if (permissionLevel == PermissionLevel.WORKER || permissionLevel == PermissionLevel.MANAGER) {
+            main.setViewPurityScene();
+        }
     }
 
     @FXML
