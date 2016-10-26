@@ -43,9 +43,9 @@ public class ViewReportsScreenController {
      * Updates the reports list with stringified reports.
      */
     public void setReportsList() {
-        Stream<Report> reports;
+        Stream<? extends Report> reports;
         if (viewPurityReports) {
-            //TODO: get purity reports
+            reports = main.getReportManager().getPurityReports();
         } else {
             reports = main.getReportManager().getSourceReports();
         }

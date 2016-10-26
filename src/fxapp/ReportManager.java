@@ -39,4 +39,12 @@ public class ReportManager {
     public Stream<Report> getAllReports() {
         return Stream.concat(sourceReports.stream(), purityReports.stream());
     }
+    
+    public Stream<? extends Report> getSourceReports() {
+        return sourceReports.stream();
+    }
+    
+    public Stream<? extends Report> getPurityReports() {
+        return purityReports.stream();
+    }
 }

@@ -47,7 +47,7 @@ public class MainScreenController {
     
     @FXML
     public void onViewPurityReports() {
-        
+        main.setViewPurityScene();
     }
 
     @FXML
