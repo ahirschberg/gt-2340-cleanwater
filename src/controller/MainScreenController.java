@@ -54,7 +54,7 @@ public class MainScreenController {
     public void onSubmitQualityReport() {
         User currentUser = main.getActiveUser();
         PermissionLevel permissionLevel = currentUser.getPermissionLevel();
-        if (permissionLevel.getLevel() == 1 || permissionLevel.getLevel() == 2) {
+        if (permissionLevel == PermissionLevel.WORKER || permissionLevel == PermissionLevel.MANAGER) {
             main.setQualityReportScene();
         }
     }
