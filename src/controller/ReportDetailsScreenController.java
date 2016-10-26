@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import model.Report;
+import model.SourceReport;
 
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ public class ReportDetailsScreenController {
     /**
      * Sets the report info. Unfinished
      */
-    public void setReportInfo(Report report) {
+    public void setReportInfo(SourceReport report) {
 
         reportTitle.setText("Water report for " + report.getLocation());
         reportInfo.getItems().clear();

@@ -68,7 +68,8 @@ public class SourceReportScreenController {
             } else if (waterCondition == null) {
                 errorMessage.setText("Please enter a water condition");
             } else {
-                main.getReportManager().addReport(new Report(latitude, longitude, waterType, waterCondition, reportNum));
+                main.getReportManager().addReport(new SourceReport(new Location(latitude, longitude),
+                        waterType, waterCondition));
                 reportNum++;
                 main.setMainScene();
             }
