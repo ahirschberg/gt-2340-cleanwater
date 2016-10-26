@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import model.Location;
 import model.PurityReport;
 import model.Report;
 
@@ -75,7 +76,8 @@ public class QualityReportController {
             if (waterPurity == null) {
                 errorMessage.setText("Please enter a water purity level");
             } else{
-                main.getReportManager().addPurityReport(new PurityReport(latitude, longitude, virusPPMNum, contaminantPPMNum, waterPurity, reportNum));
+                main.getReportManager().addPurityReport(new PurityReport(new Location(latitude, longitude),
+                        virusPPMNum, contaminantPPMNum, waterPurity));
                 reportNum++;
                 main.setMainScene();
             }
