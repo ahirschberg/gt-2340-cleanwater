@@ -44,6 +44,11 @@ public class MainScreenController {
     public void onViewSourceReports() {
         main.setViewReportsScene();
     }
+    
+    @FXML
+    public void onViewPurityReports() {
+        
+    }
 
     @FXML
     public void onViewMap() {
