@@ -26,6 +26,6 @@ public class PurityReport extends Report{
     public double getVirusPPM() { return virusPPM; }
     public double getContaminantPPM() { return contaminantPPM; }
     public String toString() {
-        return String.format("Purity Report %s %s, %s", super.toString(), virusPPM, contaminantPPM);
+        return String.format("Purity Report %s Virus PPM %s, Contaminant PPM %s", super.toString(), virusPPM, contaminantPPM);
     }
 }
