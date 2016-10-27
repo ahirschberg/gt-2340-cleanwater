@@ -47,8 +47,8 @@ public class SourceReportScreenController {
     public void onSubmitSelected() {
         String latString = latitudeField.getText();
         String longString = longitudeField.getText();
-        double latitude = 0;
-        double longitude = 0;
+        double latitude;
+        double longitude;
         String waterType = waterTypeBox.getSelectionModel().getSelectedItem();
         String waterCondition = waterConditionBox.getSelectionModel().getSelectedItem();
 
@@ -61,9 +61,7 @@ public class SourceReportScreenController {
                 throw new Exception();
             }
 
-            if (latString == null || longString == null) {
-                errorMessage.setText("Latitude or Longitude was invalid");
-            } else if (waterType == null) {
+            if (waterType == null) {
                 errorMessage.setText("Please enter a water type");
             } else if (waterCondition == null) {
                 errorMessage.setText("Please enter a water condition");

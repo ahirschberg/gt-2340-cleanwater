@@ -128,9 +128,13 @@ public class MainFXApplication extends Application  {
      * Set scene to individual report details view
      */
     public void setReportDetailsScene(Report report) {
-        System.err.println("TODO: general report details screen not implemented"); // TODO generalize report info screen
-//        sourceReportDetails.setReportInfo(report);
-//        setScene(sourceReportDetailsScene, "Cleanwater - View Individual Source Reports");
+        // FIXME this is bad!!
+        if (report instanceof SourceReport) {
+            sourceReportDetails.setReportInfo((SourceReport) report);
+            setScene(sourceReportDetailsScene, "Cleanwater - View Individual Source Reports");
+        } else {
+            System.err.println("report details screen not implemented for " + report.getClass()); // TODO generalize report info screen
+        }
     }
 
     private void setScene(Scene s, String title) {

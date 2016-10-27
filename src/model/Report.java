@@ -5,7 +5,6 @@ package model;
  */
 public abstract class Report {
     private Location location;
-    private static String REPORT_TYPE;
     private int reportNum;
 
     /**
@@ -17,10 +16,6 @@ public abstract class Report {
         this.reportNum = reportNum;
     }
 
-    public static void setReportType(String reportType) {
-        REPORT_TYPE = reportType;
-    }
-
     /**
      * Returns the number of the report
      * @return the number of the report
@@ -29,7 +24,7 @@ public abstract class Report {
 
 
     public String toString() {
-        return String.format("%s Report #%d at %s", REPORT_TYPE, getReportNum(), getLocation());
+        return String.format("#%d at %s", getReportNum(), getLocation());
     }
 
     public Location getLocation() {

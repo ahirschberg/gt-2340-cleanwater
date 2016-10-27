@@ -25,11 +25,9 @@ public class ReportManager {
      */
     public void addReport(SourceReport report) {
         sourceReports.add(report);
-        System.out.println(sourceReports);
     }
     public void addPurityReport(PurityReport report){
         purityReports.add(report);
-        System.out.println(purityReports);
     }
 
     /**

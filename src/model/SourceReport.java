@@ -4,9 +4,6 @@ package model;
  * Created by alex on 10/26/16.
  */
 public class SourceReport extends Report {
-    static {
-       setReportType("Source Report");
-    }
 
     private String waterType;
     private String waterCondition;
@@ -14,7 +11,6 @@ public class SourceReport extends Report {
 
     /**
      * Creates a new Source Report
-     * @param reportNum the id of the report
      * @param location the location the report refers to
      * @param waterType the type of water source
      * @param waterCondition the quality of water source
@@ -34,7 +30,7 @@ public class SourceReport extends Report {
     }
 
     public String toString() {
-        return super.toString() + String.format(" %s, %s", getWaterType(), getWaterCondition());
+        return String.format("Source Report %s %s, %s", super.toString(), getWaterType(), getWaterCondition());
     }
 
     /**
