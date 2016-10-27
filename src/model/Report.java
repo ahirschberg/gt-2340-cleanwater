@@ -3,50 +3,17 @@ package model;
 /**
  * A water quality report.
  */
-public class Report {
-
-    private double latitude;
-    private double longitude;
-    private String waterType;
-    private String waterCondition;
+public abstract class Report {
+    private Location location;
     private int reportNum;
 
     /**
      * Creates a new report
-     * @param waterType the type of water source
-     * @param waterCondition the quality of water source
      * @param reportNum the number of the report
      */
-    public Report(double latitude, double longitude, String waterType, String waterCondition, int reportNum) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.waterType = waterType;
-        this.waterCondition = waterCondition;
+    public Report(int reportNum, Location location) {
+        this.location = location;
         this.reportNum = reportNum;
-    }
-
-    /**
-     * Returns the location of the report
-     * @return location, as a string
-     */
-    public String getLocation() {
-        return latitude + "," + longitude;
-    }
-
-    /**
-     * Returns the water type of the report
-     * @return water type, as a string
-     */
-    public String getWaterType() {
-        return waterType;
-    }
-
-    /**
-     * Returns the water condition of the report
-     * @return condition, as a string
-     */
-    public String getWaterCondition() {
-        return waterCondition;
     }
 
     /**
@@ -55,24 +22,12 @@ public class Report {
      */
     public int getReportNum() { return reportNum; }
 
+
     public String toString() {
-        return String.format("Water Report #%d at %s: %s, %s", getReportNum(), getLocation(), getWaterType(),
-                getWaterCondition());
+        return String.format("#%d at %s", getReportNum(), getLocation());
     }
 
-    /**
-     * Gets the latitude, as a double
-     * @return latitude
-     */
-    public double getLatitude() {
-        return latitude;
-    }
-
-    /**
-     * Gets the longitude, as a double
-     * @return longitude
-     */
-    public double getLongitude() {
-        return longitude;
+    public Location getLocation() {
+        return this.location;
     }
 }

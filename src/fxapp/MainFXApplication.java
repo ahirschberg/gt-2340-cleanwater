@@ -7,8 +7,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import model.Report;
+import model.SourceReport;
 import model.Token;
 import model.User;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,8 +37,8 @@ public class MainFXApplication extends Application  {
     private ReportManager reportManager;
     private ViewReportsScreenController viewReports;
     private DatabaseManager databaseManager;
-    private Scene reportDetailsScene;
-    private ReportDetailsScreenController reportDetails;
+    private Scene sourceReportDetailsScene;
+    private ReportDetailsScreenController sourceReportDetails;
 
     /**
      * Gets the active user
@@ -105,8 +107,13 @@ public class MainFXApplication extends Application  {
      * Set scene to report view
      */
     public void setViewReportsScene() {
-        viewReports.setReportsList();
+        viewReports.setReportsList(reportManager.getSourceReports());
         setScene(viewReportsScene, "Cleanwater - View Source Reports");
+    }
+    
+    public void setViewPurityScene() {
+        viewReports.setReportsList(reportManager.getPurityReports());
+        setScene(viewReportsScene, "Cleanwater - View Purity Reports");
     }
     
     /**
@@ -121,8 +128,13 @@ public class MainFXApplication extends Application  {
      * Set scene to individual report details view
      */
     public void setReportDetailsScene(Report report) {
-        reportDetails.setReportInfo(report);
-        setScene(reportDetailsScene, "Cleanwater - View Individual Source Reports");
+        // FIXME this is bad!!
+        if (report instanceof SourceReport) {
+            sourceReportDetails.setReportInfo((SourceReport) report);
+            setScene(sourceReportDetailsScene, "Cleanwater - View Individual Source Reports");
+        } else {
+            System.err.println("report details screen not implemented for " + report.getClass()); // TODO generalize report info screen
+        }
     }
 
     private void setScene(Scene s, String title) {
@@ -172,7 +184,7 @@ public class MainFXApplication extends Application  {
             sourceReportScene = new Scene(sourceReportLayout);
             viewReportsScene = new Scene(viewReportsLayout);
             mapScene = new Scene(mapLayout);
-            reportDetailsScene = new Scene(reportDetailsLayout);
+            sourceReportDetailsScene = new Scene(reportDetailsLayout);
             qualityReportScene = new Scene(qualReportLayout);
 
             // Give the controller access to the main app.
@@ -184,7 +196,7 @@ public class MainFXApplication extends Application  {
             SourceReportScreenController sourceReport = sourceReportLoader.getController();
             viewReports = viewReportsLoader.getController();
             mapScreenController = mapLoader.getController();
-            reportDetails = reportDetailsLoader.getController();
+            sourceReportDetails = reportDetailsLoader.getController();
             controller.registerMainApp(this);
             logout.registerMainApp(this);
             register.registerMainApp(this);
@@ -193,7 +205,7 @@ public class MainFXApplication extends Application  {
             sourceReport.registerMainApp(this);
             viewReports.registerMainApp(this);
             mapScreenController.registerMainApp(this);
-            reportDetails.registerMainApp(this);
+            sourceReportDetails.registerMainApp(this);
 
 
             setLoginScene();

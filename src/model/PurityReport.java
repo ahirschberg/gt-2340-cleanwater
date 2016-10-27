@@ -1,47 +1,31 @@
 package model;
 
-public class PurityReport {
-    private double latitude;
-    private double longitude;
-    private int reportNum;
+public class PurityReport extends Report{
     private double virusPPM;
     private double contaminantPPM;
-    private String condition;
+    private String waterCondition;
+    private static int purityReportNum = 0;
 
-    public PurityReport(double latitude, double longitude, double virusPPM, double contaminantPPM, String condition, int reportNum) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    /**
+     * Creates a Purity Report
+     * @param location
+     * @param virusPPM
+     * @param contaminantPPM
+     * @param waterCondition
+     */
+    public PurityReport(Location location,
+                        double virusPPM, double contaminantPPM, String waterCondition) {
+        super(++purityReportNum, location);
         this.virusPPM = virusPPM;
         this.contaminantPPM = contaminantPPM;
-        this.condition = condition;
-        this.reportNum = reportNum;
+        this.waterCondition = waterCondition;
     }
-    /**
-     * Returns the location of the report
-     * @return location, as a string
-     */
-    public String getLocation() {
-        return latitude + "," + longitude;
-    }
-    public int getReportNum() { return reportNum; }
-    /**
-     * Gets the latitude, as a double
-     * @return latitude
-     */
-    public double getLatitude() {
-        return latitude;
-    }
-
-    /**
-     * Gets the longitude, as a double
-     * @return longitude
-     */
-    public double getLongitude() {
-        return longitude;
+    public String getWaterCondition() {
+        return waterCondition;
     }
     public double getVirusPPM() { return virusPPM; }
     public double getContaminantPPM() { return contaminantPPM; }
     public String toString() {
-        return String.format("Water Report #%d at %s: %s, %s", getReportNum(), getLocation(), virusPPM, contaminantPPM);
+        return String.format("Purity Report %s Virus PPM %s, Contaminant PPM %s", super.toString(), virusPPM, contaminantPPM);
     }
 }
