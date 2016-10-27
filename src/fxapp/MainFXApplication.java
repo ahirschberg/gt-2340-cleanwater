@@ -107,14 +107,12 @@ public class MainFXApplication extends Application  {
      * Set scene to report view
      */
     public void setViewReportsScene() {
-        viewReports.showPurityReports(false);
-        viewReports.setReportsList();
+        viewReports.setReportsList(reportManager.getSourceReports());
         setScene(viewReportsScene, "Cleanwater - View Source Reports");
     }
     
     public void setViewPurityScene() {
-        viewReports.showPurityReports(true);
-        viewReports.setReportsList();
+        viewReports.setReportsList(reportManager.getPurityReports());
         setScene(viewReportsScene, "Cleanwater - View Purity Reports");
     }
     
