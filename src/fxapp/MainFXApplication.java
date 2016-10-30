@@ -10,7 +10,6 @@ import model.Report;
 import model.SourceReport;
 import model.Token;
 import model.User;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -223,7 +222,7 @@ public class MainFXApplication extends Application  {
     public boolean notifyLogin(Token token) {
         loggedInUser = null;
         try {
-            loggedInUser = databaseManager.<User>getPersist(User.class).retrieveOne("token", token.toString());
+            loggedInUser = databaseManager.<User>getPersistence(User.class).retrieveOne("token", token.toString());
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
@@ -236,7 +235,7 @@ public class MainFXApplication extends Application  {
      */
     public boolean notifyRegistration(User registered) {
         try {
-            databaseManager.<User>getPersist(User.class).store(registered);
+            databaseManager.<User>getPersistence(User.class).store(registered);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();

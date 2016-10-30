@@ -77,7 +77,7 @@ class DatabaseManager {
     }
 
     @SuppressWarnings("unchecked")
-    public <M> Persistent<M> getPersist(final Class c) {
+    public <M> Persistent<M> getPersistence(final Class c) {
         return helpers.stream().filter((p) -> p.getType().equals(c)).findFirst().get();
     }
 

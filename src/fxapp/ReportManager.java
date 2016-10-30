@@ -19,13 +19,13 @@ public class ReportManager {
     private DatabaseManager db;
     public ReportManager(DatabaseManager db) {
         try {
-            sourceReports = db.<SourceReport>getPersist(SourceReport.class).retrieveAll();
+            sourceReports = db.<SourceReport>getPersistence(SourceReport.class).retrieveAll();
         } catch (SQLException e) {
             e.printStackTrace();
             sourceReports = new LinkedList<>();
         }
         try {
-            purityReports = db.<PurityReport>getPersist(PurityReport.class).retrieveAll();
+            purityReports = db.<PurityReport>getPersistence(PurityReport.class).retrieveAll();
         } catch (SQLException e) {
             e.printStackTrace();
             purityReports = new ArrayList<>();
@@ -39,7 +39,7 @@ public class ReportManager {
      */
     public void addSourceReport(SourceReport report) {
         try {
-            db.getPersist(SourceReport.class).store(report);
+            db.getPersistence(SourceReport.class).store(report);
             sourceReports.add(report);
         } catch (SQLException e) {
             System.err.println("Error: could not store report in database: " + report);
@@ -48,7 +48,7 @@ public class ReportManager {
     }
     public void addPurityReport(PurityReport report) {
         try {
-            db.getPersist(PurityReport.class).store(report);
+            db.getPersistence(PurityReport.class).store(report);
             purityReports.add(report);
         } catch (SQLException e) {
             System.err.println("Error: could not store report in database: " + report);
