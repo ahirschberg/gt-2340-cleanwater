@@ -1,26 +1,30 @@
 package fxapp;
 
 import javax.xml.crypto.Data;
+import java.lang.reflect.ParameterizedType;
 import java.sql.*;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ModelPersistenceHelper<M> {
+public class Persistent<M> {
     private String tableName;
     private List<DataColumn> columns;
     private DatabaseManager dbManager;
+    private Reviver<M> reviver;
+    private Class<M> type;
 
-    public ModelPersistenceHelper(DatabaseManager dbManager, String tableName) {
+    public Persistent(Class<M> type, DatabaseManager dbManager, String tableName, Reviver<M> reviver) {
+        this.type = type;
         this.tableName = tableName;
         columns = new LinkedList<>();
         this.dbManager = dbManager;
+        this.reviver = reviver;
     }
 
-    public void addColumn(String schema, Function<M, ?> getter) {
-        columns.add(new DataColumn(schema, getter));
+    public void addColumn(String schema, Function<M, ?> property) {
+        columns.add(new DataColumn(schema, property));
     }
 
     public void init() {
@@ -31,12 +35,16 @@ public class ModelPersistenceHelper<M> {
             ResultSet rs = checkTableExists.executeQuery();
             if (!rs.next()) {
                 conn.createStatement().executeUpdate(
-                        "create table users (" + getSQLStrings((DataColumn col) -> col.schema) + ");");
+                        "create table " + tableName + "(" + getSQLStrings((DataColumn col) -> col.schema) + ");");
             }
             checkTableExists.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Class<M> getType() {
+        return type;
     }
 
     private String getSQLStrings(Function<DataColumn, String> mapper) {
@@ -53,7 +61,7 @@ public class ModelPersistenceHelper<M> {
                     + getSQLStrings((DataColumn col) -> "?") + ")")) {
                 int index = 1;
                 for (DataColumn column : columns) {
-                    prep.setObject(index, column.getter.apply(model));
+                    prep.setObject(index, column.property.apply(model));
                     index++;
                 }
                 prep.addBatch();
@@ -62,13 +70,40 @@ public class ModelPersistenceHelper<M> {
         }
     }
 
+    public List<M> retrieve(String columnName, Object data) throws SQLException {
+        try (Connection conn = dbManager.getConnection()) {
+            PreparedStatement prep = conn.prepareStatement("select * from " + tableName + " WHERE " + columnName + "=(?)");
+            prep.setObject(1, data);
+            ResultSet model = prep.executeQuery();
+            List<M> resultant = new LinkedList<>();
+            while(model.next()) {
+                resultant.add(reviver.make(model));
+            }
+            return resultant;
+        }
+    }
+
+    public M retrieveOne(String columnName, Object data) throws SQLException {
+        List<M> all = retrieve(columnName, data);
+        if (all.size() == 0) {
+            return null;
+        } else {
+            return all.get(0);
+        }
+    }
+
     public class DataColumn {
         private String schema;
 
-        private Function<? super M, ?> getter;
-        public DataColumn(String schema, Function getter) {
+        private Function<? super M, ?> property;
+        public DataColumn(String schema, Function<? super M, ?> property) {
             this.schema = schema;
-            this.getter = getter;
+            this.property = property;
         }
+    }
+
+    @FunctionalInterface
+    public interface Reviver<N> {
+        N make(ResultSet modelRow) throws SQLException;
     }
 }

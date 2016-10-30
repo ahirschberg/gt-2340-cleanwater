@@ -224,7 +224,7 @@ public class MainFXApplication extends Application  {
     public boolean notifyLogin(Token token) {
         loggedInUser = null;
         try {
-            loggedInUser = databaseManager.getUser(token);
+            loggedInUser = databaseManager.<User>getPersist(User.class).retrieveOne("token", token.toString());
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
@@ -236,7 +236,13 @@ public class MainFXApplication extends Application  {
      * @param registered the user to add to the database
      */
     public boolean notifyRegistration(User registered) {
-        return databaseManager.storeUser(registered);
+        try {
+            databaseManager.<User>getPersist(User.class).store(registered);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**

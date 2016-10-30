@@ -1,8 +1,5 @@
 package model;
 
-/**
- * Created by alex on 10/26/16.
- */
 public class SourceReport extends Report {
 
     private String waterType;
@@ -16,9 +13,15 @@ public class SourceReport extends Report {
      * @param waterCondition the quality of water source
      */
     public SourceReport(Location location, String waterType, String waterCondition) {
-        super(++sourceReportNum, location);
+        this(++sourceReportNum, location, waterType, waterCondition);
+    }
+
+    public SourceReport(int num, Location location, String waterType, String waterCondition) {
+        super(num, location);
         this.waterType = waterType;
         this.waterCondition = waterCondition;
+
+        sourceReportNum = Math.max(num, sourceReportNum);
     }
 
     /**
