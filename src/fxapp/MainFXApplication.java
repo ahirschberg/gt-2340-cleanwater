@@ -56,13 +56,13 @@ public class MainFXApplication extends Application  {
         launch(args);
     }
     public void start(Stage primaryStage) {
-        this.reportManager = new ReportManager();
-        initRootLayout(primaryStage);
         try {
             this.databaseManager = new DatabaseManager();
         } catch (ClassNotFoundException cne) {
             cne.printStackTrace();
         }
+        this.reportManager = new ReportManager(databaseManager);
+        initRootLayout(primaryStage);
     }
 
     /**
@@ -128,12 +128,11 @@ public class MainFXApplication extends Application  {
      * Set scene to individual report details view
      */
     public void setReportDetailsScene(Report report) {
-        // FIXME this is bad!!
         if (report instanceof SourceReport) {
             sourceReportDetails.setReportInfo((SourceReport) report);
             setScene(sourceReportDetailsScene, "Cleanwater - View Individual Source Reports");
         } else {
-            System.err.println("report details screen not implemented for " + report.getClass()); // TODO generalize report info screen
+            System.err.println("report details screen not implemented for " + report.getClass());
         }
     }
 

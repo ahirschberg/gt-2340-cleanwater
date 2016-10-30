@@ -1,13 +1,15 @@
 package fxapp;
 
-import javax.xml.crypto.Data;
-import java.lang.reflect.ParameterizedType;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Handles storing and retrieving a specific type of model
+ * @param <M> the model to store
+ */
 public class Persistent<M> {
     private String tableName;
     private List<DataColumn> columns;
@@ -15,6 +17,13 @@ public class Persistent<M> {
     private Reviver<M> reviver;
     private Class<M> type;
 
+    /**
+     * Creates a new Persistent model
+     * @param type the type to persist
+     * @param dbManager the database manager
+     * @param tableName the name of the table to link the model to
+     * @param reviver the function to use when creating the POJO from a database row
+     */
     public Persistent(Class<M> type, DatabaseManager dbManager, String tableName, Reviver<M> reviver) {
         this.type = type;
         this.tableName = tableName;
@@ -23,10 +32,18 @@ public class Persistent<M> {
         this.reviver = reviver;
     }
 
+    /**
+     * Adds a column-property link during initialization of Persistent model.
+     * @param schema the SQL property's schema
+     * @param property a lambda that acts as a getter for the property
+     */
     public void addColumn(String schema, Function<M, ?> property) {
         columns.add(new DataColumn(schema, property));
     }
 
+    /**
+     * Creates the model's table from the given schema if one does not already exist.
+     */
     public void init() {
         try(Connection conn = dbManager.getConnection()) {
             PreparedStatement checkTableExists
@@ -43,22 +60,25 @@ public class Persistent<M> {
         }
     }
 
+    /**
+     * Gets the generic type of the Persistence.
+     * @return the generic type
+     */
     public Class<M> getType() {
         return type;
     }
 
-    private String getSQLStrings(Function<DataColumn, String> mapper) {
-        return String.join(", ", columns.stream()
-                    .map(mapper)
-                    .collect(Collectors.toList()));
-    }
-
+    /**
+     * Stores the model in the database.
+     * @param model the model to store
+     * @throws SQLException
+     */
     public void store(M model) throws SQLException {
         try (Connection conn = dbManager.getConnection()) {
 
             try (PreparedStatement prep
-                         = conn.prepareStatement("insert into users values ("
-                    + getSQLStrings((DataColumn col) -> "?") + ")")) {
+                         = conn.prepareStatement("insert into " + tableName + " values ("
+                    + getPlaceholders() + ");")) {
                 int index = 1;
                 for (DataColumn column : columns) {
                     prep.setObject(index, column.property.apply(model));
@@ -70,19 +90,28 @@ public class Persistent<M> {
         }
     }
 
+    /**
+     * Retrieves all models with the given data in the given column
+     * @param columnName the column of the data to compare
+     * @param data the data to compare
+     * @return all matching data, instantiated as models
+     * @throws SQLException
+     */
     public List<M> retrieve(String columnName, Object data) throws SQLException {
         try (Connection conn = dbManager.getConnection()) {
             PreparedStatement prep = conn.prepareStatement("select * from " + tableName + " WHERE " + columnName + "=(?)");
             prep.setObject(1, data);
-            ResultSet model = prep.executeQuery();
-            List<M> resultant = new LinkedList<>();
-            while(model.next()) {
-                resultant.add(reviver.make(model));
-            }
-            return resultant;
+            return retrieveWithQuery(prep);
         }
     }
 
+    /**
+     * Retrieves the first model with the given data in the given column.
+     * @param columnName the column of the data to compare
+     * @param data the data to compare
+     * @return the first match, instantiated as a model
+     * @throws SQLException
+     */
     public M retrieveOne(String columnName, Object data) throws SQLException {
         List<M> all = retrieve(columnName, data);
         if (all.size() == 0) {
@@ -92,7 +121,38 @@ public class Persistent<M> {
         }
     }
 
-    public class DataColumn {
+    /**
+     * Retrieves all models
+     * @return all data, instantiated as models.
+     * @throws SQLException
+     */
+    public List<M> retrieveAll() throws SQLException {
+        try (Connection conn = dbManager.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tableName);
+            return retrieveWithQuery(ps);
+        }
+    }
+
+    private String getSQLStrings(Function<DataColumn, String> mapper) {
+        return String.join(", ", columns.stream()
+                .map(mapper)
+                .collect(Collectors.toList()));
+    }
+
+    private String getPlaceholders() {
+        return getSQLStrings((DataColumn col) -> "?");
+    }
+
+    private List<M> retrieveWithQuery(PreparedStatement statement) throws SQLException {
+        ResultSet model = statement.executeQuery();
+        List<M> resultant = new LinkedList<>();
+        while(model.next()) {
+            resultant.add(reviver.make(model));
+        }
+        return resultant;
+    }
+
+    private class DataColumn {
         private String schema;
 
         private Function<? super M, ?> property;
@@ -104,6 +164,13 @@ public class Persistent<M> {
 
     @FunctionalInterface
     public interface Reviver<N> {
+
+        /**
+         * Creates a model from a row in the database
+         * @param modelRow the row of data to instantiate
+         * @return a model instantiated with the row data
+         * @throws SQLException
+         */
         N make(ResultSet modelRow) throws SQLException;
     }
 }
