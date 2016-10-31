@@ -28,13 +28,13 @@
             </HBox>
             <HBox prefHeight="26.0" prefWidth="580.0">
                <children>
-                  <TextField fx:id="latitudeField" prefHeight="25.0" prefWidth="257.0" text="From (min)" />
-                  <TextField prefHeight="25.0" prefWidth="253.0" text="To (max)" />
-                  <TextField fx:id="longitudeField" prefHeight="25.0" prefWidth="260.0" text="From (min)" />
-                  <TextField prefHeight="25.0" prefWidth="257.0" text="To (max)" />
+                  <TextField fx:id="latitudeFieldMin" prefHeight="25.0" prefWidth="257.0" text="From (min)" />
+                  <TextField fx:id="latitudeFieldMax" prefHeight="25.0" prefWidth="253.0" text="To (max)" />
+                  <TextField fx:id="longitudeFieldMin" prefHeight="25.0" prefWidth="260.0" text="From (min)" />
+                  <TextField fx:id="longitudeFieldMax" prefHeight="25.0" prefWidth="257.0" text="To (max)" />
                </children>
             </HBox>
-            <ComboBox id="waterCondition" fx:id="waterTypeBox" prefHeight="25.0" prefWidth="175.0" promptText="Virus or Contaminant?" />
+            <ComboBox id="waterCondition" fx:id="contTypeBox" prefHeight="25.0" prefWidth="175.0" promptText="Virus or Contaminant?" />
             <HBox prefHeight="22.0" prefWidth="580.0">
                <children>
                   <Label text="Year" />
@@ -47,7 +47,7 @@
             </HBox>
             <HBox prefHeight="29.0" prefWidth="580.0">
                <children>
-                  <TextField fx:id="virusPPM" />
+                  <TextField fx:id="yearField" />
                </children>
             </HBox>
             <Text fx:id="errorMessage" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0" />
