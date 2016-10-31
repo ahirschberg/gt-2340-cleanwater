@@ -2,6 +2,7 @@ package fxapp;
 
 import controller.*;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -37,6 +38,7 @@ public class MainFXApplication extends Application  {
     private ViewReportsScreenController viewReports;
     private DatabaseManager databaseManager;
     private Scene sourceReportDetailsScene;
+    private Scene histReportDataScene;
     private ReportDetailsScreenController sourceReportDetails;
 
     /**
@@ -114,6 +116,9 @@ public class MainFXApplication extends Application  {
         viewReports.setReportsList(reportManager.getPurityReports());
         setScene(viewReportsScene, "Cleanwater - View Purity Reports");
     }
+    public void setHistReportDataScene() {
+        setScene(histReportDataScene, "Cleanwater - Enter data for graph");
+    }
     
     /**
      * Set scene to water availability map
@@ -153,6 +158,7 @@ public class MainFXApplication extends Application  {
             FXMLLoader sourceReportLoader = new FXMLLoader();
             FXMLLoader viewReportsLoader = new FXMLLoader();
             FXMLLoader mapLoader = new FXMLLoader();
+            FXMLLoader histReportDataLoader = new FXMLLoader();
             FXMLLoader qualityReportLoader = new FXMLLoader();
             FXMLLoader reportDetailsLoader = new FXMLLoader();
             loginLoader.setLocation(MainFXApplication.class.getResource("../view/LoginScreen.fxml"));
@@ -164,6 +170,7 @@ public class MainFXApplication extends Application  {
             mapLoader.setLocation(MainFXApplication.class.getResource("../view/MapScreen.fxml"));
             reportDetailsLoader.setLocation(MainFXApplication.class.getResource("../view/ReportDetailsScreen.fxml"));
             qualityReportLoader.setLocation(MainFXApplication.class.getResource("../view/PurityReportScreen.fxml"));
+            histReportDataLoader.setLocation(MainFXApplication.class.getResource("../view/HistReportDataScreen.fxml"));
             BorderPane loginLayout = loginLoader.load();
             BorderPane mainLayout = mainLoader.load();
             BorderPane registerLayout = registerLoader.load();
@@ -173,6 +180,7 @@ public class MainFXApplication extends Application  {
             BorderPane mapLayout = mapLoader.load();
             BorderPane qualReportLayout = qualityReportLoader.load();
             BorderPane reportDetailsLayout = reportDetailsLoader.load();
+            BorderPane histDataLayout = histReportDataLoader.load();
 
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);
@@ -184,12 +192,14 @@ public class MainFXApplication extends Application  {
             mapScene = new Scene(mapLayout);
             sourceReportDetailsScene = new Scene(reportDetailsLayout);
             qualityReportScene = new Scene(qualReportLayout);
+            histReportDataScene = new Scene(histDataLayout);
 
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
             MainScreenController logout = mainLoader.getController();
             RegisterScreenController register = registerLoader.getController();
             QualityReportController qualityReport = qualityReportLoader.getController();
+            HistReportDataController histData = histReportDataLoader.getController();
             userInfoScreenController = userInfoLoader.getController();
             SourceReportScreenController sourceReport = sourceReportLoader.getController();
             viewReports = viewReportsLoader.getController();
@@ -199,6 +209,7 @@ public class MainFXApplication extends Application  {
             logout.registerMainApp(this);
             register.registerMainApp(this);
             qualityReport.registerMainApp(this);
+            histData.registerMainApp(this);
             userInfoScreenController.registerMainApp(this);
             sourceReport.registerMainApp(this);
             viewReports.registerMainApp(this);
