@@ -15,10 +15,14 @@ public class PurityReport extends Report{
      */
     public PurityReport(Location location,
                         double virusPPM, double contaminantPPM, String waterCondition) {
-        super(++purityReportNum, location);
+        this(++purityReportNum, location, virusPPM, contaminantPPM, waterCondition);
+    }
+    public PurityReport(int num, Location location, double virusPPM, double contaminantPPM, String waterCondition) {
+        super(num, location);
         this.virusPPM = virusPPM;
         this.contaminantPPM = contaminantPPM;
         this.waterCondition = waterCondition;
+        purityReportNum = Math.max(purityReportNum, num);
     }
     public String getWaterCondition() {
         return waterCondition;

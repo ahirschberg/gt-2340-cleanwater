@@ -10,7 +10,6 @@ import model.Report;
 import model.SourceReport;
 import model.Token;
 import model.User;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -56,13 +55,13 @@ public class MainFXApplication extends Application  {
         launch(args);
     }
     public void start(Stage primaryStage) {
-        this.reportManager = new ReportManager();
-        initRootLayout(primaryStage);
         try {
             this.databaseManager = new DatabaseManager();
         } catch (ClassNotFoundException cne) {
             cne.printStackTrace();
         }
+        this.reportManager = new ReportManager(databaseManager);
+        initRootLayout(primaryStage);
     }
 
     /**
@@ -128,12 +127,11 @@ public class MainFXApplication extends Application  {
      * Set scene to individual report details view
      */
     public void setReportDetailsScene(Report report) {
-        // FIXME this is bad!!
         if (report instanceof SourceReport) {
             sourceReportDetails.setReportInfo((SourceReport) report);
             setScene(sourceReportDetailsScene, "Cleanwater - View Individual Source Reports");
         } else {
-            System.err.println("report details screen not implemented for " + report.getClass()); // TODO generalize report info screen
+            System.err.println("report details screen not implemented for " + report.getClass());
         }
     }
 
@@ -224,7 +222,7 @@ public class MainFXApplication extends Application  {
     public boolean notifyLogin(Token token) {
         loggedInUser = null;
         try {
-            loggedInUser = databaseManager.getUser(token);
+            loggedInUser = databaseManager.<User>getPersistence(User.class).retrieveOne("token", token.toString());
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
@@ -236,7 +234,13 @@ public class MainFXApplication extends Application  {
      * @param registered the user to add to the database
      */
     public boolean notifyRegistration(User registered) {
-        return databaseManager.storeUser(registered);
+        try {
+            databaseManager.<User>getPersistence(User.class).store(registered);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**

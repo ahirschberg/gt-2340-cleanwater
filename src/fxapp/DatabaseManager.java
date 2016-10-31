@@ -1,76 +1,84 @@
 package fxapp;
 
 
-import model.PermissionLevel;
-import model.Token;
-import model.User;
+import model.*;
 
 import java.sql.*;
-import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
-public class DatabaseManager {
-    public void init() {
-        try(Connection conn = getConnection()) {
-            Statement stat = conn.createStatement();
-            ResultSet rs = stat.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='users';");
-            if (!rs.next()) {
-                conn.createStatement().executeUpdate("create table users (username string, token string UNIQUE, permission integer);");
-            }
-            stat.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+class DatabaseManager {
+    private List<Persistent> helpers;
+    private Persistent<User> users;
+    private Persistent<SourceReport> sourceReports;
+    private Persistent<PurityReport> purityReports;
+
+    private void initHelpers() {
+        users = createPersistenceHelper(User.class, "users", (ResultSet rs) -> new User(
+                    rs.getString("username"),
+                    new Token(rs.getString("token")),
+                    PermissionLevel.fromInt(rs.getInt("permission"))
+        ));
+
+        sourceReports = createPersistenceHelper(SourceReport.class, "source_reports", (rs) -> new SourceReport(
+                rs.getInt("id"),
+                new Location(rs.getDouble("latitude"), rs.getDouble("longitude")),
+                rs.getString("water_type"),
+                rs.getString("water_condition")
+        ));
+
+        purityReports = createPersistenceHelper(PurityReport.class, "purity_reports", (rs) -> new PurityReport(
+                rs.getInt("id"),
+                new Location(rs.getDouble("latitude"), rs.getDouble("longitude")),
+                rs.getDouble("virus_ppm"),
+                rs.getDouble("contaminant_ppm"),
+                rs.getString("water_condition")
+        ));
     }
 
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:sqlite:cleanwater.db");
-    }
-
-    public boolean storeUser(User u) {
-        try (Connection conn = getConnection()) {
-            try (PreparedStatement checkExists = conn.prepareStatement("SELECT * FROM users where username=(?)")) {
-                checkExists.setString(1, u.getUsername());
-                try (ResultSet rs = checkExists.executeQuery()) {
-                    if (rs.next()) {
-                        return false;
-                    }
-                }
-            }
-            try (PreparedStatement prep = conn.prepareStatement("insert into users values (?, ?, ?);")) {
-                prep.setString(1, u.getUsername());
-                prep.setString(2, u.getToken().toString());
-                prep.setInt(3, u.getPermissionLevel().level);
-                prep.addBatch();
-                prep.executeBatch();
-                prep.close();
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public User getUser(Token t) throws SQLException {
-        try (Connection conn = getConnection()) {
-            PreparedStatement prep = conn.prepareStatement("select * from users WHERE token=(?)");
-            prep.setString(1, t.toString());
-            ResultSet match = prep.executeQuery();
-            if (match.next()) {
-                final int permissionLevelInt = match.getInt("permission");
-                PermissionLevel permissionLevel = Arrays // find first PermissionLevel with matching integer
-                        .stream(PermissionLevel.values())
-                        .filter((pl) -> pl.level == permissionLevelInt)
-                        .findFirst()
-                        .get();
-                return new User(match.getString("username"), new Token(match.getString("token")), permissionLevel);
-            }
-        }
-        return null;
+    private <M> Persistent<M> createPersistenceHelper(Class<M> klass,
+                                                      String tableName, Persistent.Reviver<M> reviver) {
+        Persistent<M> p = new Persistent<>(klass, this, tableName, reviver);
+        helpers.add(p);
+        return p;
     }
 
     public DatabaseManager() throws ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
-        init();
+        helpers = new LinkedList<>();
+        initHelpers();
+        makePersistence();
     }
+
+    private void makePersistence() {
+        users.addColumn("username string UNIQUE", User::getUsername);
+        users.addColumn("token string UNIQUE", User::getToken);
+        users.addColumn("permission integer", (User u) -> u.getPermissionLevel().level);
+        users.init();
+
+        sourceReports.addColumn("id integer", SourceReport::getReportNum);
+        sourceReports.addColumn("latitude real", (SourceReport sr) -> sr.getLocation().getLatitude());
+        sourceReports.addColumn("longitude real", (SourceReport sr) -> sr.getLocation().getLongitude());
+        sourceReports.addColumn("water_type string", SourceReport::getWaterType);
+        sourceReports.addColumn("water_condition string", SourceReport::getWaterCondition);
+        sourceReports.init();
+
+        purityReports.addColumn("id integer", PurityReport::getReportNum);
+        purityReports.addColumn("latitude real", (PurityReport sr) -> sr.getLocation().getLatitude());
+        purityReports.addColumn("longitude real", (PurityReport sr) -> sr.getLocation().getLongitude());
+        purityReports.addColumn("virus_ppm real", PurityReport::getVirusPPM);
+        purityReports.addColumn("contaminant_ppm real", PurityReport::getContaminantPPM);
+        purityReports.addColumn("water_condition string", PurityReport::getWaterCondition);
+        purityReports.init();
+    }
+
+    Connection getConnection() throws SQLException {
+        return DriverManager.getConnection("jdbc:sqlite:cleanwater.db");
+    }
+
+    @SuppressWarnings("unchecked")
+    public <M> Persistent<M> getPersistence(final Class c) {
+        return helpers.stream().filter((p) -> p.getType().equals(c)).findFirst().get();
+    }
+
 }
