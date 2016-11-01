@@ -85,6 +85,7 @@ public class HistReportDataController {
             if (validInput) {
                 errorMessage.setText("");
                 HistoricalData hData = new HistoricalData(latitudeMin, latitudeMax, longitudeMin, longitudeMax, year, contaminantType);
+                main.setHistReportScene(hData);
             }
         } catch (Exception e) {
             errorMessage.setText("Input Invalid.  Enter Valid year and coordinates");

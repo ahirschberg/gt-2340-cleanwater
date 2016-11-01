@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.Report;
-import model.SourceReport;
-import model.Token;
-import model.User;
+import model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -22,6 +19,7 @@ import java.util.logging.Logger;
  */
 public class MainFXApplication extends Application  {
     private UserInfoScreenController userInfoScreenController;
+    private HistReportController histReportController;
     private MapScreenController mapScreenController;
     public static final Logger LOGGER = Logger.getLogger("MainFXApplication");
     private User loggedInUser;
@@ -39,6 +37,7 @@ public class MainFXApplication extends Application  {
     private DatabaseManager databaseManager;
     private Scene sourceReportDetailsScene;
     private Scene histReportDataScene;
+    private Scene histReportScene;
     private ReportDetailsScreenController sourceReportDetails;
 
     /**
@@ -119,7 +118,10 @@ public class MainFXApplication extends Application  {
     public void setHistReportDataScene() {
         setScene(histReportDataScene, "Cleanwater - Enter data for graph");
     }
-    
+    public void setHistReportScene(HistoricalData d) {
+        histReportController.setData(d);
+        setScene(histReportScene, "Graph of year " + d.getYear());
+    }
     /**
      * Set scene to water availability map
      */
@@ -159,6 +161,7 @@ public class MainFXApplication extends Application  {
             FXMLLoader viewReportsLoader = new FXMLLoader();
             FXMLLoader mapLoader = new FXMLLoader();
             FXMLLoader histReportDataLoader = new FXMLLoader();
+            FXMLLoader histReportLoader = new FXMLLoader();
             FXMLLoader qualityReportLoader = new FXMLLoader();
             FXMLLoader reportDetailsLoader = new FXMLLoader();
             loginLoader.setLocation(MainFXApplication.class.getResource("../view/LoginScreen.fxml"));
@@ -171,6 +174,7 @@ public class MainFXApplication extends Application  {
             reportDetailsLoader.setLocation(MainFXApplication.class.getResource("../view/ReportDetailsScreen.fxml"));
             qualityReportLoader.setLocation(MainFXApplication.class.getResource("../view/PurityReportScreen.fxml"));
             histReportDataLoader.setLocation(MainFXApplication.class.getResource("../view/HistReportDataScreen.fxml"));
+            histReportLoader.setLocation(MainFXApplication.class.getResource("../view/HistReportScreen.fxml"));
             BorderPane loginLayout = loginLoader.load();
             BorderPane mainLayout = mainLoader.load();
             BorderPane registerLayout = registerLoader.load();
@@ -181,6 +185,7 @@ public class MainFXApplication extends Application  {
             BorderPane qualReportLayout = qualityReportLoader.load();
             BorderPane reportDetailsLayout = reportDetailsLoader.load();
             BorderPane histDataLayout = histReportDataLoader.load();
+            BorderPane histLayout = histReportLoader.load();
 
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);
@@ -193,6 +198,7 @@ public class MainFXApplication extends Application  {
             sourceReportDetailsScene = new Scene(reportDetailsLayout);
             qualityReportScene = new Scene(qualReportLayout);
             histReportDataScene = new Scene(histDataLayout);
+            histReportScene = new Scene(histLayout);
 
             // Give the controller access to the main app.
             LoginScreenController controller = loginLoader.getController();
@@ -201,6 +207,7 @@ public class MainFXApplication extends Application  {
             QualityReportController qualityReport = qualityReportLoader.getController();
             HistReportDataController histData = histReportDataLoader.getController();
             userInfoScreenController = userInfoLoader.getController();
+            histReportController = histReportLoader.getController();
             SourceReportScreenController sourceReport = sourceReportLoader.getController();
             viewReports = viewReportsLoader.getController();
             mapScreenController = mapLoader.getController();
@@ -213,6 +220,7 @@ public class MainFXApplication extends Application  {
             userInfoScreenController.registerMainApp(this);
             sourceReport.registerMainApp(this);
             viewReports.registerMainApp(this);
+            histReportController.registerMainApp(this);
             mapScreenController.registerMainApp(this);
             sourceReportDetails.registerMainApp(this);
 
