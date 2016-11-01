@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 public class PurityReport extends Report{
     private double virusPPM;
     private double contaminantPPM;
@@ -18,7 +20,10 @@ public class PurityReport extends Report{
         this(++purityReportNum, location, virusPPM, contaminantPPM, waterCondition);
     }
     public PurityReport(int num, Location location, double virusPPM, double contaminantPPM, String waterCondition) {
-        super(num, location);
+        this(num, location, virusPPM, contaminantPPM, waterCondition, new Date());
+    }
+    public PurityReport(int num, Location location, double virusPPM, double contaminantPPM, String waterCondition, Date creationDatetime) {
+        super(num, location, creationDatetime);
         this.virusPPM = virusPPM;
         this.contaminantPPM = contaminantPPM;
         this.waterCondition = waterCondition;

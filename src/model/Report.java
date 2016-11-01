@@ -15,7 +15,11 @@ public abstract class Report {
      * @param reportNum the number of the report
      */
     public Report(int reportNum, Location location) {
-        this.creationDatetime = new Date(); //Sets date to moment of allocation (ms precision)
+        this(reportNum, location, new Date()); //Sets date to moment of allocation (ms precision)
+    }
+    
+    public Report(int reportNum, Location location, Date creationDatetime) {
+        this.creationDatetime = creationDatetime;
         this.location = location;
         this.reportNum = reportNum;
     }

@@ -31,7 +31,7 @@ public class ReportDetailsScreenController {
         reportTitle.setText("Water report for " + report.getLocation());
         reportInfo.getItems().clear();
         reportInfo.getItems().addAll("Location: " + report.getLocation(), "Condition: " + report.getWaterCondition(),
-                "Water Type: " + report.getWaterType());
+                "Water Type: " + report.getWaterType() + "Date: " + report.getCreationDatetime().toString());
     }
 
     /**
