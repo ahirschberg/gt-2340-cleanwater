@@ -73,19 +73,29 @@ public class Persistent<M> {
      * @param model the model to store
      * @throws SQLException
      */
-    public void store(M model) throws SQLException {
+    public int store(M model) throws SQLException {
         try (Connection conn = dbManager.getConnection()) {
 
             try (PreparedStatement prep
                          = conn.prepareStatement("insert into " + tableName + " values ("
-                    + getPlaceholders() + ");")) {
+                    + getPlaceholders() + ");", Statement.RETURN_GENERATED_KEYS)) {
                 int index = 1;
                 for (DataColumn column : columns) {
-                    prep.setObject(index, column.property.apply(model));
+                    if (column.property != null) {
+                        prep.setObject(index, column.property.apply(model));
+                    } else {
+                        prep.setObject(index, null);
+                    }
                     index++;
                 }
                 prep.addBatch();
                 prep.executeBatch();
+                ResultSet keys = prep.getGeneratedKeys();
+                if (keys.next()) {
+                    return keys.getInt(1);
+                } else {
+                    return -1;
+                }
             }
         }
     }

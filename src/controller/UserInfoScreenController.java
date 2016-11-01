@@ -44,9 +44,6 @@ public class UserInfoScreenController {
      */
     public void initFields() {
         Profile active = main.getActiveUser().getProfile();
-        if (active == null) {
-            active = new Profile();
-        }
         nameField.setText(active.getName());
         emailField.setText(active.getEmail());
         streetField.setText(active.getStreet());

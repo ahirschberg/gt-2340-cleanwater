@@ -62,6 +62,7 @@ public class MainFXApplication extends Application  {
         }
         this.reportManager = new ReportManager(databaseManager);
         initRootLayout(primaryStage);
+        User.registerDatabaseManager(databaseManager);
     }
 
     /**
@@ -222,7 +223,7 @@ public class MainFXApplication extends Application  {
     public boolean notifyLogin(Token token) {
         loggedInUser = null;
         try {
-            loggedInUser = databaseManager.<User>getPersistence(User.class).retrieveOne("token", token.toString());
+            loggedInUser = databaseManager.getPersistence(User.class).retrieveOne("token", token.toString());
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
@@ -235,7 +236,7 @@ public class MainFXApplication extends Application  {
      */
     public boolean notifyRegistration(User registered) {
         try {
-            databaseManager.<User>getPersistence(User.class).store(registered);
+            databaseManager.getPersistence(User.class).store(registered);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
