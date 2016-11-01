@@ -53,7 +53,14 @@ public class MainScreenController {
             main.setViewPurityScene();
         }
     }
-
+    @FXML
+    public void onViewHistoricalReports() {
+        User currentUser = main.getActiveUser();
+        PermissionLevel permissionLevel = currentUser.getPermissionLevel();
+        if (permissionLevel == PermissionLevel.MANAGER) {
+            main.setHistReportDataScene();
+        }
+    }
     @FXML
     public void onViewMap() {
         main.setMapScene();

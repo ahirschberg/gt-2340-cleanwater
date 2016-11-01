@@ -59,6 +59,11 @@
                   <Font size="16.0" />
                </font>
             </Button>
+            <Button mnemonicParsing="false" onAction="#onViewHistoricalReports" prefHeight="40.0" prefWidth="216.0" text="View Historical Reports">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
    </right>
