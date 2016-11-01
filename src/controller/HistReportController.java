@@ -2,7 +2,9 @@ package controller;
 
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import model.HistoricalData;
 import model.PermissionLevel;
 import model.User;
@@ -32,5 +34,6 @@ public class HistReportController {
     }
     @FXML
     public void initialize() {
+        historicalChart.getXAxis().setLabel("Month");
     }
 }
