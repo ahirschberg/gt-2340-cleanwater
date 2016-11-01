@@ -39,7 +39,7 @@ public class SourceReport extends Report {
     }
 
     public String toString() {
-        return String.format("Source Report %s %s, %s", super.toString(), getWaterType(), getWaterCondition());
+        return String.format("%s Source Report %s %s, %s", getCreationDatetime().toString(), super.toString(), getWaterType(), getWaterCondition());
     }
 
     /**

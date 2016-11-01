@@ -72,7 +72,7 @@ class DatabaseManager {
         purityReports.addColumn("virus_ppm real", PurityReport::getVirusPPM);
         purityReports.addColumn("contaminant_ppm real", PurityReport::getContaminantPPM);
         purityReports.addColumn("water_condition string", PurityReport::getWaterCondition);
-        sourceReports.addColumn("datetime integer", (SourceReport sr) -> sr.getCreationDatetime().getTime());
+        purityReports.addColumn("datetime integer", (PurityReport pr) -> pr.getCreationDatetime().getTime());
         purityReports.init();
     }
 
