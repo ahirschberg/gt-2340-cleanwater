@@ -25,7 +25,7 @@ class DatabaseManager {
                 new Location(rs.getDouble("latitude"), rs.getDouble("longitude")),
                 rs.getString("water_type"),
                 rs.getString("water_condition"),
-                new Date(rs.getLong("datetime"))
+                new Time(rs.getLong("datetime"))
         ));
 
         purityReports = createPersistenceHelper(PurityReport.class, "purity_reports", (rs) -> new PurityReport(
@@ -34,7 +34,7 @@ class DatabaseManager {
                 rs.getDouble("virus_ppm"),
                 rs.getDouble("contaminant_ppm"),
                 rs.getString("water_condition"),
-                new Date(rs.getLong("datetime"))
+                new Time(rs.getLong("datetime"))
         ));
     }
 
