@@ -52,5 +52,8 @@ public class ReportDetailsScreenController {
     }
 
     @FXML
+    /**
+     * Take the user to the map of reports
+     */
     public void onMapSelected() { main.setMapScene(); }
 }

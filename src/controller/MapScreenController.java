@@ -47,6 +47,9 @@ public class MapScreenController implements Initializable, MapComponentInitializ
     }
     
     @Override
+    /**
+     * Initializes the map to display
+     */
     public void mapInitialized() {
         MapOptions options = new MapOptions();
 
@@ -65,7 +68,10 @@ public class MapScreenController implements Initializable, MapComponentInitializ
 
         map = mapView.createMap(options);
     }
-    
+
+    /**
+     * Updates the map with the location of each water report
+     */
     public void refreshMarkers() {
         LatLong center = new LatLong(33.7756, -84.3963);
         ReportManager rm = main.getReportManager();

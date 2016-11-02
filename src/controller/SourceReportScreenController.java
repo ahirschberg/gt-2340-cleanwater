@@ -44,6 +44,10 @@ public class SourceReportScreenController {
     }
 
     @FXML
+    /**
+     * Submits the report with map of location and all entered info
+     * Unless fields are empty, in which case it gives the user an error
+     */
     public void onSubmitSelected() {
         String latString = latitudeField.getText();
         String longString = longitudeField.getText();

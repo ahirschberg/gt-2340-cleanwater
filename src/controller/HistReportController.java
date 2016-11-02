@@ -16,14 +16,25 @@ public class HistReportController {
     @FXML
     private LineChart historicalChart;
 
+    /**
+     * Registers the main application with this controller
+     * @param main the main application
+     */
     public void registerMainApp(MainFXApplication main) {
         this.main = main;
     }
 
+    /**
+     * Sets the scene with the current and updated data
+     * @param historicalData data to set the scene with
+     */
     public void setData(HistoricalData historicalData) {
         this.historicalData = historicalData;
     }
 
+    /**
+     * Shows data of the report if authorization level is correct
+     */
     @FXML
     public void onCancelSelected() {
         User currentUser = main.getActiveUser();
