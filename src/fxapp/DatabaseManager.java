@@ -7,18 +7,31 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-class DatabaseManager {
+public class DatabaseManager {
     private List<Persistent> helpers;
     private Persistent<User> users;
+    private Persistent<Profile> profiles;
     private Persistent<SourceReport> sourceReports;
     private Persistent<PurityReport> purityReports;
 
     private void initHelpers() {
-        users = createPersistenceHelper(User.class, "users", (ResultSet rs) -> new User(
+        users = createPersistenceHelper(User.class, "users", (ResultSet rs) -> {
+            Profile p = getPersistence(Profile.class).retrieveOne("rowid", rs.getInt("profile"));
+            return new User(
                     rs.getString("username"),
                     new Token(rs.getString("token")),
-                    PermissionLevel.fromInt(rs.getInt("permission"))
-        ));
+                    PermissionLevel.fromInt(rs.getInt("permission")),
+                    (p == null) ? new Profile() : p
+            );
+        });
+
+        profiles = createPersistenceHelper(Profile.class, "profiles", (ResultSet rs) ->
+            new Profile(
+                    rs.getString("name"),   rs.getString("email"),
+                    rs.getString("street"), rs.getString("city"),
+                    rs.getString("state"),  rs.getString("country"),
+                    rs.getString("org"))
+        );
 
         sourceReports = createPersistenceHelper(SourceReport.class, "source_reports", (rs) -> new SourceReport(
                 rs.getInt("id"),
@@ -56,7 +69,18 @@ class DatabaseManager {
         users.addColumn("username string UNIQUE", User::getUsername);
         users.addColumn("token string UNIQUE", User::getToken);
         users.addColumn("permission integer", (User u) -> u.getPermissionLevel().level);
+        users.addColumn("profile integer UNIQUE", null);
         users.init();
+
+        profiles.addColumn("id integer PRIMARY KEY AUTOINCREMENT", null);
+        profiles.addColumn("name string", Profile::getName);
+        profiles.addColumn("email string", Profile::getEmail);
+        profiles.addColumn("street string", Profile::getStreet);
+        profiles.addColumn("city string", Profile::getCity);
+        profiles.addColumn("state string", Profile::getState);
+        profiles.addColumn("country string", Profile::getCountry);
+        profiles.addColumn("org string", Profile::getOrg);
+        profiles.init();
 
         sourceReports.addColumn("id integer", SourceReport::getReportNum);
         sourceReports.addColumn("latitude real", (SourceReport sr) -> sr.getLocation().getLatitude());
@@ -76,12 +100,12 @@ class DatabaseManager {
         purityReports.init();
     }
 
-    Connection getConnection() throws SQLException {
+    public Connection getConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:sqlite:cleanwater.db");
     }
 
     @SuppressWarnings("unchecked")
-    public <M> Persistent<M> getPersistence(final Class c) {
+    public <M> Persistent<M> getPersistence(final Class<M> c) {
         return helpers.stream().filter((p) -> p.getType().equals(c)).findFirst().get();
     }
 
