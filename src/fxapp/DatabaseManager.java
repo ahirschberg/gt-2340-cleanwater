@@ -24,7 +24,8 @@ class DatabaseManager {
                 rs.getInt("id"),
                 new Location(rs.getDouble("latitude"), rs.getDouble("longitude")),
                 rs.getString("water_type"),
-                rs.getString("water_condition")
+                rs.getString("water_condition"),
+                new Time(rs.getLong("datetime"))
         ));
 
         purityReports = createPersistenceHelper(PurityReport.class, "purity_reports", (rs) -> new PurityReport(
@@ -32,7 +33,8 @@ class DatabaseManager {
                 new Location(rs.getDouble("latitude"), rs.getDouble("longitude")),
                 rs.getDouble("virus_ppm"),
                 rs.getDouble("contaminant_ppm"),
-                rs.getString("water_condition")
+                rs.getString("water_condition"),
+                new Time(rs.getLong("datetime"))
         ));
     }
 
@@ -61,6 +63,7 @@ class DatabaseManager {
         sourceReports.addColumn("longitude real", (SourceReport sr) -> sr.getLocation().getLongitude());
         sourceReports.addColumn("water_type string", SourceReport::getWaterType);
         sourceReports.addColumn("water_condition string", SourceReport::getWaterCondition);
+        sourceReports.addColumn("datetime integer", (SourceReport sr) -> sr.getCreationDatetime().getTime());
         sourceReports.init();
 
         purityReports.addColumn("id integer", PurityReport::getReportNum);
@@ -69,6 +72,7 @@ class DatabaseManager {
         purityReports.addColumn("virus_ppm real", PurityReport::getVirusPPM);
         purityReports.addColumn("contaminant_ppm real", PurityReport::getContaminantPPM);
         purityReports.addColumn("water_condition string", PurityReport::getWaterCondition);
+        purityReports.addColumn("datetime integer", (PurityReport pr) -> pr.getCreationDatetime().getTime());
         purityReports.init();
     }
 

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 public class SourceReport extends Report {
 
     private String waterType;
@@ -17,7 +19,11 @@ public class SourceReport extends Report {
     }
 
     public SourceReport(int num, Location location, String waterType, String waterCondition) {
-        super(num, location);
+        this(num, location, waterType, waterCondition, new Date());
+    }
+    
+    public SourceReport(int num, Location location, String waterType, String waterCondition, Date creationDatetime) {
+        super(num, location, creationDatetime);
         this.waterType = waterType;
         this.waterCondition = waterCondition;
 
@@ -33,7 +39,7 @@ public class SourceReport extends Report {
     }
 
     public String toString() {
-        return String.format("Source Report %s %s, %s", super.toString(), getWaterType(), getWaterCondition());
+        return String.format("%s Source Report %s %s, %s", getCreationDatetime().toString(), super.toString(), getWaterType(), getWaterCondition());
     }
 
     /**
