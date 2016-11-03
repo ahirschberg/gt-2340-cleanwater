@@ -52,6 +52,9 @@ public class QualityReportController {
     }
 
     @FXML
+    /**
+     * Enters the report into the database if all fields are filled and valid
+     */
     public void onSubmitSelected() {
         String latString = latitudeField.getText();
         String longString = longitudeField.getText();

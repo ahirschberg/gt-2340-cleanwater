@@ -11,6 +11,10 @@ import model.HistoricalData;
 public class HistReportDataController {
     private MainFXApplication main;
 
+    /**
+     * Registers the main application with this controller
+     * @param main the main application
+     */
     public void registerMainApp(MainFXApplication main) {
         this.main = main;
     }
@@ -41,6 +45,9 @@ public class HistReportDataController {
     @FXML
     private Text errorMessage;
 
+    /**
+     * Submits report if all fields are filled out and valid
+     */
     @FXML
     public void onSubmitSelected() {
         try {
@@ -93,6 +100,9 @@ public class HistReportDataController {
 
     }
 
+    /**
+     * Sets the screen to the home scene
+     */
     @FXML
     public void onCancelSelected() {
         main.setMainScene();
