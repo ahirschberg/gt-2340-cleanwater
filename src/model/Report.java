@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -37,10 +38,28 @@ public abstract class Report {
     }
 
     public String toString() {
-        return String.format("#%d at %s", getReportNum(), getLocation());
+        return String.format("#%d at %s time: %s", getReportNum(), getLocation(), getCreationDatetime());
     }
 
     public Location getLocation() {
         return this.location;
+    }
+
+    public int getReportMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(creationDatetime);
+        return cal.get(Calendar.MONTH);
+    }
+    public int getReportYear() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(creationDatetime);
+        return cal.get(Calendar.YEAR);
+    }
+    public PurityReport getPurityReport() {
+       if (this instanceof PurityReport) {
+           return (PurityReport) this;
+       } else {
+           return null;
+       }
     }
 }

@@ -89,6 +89,7 @@ public class HistReportDataController {
             }
         } catch (Exception e) {
             errorMessage.setText("Input Invalid.  Enter Valid year and coordinates");
+            e.printStackTrace();
         }
 
     }

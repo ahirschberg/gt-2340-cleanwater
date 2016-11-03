@@ -121,6 +121,8 @@ public class MainFXApplication extends Application  {
     }
     public void setHistReportScene(HistoricalData d) {
         histReportController.setData(d);
+        histReportController.setReportsList(reportManager.getPurityReports());
+        histReportController.setGraph();
         setScene(histReportScene, "Graph of year " + d.getYear());
     }
     /**
