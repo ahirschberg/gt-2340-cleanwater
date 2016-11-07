@@ -14,6 +14,9 @@ public class DatabaseManager {
     private Persistent<SourceReport> sourceReports;
     private Persistent<PurityReport> purityReports;
 
+    /**
+     * Initializes Helpers for users, profiles, and reports
+     */
     private void initHelpers() {
         users = createPersistenceHelper(User.class, "users", (ResultSet rs) -> {
             Profile p = getPersistence(Profile.class).retrieveOne("rowid", rs.getInt("profile"));
