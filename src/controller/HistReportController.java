@@ -64,10 +64,10 @@ public class HistReportController {
             Queue<PurityReport> queue = new LinkedList<>();
             reportsList.add(queue);
         }
-        reports = reports.filter(Report -> Report.getLocation().getLatitude() > historicalData.getLatMin()
-                && Report.getLocation().getLatitude() < historicalData.getLatMax()
-                && Report.getLocation().getLongitude() > historicalData.getLongMin()
-                && Report.getLocation().getLongitude() < historicalData.getLongMax());
+        reports = reports.filter(Report -> Report.getLocation().getLatitude() >= historicalData.getLatMin()
+                && Report.getLocation().getLatitude() <= historicalData.getLatMax()
+                && Report.getLocation().getLongitude() >= historicalData.getLongMin()
+                && Report.getLocation().getLongitude() <= historicalData.getLongMax());
         reports = reports.filter(Report -> Report.getReportYear() == historicalData.getYear());
         reports.forEach(Report -> reportsList.get(Report.getReportMonth()).add(Report.getPurityReport()));
     }
