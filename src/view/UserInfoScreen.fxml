@@ -27,9 +27,9 @@
             <TextField fx:id="streetField" prefHeight="25.0" prefWidth="150.0" />
             <HBox prefHeight="0.0" prefWidth="580.0">
                <children>
-                  <Label text="City" />
-                  <Label text="State/Province" translateX="130.0" />
-                  <Label text="Country" translateX="200.0" />
+                  <Label text="City" translateX="2.0" />
+                  <Label text="State/Province" translateX="145.0" />
+                  <Label text="Country" translateX="220.0" />
                </children>
             </HBox>
             <HBox prefHeight="16.0" prefWidth="580.0">
@@ -41,10 +41,10 @@
             </HBox>
             <Label text="Organization" />
             <TextField fx:id="orgField" />
-            <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onProfileSaved" prefHeight="26.0" prefWidth="101.0" text="Save Changes" />
+            <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onProfileSaved" minWidth="-Infinity" prefHeight="26.0" prefWidth="110.0" text="Save Changes" />
             <Button defaultButton="true" mnemonicParsing="false" onAction="#onCancel" text="Cancel">
                <font>
-                  <Font size="9.5" />
+                  <Font size="12.5" />
                </font>
             </Button>
             <Text fx:id="errorMessage" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0" />
