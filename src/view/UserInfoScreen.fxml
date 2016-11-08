@@ -15,55 +15,50 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserInfoScreenController">
    <center>
       <VBox alignment="CENTER_LEFT" prefHeight="378.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Name" />
-            <TextField fx:id="nameField">
-               <tooltip>
-                  <Tooltip text="Enter your Name!" />
-               </tooltip></TextField>
-            <Label text="E-mail" />
-            <TextField fx:id="emailField" prefHeight="0.0" prefWidth="580.0" />
-            <Label text="Address" />
-            <TextField fx:id="streetField" prefHeight="25.0" prefWidth="150.0" />
-            <HBox prefHeight="0.0" prefWidth="580.0">
-               <children>
-                  <Label text="City" />
-                  <Label text="State/Province" translateX="130.0" />
-                  <Label text="Country" translateX="200.0" />
-               </children>
-            </HBox>
-            <HBox prefHeight="16.0" prefWidth="580.0">
-               <children>
-                  <TextField fx:id="cityField" />
-                  <TextField fx:id="stateField" />
-                  <TextField fx:id="countryField" />
-               </children>
-            </HBox>
-            <Label text="Organization" />
-            <TextField fx:id="orgField" />
-            <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onProfileSaved" prefHeight="26.0" prefWidth="101.0" text="Save Changes" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#onCancel" text="Cancel">
-               <font>
-                  <Font size="9.5" />
-               </font>
-            </Button>
-            <Text fx:id="errorMessage" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0" />
-         </children>
          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
          </padding>
+         <Label text="Name"/>
+         <TextField fx:id="nameField">
+            <tooltip>
+               <Tooltip text="Enter your Name!"/>
+            </tooltip>
+         </TextField>
+         <Label text="E-mail"/>
+         <TextField fx:id="emailField" prefHeight="0.0" prefWidth="580.0"/>
+         <Label text="Address"/>
+         <TextField fx:id="streetField" prefHeight="25.0" prefWidth="150.0"/>
+         <HBox prefHeight="0.0" prefWidth="580.0">
+            <Label text="City"/>
+            <Label text="State/Province" translateX="130.0"/>
+            <Label text="Country" translateX="200.0"/>
+         </HBox>
+         <HBox prefHeight="16.0" prefWidth="580.0">
+            <TextField fx:id="cityField"/>
+            <TextField fx:id="stateField"/>
+            <TextField fx:id="countryField"/>
+         </HBox>
+         <Label text="Organization"/>
+         <TextField fx:id="orgField"/>
+         <Button alignment="CENTER" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onProfileSaved"
+                 prefHeight="26.0" prefWidth="101.0" text="Save Changes"/>
+         <Button defaultButton="true" mnemonicParsing="false" onAction="#onCancel" text="Cancel">
+            <font>
+               <Font size="9.5"/>
+            </font>
+         </Button>
+         <Text fx:id="errorMessage" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0"/>
       </VBox>
    </center>
    <top>
       <HBox prefHeight="37.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="                               " />
-            <Label alignment="CENTER" prefHeight="34.0" prefWidth="358.0" text="Edit User Profile" textAlignment="CENTER">
-               <font>
-                  <Font size="14.0" />
-               </font></Label>
-            <AmbientLight color="CHARTREUSE" lightOn="true" />
-         </children>
+         <Label text="                               "/>
+         <Label alignment="CENTER" prefHeight="34.0" prefWidth="358.0" text="Edit User Profile" textAlignment="CENTER">
+            <font>
+               <Font size="14.0"/>
+            </font>
+         </Label>
+         <AmbientLight color="CHARTREUSE"/>
       </HBox>
    </top>
 </BorderPane>

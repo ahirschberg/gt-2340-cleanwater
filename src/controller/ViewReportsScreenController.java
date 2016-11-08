@@ -3,7 +3,7 @@ package controller;
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import model.*;
+import model.Report;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -24,6 +24,7 @@ public class ViewReportsScreenController {
 
     /**
      * Registers the main application with this controller
+     *
      * @param main the main application
      */
     public void registerMainApp(MainFXApplication main) {
@@ -35,7 +36,8 @@ public class ViewReportsScreenController {
      */
     public void setReportsList(Stream<? extends Report> reports) {
         reportsList.getItems().clear();
-        reportsList.getItems().addAll(reports.map(Report::toString).collect(Collectors.toList()));
+        reportsList.getItems().addAll(reports.map(Report::toString)
+                .collect(Collectors.toList()));
     }
 
     /**

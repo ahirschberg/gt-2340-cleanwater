@@ -13,6 +13,7 @@ public class HistReportDataController {
 
     /**
      * Registers the main application with this controller
+     *
      * @param main the main application
      */
     public void registerMainApp(MainFXApplication main) {
@@ -62,7 +63,8 @@ public class HistReportDataController {
             double latitudeMax = Double.parseDouble(latStringMax);
             double longitudeMax = Double.parseDouble(longStringMax);
             int year = Integer.parseInt(yearString);
-            String contaminantType = contTypeBox.getSelectionModel().getSelectedItem();
+            String contaminantType = contTypeBox
+                    .getSelectionModel().getSelectedItem();
             if (latitudeMin > latitudeMax || longitudeMin > longitudeMax) {
                 errorMessage.setText("coordinates are in wrong order");
                 validInput = false;
@@ -91,11 +93,14 @@ public class HistReportDataController {
             }
             if (validInput) {
                 errorMessage.setText("");
-                HistoricalData hData = new HistoricalData(latitudeMin, latitudeMax, longitudeMin, longitudeMax, year, contaminantType);
+                HistoricalData hData = new HistoricalData(latitudeMin,
+                        latitudeMax, longitudeMin,
+                        longitudeMax, year, contaminantType);
                 main.setHistReportScene(hData);
             }
         } catch (Exception e) {
-            errorMessage.setText("Input Invalid.  Enter Valid year and coordinates");
+            errorMessage.setText("Input Invalid."
+                   + "  Enter Valid year and coordinates");
             e.printStackTrace();
         }
 

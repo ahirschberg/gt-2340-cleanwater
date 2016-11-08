@@ -10,15 +10,16 @@ public class HistoricalData {
 
     /**
      * Stores all of the data from a report in class level access variables
-     * @param latMin minimum lattitude for map
-     * @param latMax maximum latitude for map
-     * @param longMin minimum longitude for map
-     * @param longMax maximum longitude for map
-     * @param year year of report
+     *
+     * @param latMin          minimum lattitude for map
+     * @param latMax          maximum latitude for map
+     * @param longMin         minimum longitude for map
+     * @param longMax         maximum longitude for map
+     * @param year            year of report
      * @param contaminantType Type of contaminant in the water
      */
-    public HistoricalData(double latMin, double latMax, double longMin, double longMax,
-                          int year, String contaminantType) {
+    public HistoricalData(double latMin, double latMax, double longMin,
+                          double longMax, int year, String contaminantType) {
         this.latMin = latMin;
         this.latMax = latMax;
         this.longMin = longMin;
@@ -26,6 +27,7 @@ public class HistoricalData {
         this.year = year;
         this.contaminantType = contaminantType;
     }
+
     public double getLatMin() {
         return latMin;
     }

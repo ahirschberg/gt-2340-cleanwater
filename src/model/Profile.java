@@ -16,21 +16,27 @@ public class Profile {
     public String getName() {
         return name;
     }
+
     public String getEmail() {
         return email;
     }
+
     public String getStreet() {
         return street;
     }
+
     public String getCity() {
         return city;
     }
+
     public String getState() {
         return state;
     }
+
     public String getCountry() {
         return country;
     }
+
     public String getOrg() {
         return org;
     }

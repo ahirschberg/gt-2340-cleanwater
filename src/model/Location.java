@@ -2,9 +2,7 @@ package model;
 
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
-/**
- * Created by alex on 10/26/16.
- */
+
 public class Location {
     private double latitude;
 
@@ -15,6 +13,7 @@ public class Location {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
     public double getLatitude() {
         return latitude;
     }
@@ -29,6 +28,7 @@ public class Location {
 
     /**
      * Returns the location of the report
+     *
      * @return location, as a string
      */
     public String toString() {

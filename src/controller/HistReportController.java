@@ -2,16 +2,18 @@ package controller;
 
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import model.*;
+import model.HistoricalData;
+import model.PermissionLevel;
+import model.PurityReport;
+import model.Report;
+import model.User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.stream.Stream;
-
-import static java.util.Calendar.MONTH;
 
 public class HistReportController {
     private MainFXApplication main;
@@ -39,9 +41,11 @@ public class HistReportController {
     public void setData(HistoricalData historicalData) {
         this.historicalData = historicalData;
     }
+
     public double[] getPPM() {
         return ppms;
     }
+
     /**
      * Shows data of the report if authorization level is correct
      */
@@ -64,12 +68,19 @@ public class HistReportController {
             Queue<PurityReport> queue = new LinkedList<>();
             reportsList.add(queue);
         }
-        reports = reports.filter(Report -> Report.getLocation().getLatitude() >= historicalData.getLatMin()
-                && Report.getLocation().getLatitude() <= historicalData.getLatMax()
-                && Report.getLocation().getLongitude() >= historicalData.getLongMin()
-                && Report.getLocation().getLongitude() <= historicalData.getLongMax());
-        reports = reports.filter(Report -> Report.getReportYear() == historicalData.getYear());
-        reports.forEach(Report -> reportsList.get(Report.getReportMonth()).add(Report.getPurityReport()));
+        reports = reports.filter(Report ->
+                Report.getLocation().getLatitude() >= historicalData.getLatMin()
+                && Report.getLocation().getLatitude()
+                        <= historicalData.getLatMax()
+                && Report.getLocation().getLongitude()
+                        >= historicalData.getLongMin()
+                && Report.getLocation().getLongitude()
+                        <= historicalData.getLongMax());
+        reports = reports.filter(Report ->
+                Report.getReportYear() == historicalData.getYear());
+        reports.forEach(Report ->
+                reportsList.get(Report.getReportMonth())
+                        .add(Report.getPurityReport()));
     }
 
     public void setGraph() {
@@ -78,8 +89,11 @@ public class HistReportController {
             historicalChart.getXAxis().setLabel("Month");
         }
         if (historicalData.getContaminantType().equals("Virus PPM")) {
-            series.setName("Virus PPM from latitude " + historicalData.getLatMin() + "-" + historicalData.getLatMax()
-                    + " and longitude " + historicalData.getLongMin() + "-" + historicalData.getLongMax());
+            series.setName("Virus PPM from latitude "
+                    + historicalData.getLatMin()
+                    + "-" + historicalData.getLatMax()
+                    + " and longitude " + historicalData.getLongMin()
+                    + "-" + historicalData.getLongMax());
             if (historicalChart != null) {
                 historicalChart.getYAxis().setLabel("PPM");
             }
@@ -110,8 +124,11 @@ public class HistReportController {
                 historicalChart.getData().add(series);
             }
         } else {
-            series.setName("Contaminant PPM from latitude " + historicalData.getLatMin() + "-" + historicalData.getLatMax()
-                    + " and longitude " + historicalData.getLongMin() + "-" + historicalData.getLongMax());
+            series.setName("Contaminant PPM from latitude "
+                    + historicalData.getLatMin()
+                    + "-" + historicalData.getLatMax()
+                    + " and longitude " + historicalData.getLongMin()
+                    + "-" + historicalData.getLongMax());
             if (historicalChart != null) {
                 historicalChart.getYAxis().setLabel("PPM");
             }

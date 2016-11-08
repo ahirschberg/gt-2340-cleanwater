@@ -1,9 +1,19 @@
 package fxapp;
 
 
-import model.*;
+import model.Location;
+import model.PermissionLevel;
+import model.Profile;
+import model.PurityReport;
+import model.SourceReport;
+import model.Token;
+import model.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Time;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +29,8 @@ public class DatabaseManager {
      */
     private void initHelpers() {
         users = createPersistenceHelper(User.class, "users", (ResultSet rs) -> {
-            Profile p = getPersistence(Profile.class).retrieveOne("rowid", rs.getInt("profile"));
+            Profile p = getPersistence(Profile.class).retrieveOne("rowid",
+                    rs.getInt("profile"));
             return new User(
                     rs.getString("username"),
                     new Token(rs.getString("token")),
@@ -28,25 +39,30 @@ public class DatabaseManager {
             );
         });
 
-        profiles = createPersistenceHelper(Profile.class, "profiles", (ResultSet rs) ->
-            new Profile(
-                    rs.getString("name"),   rs.getString("email"),
-                    rs.getString("street"), rs.getString("city"),
-                    rs.getString("state"),  rs.getString("country"),
-                    rs.getString("org"))
+        profiles = createPersistenceHelper(Profile.class, "profiles",
+            (ResultSet rs) ->
+                new Profile(
+                        rs.getString("name"), rs.getString("email"),
+                        rs.getString("street"), rs.getString("city"),
+                        rs.getString("state"), rs.getString("country"),
+                        rs.getString("org"))
         );
 
-        sourceReports = createPersistenceHelper(SourceReport.class, "source_reports", (rs) -> new SourceReport(
+        sourceReports = createPersistenceHelper(SourceReport.class,
+                "source_reports", (rs) -> new SourceReport(
                 rs.getInt("id"),
-                new Location(rs.getDouble("latitude"), rs.getDouble("longitude")),
+                new Location(rs.getDouble("latitude"),
+                        rs.getDouble("longitude")),
                 rs.getString("water_type"),
                 rs.getString("water_condition"),
                 new Time(rs.getLong("datetime"))
         ));
 
-        purityReports = createPersistenceHelper(PurityReport.class, "purity_reports", (rs) -> new PurityReport(
+        purityReports = createPersistenceHelper(PurityReport.class,
+                "purity_reports", (rs) -> new PurityReport(
                 rs.getInt("id"),
-                new Location(rs.getDouble("latitude"), rs.getDouble("longitude")),
+                new Location(rs.getDouble("latitude"),
+                        rs.getDouble("longitude")),
                 rs.getDouble("virus_ppm"),
                 rs.getDouble("contaminant_ppm"),
                 rs.getString("water_condition"),
@@ -55,7 +71,8 @@ public class DatabaseManager {
     }
 
     private <M> Persistent<M> createPersistenceHelper(Class<M> klass,
-                                                      String tableName, Persistent.Reviver<M> reviver) {
+                                              String tableName,
+                                              Persistent.Reviver<M> reviver) {
         Persistent<M> p = new Persistent<>(klass, this, tableName, reviver);
         helpers.add(p);
         return p;
@@ -71,7 +88,8 @@ public class DatabaseManager {
     private void makePersistence() {
         users.addColumn("username string UNIQUE", User::getUsername);
         users.addColumn("token string UNIQUE", User::getToken);
-        users.addColumn("permission integer", (User u) -> u.getPermissionLevel().level);
+        users.addColumn("permission integer",
+            (User u) -> u.getPermissionLevel().level);
         users.addColumn("profile integer UNIQUE", null);
         users.init();
 
@@ -86,20 +104,30 @@ public class DatabaseManager {
         profiles.init();
 
         sourceReports.addColumn("id integer", SourceReport::getReportNum);
-        sourceReports.addColumn("latitude real", (SourceReport sr) -> sr.getLocation().getLatitude());
-        sourceReports.addColumn("longitude real", (SourceReport sr) -> sr.getLocation().getLongitude());
-        sourceReports.addColumn("water_type string", SourceReport::getWaterType);
-        sourceReports.addColumn("water_condition string", SourceReport::getWaterCondition);
-        sourceReports.addColumn("datetime integer", (SourceReport sr) -> sr.getCreationDatetime().getTime());
+        sourceReports.addColumn("latitude real",
+            (SourceReport sr) -> sr.getLocation().getLatitude());
+        sourceReports.addColumn("longitude real",
+            (SourceReport sr) -> sr.getLocation().getLongitude());
+        sourceReports.addColumn("water_type string",
+            SourceReport::getWaterType);
+        sourceReports.addColumn("water_condition string",
+            SourceReport::getWaterCondition);
+        sourceReports.addColumn("datetime integer",
+            (SourceReport sr) -> sr.getCreationDatetime().getTime());
         sourceReports.init();
 
         purityReports.addColumn("id integer", PurityReport::getReportNum);
-        purityReports.addColumn("latitude real", (PurityReport sr) -> sr.getLocation().getLatitude());
-        purityReports.addColumn("longitude real", (PurityReport sr) -> sr.getLocation().getLongitude());
+        purityReports.addColumn("latitude real",
+            (PurityReport sr) -> sr.getLocation().getLatitude());
+        purityReports.addColumn("longitude real",
+            (PurityReport sr) -> sr.getLocation().getLongitude());
         purityReports.addColumn("virus_ppm real", PurityReport::getVirusPPM);
-        purityReports.addColumn("contaminant_ppm real", PurityReport::getContaminantPPM);
-        purityReports.addColumn("water_condition string", PurityReport::getWaterCondition);
-        purityReports.addColumn("datetime integer", (PurityReport pr) -> pr.getCreationDatetime().getTime());
+        purityReports.addColumn("contaminant_ppm real",
+            PurityReport::getContaminantPPM);
+        purityReports.addColumn("water_condition string",
+            PurityReport::getWaterCondition);
+        purityReports.addColumn("datetime integer",
+            (PurityReport pr) -> pr.getCreationDatetime().getTime());
         purityReports.init();
     }
 
@@ -109,7 +137,8 @@ public class DatabaseManager {
 
     @SuppressWarnings("unchecked")
     public <M> Persistent<M> getPersistence(final Class<M> c) {
-        return helpers.stream().filter((p) -> p.getType().equals(c)).findFirst().get();
+        return helpers.stream().filter((p) ->
+                p.getType().equals(c)).findFirst().get();
     }
 
 }

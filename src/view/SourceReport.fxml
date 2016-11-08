@@ -13,45 +13,41 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterScreenController">
    <center>
-      <VBox alignment="CENTER_LEFT" prefHeight="197.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Water Location" translateY="-20.0" />
-            <TextField fx:id="waterLocationField" translateY="-20.0" />
-            <ComboBox fx:id="waterTypeBox" prefWidth="150.0" promptText="Type of Water" />
-            <ComboBox fx:id="waterConditionBox" prefWidth="150.0" promptText="Condition of Water" />
-            <Text fx:id="errorMessage" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0" />
-            <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="580.0" spacing="10.0">
-               <children>
-                  <Button alignment="CENTER" defaultButton="true" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onSubmitSelected" prefHeight="26.0" prefWidth="101.0" text="Submit" />
-               </children>
-            </HBox>
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </VBox>
+       <VBox alignment="CENTER_LEFT" prefHeight="197.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+           <padding>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+           </padding>
+           <Label text="Water Location" translateY="-20.0"/>
+           <TextField fx:id="waterLocationField" translateY="-20.0"/>
+           <ComboBox fx:id="waterTypeBox" prefWidth="150.0" promptText="Type of Water"/>
+           <ComboBox fx:id="waterConditionBox" prefWidth="150.0" promptText="Condition of Water"/>
+           <Text fx:id="errorMessage" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0"/>
+           <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="580.0" spacing="10.0">
+               <Button alignment="CENTER" defaultButton="true" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT"
+                       onAction="#onSubmitSelected" prefHeight="26.0" prefWidth="101.0" text="Submit"/>
+           </HBox>
+       </VBox>
    </center>
    <top>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label />
-            <Label alignment="CENTER" prefHeight="34.0" prefWidth="559.0" text="Submit Source Report" textAlignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-            <VBox prefHeight="100.0" prefWidth="170.0">
-               <children>
-                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onLoginSelected" prefHeight="29.0" prefWidth="113.0" text="Back to Home" textAlignment="CENTER">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
+       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+           <Label/>
+           <Label alignment="CENTER" prefHeight="34.0" prefWidth="559.0" text="Submit Source Report"
+                  textAlignment="CENTER">
+              <font>
+                  <Font size="18.0"/>
+              </font>
+           </Label>
+           <VBox prefHeight="100.0" prefWidth="170.0">
+               <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onLoginSelected"
+                       prefHeight="29.0" prefWidth="113.0" text="Back to Home" textAlignment="CENTER">
+                   <opaqueInsets>
+                       <Insets/>
+                   </opaqueInsets>
+                   <VBox.margin>
+                       <Insets right="5.0" top="5.0"/>
+                   </VBox.margin>
+               </Button>
+           </VBox>
+       </HBox>
    </top>
 </BorderPane>

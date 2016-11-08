@@ -1,16 +1,7 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 import controller.HistReportController;
@@ -18,11 +9,9 @@ import model.HistoricalData;
 import model.Location;
 import model.PurityReport;
 import model.Report;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.omg.CORBA.TIMEOUT;
 
 public class CleanWaterTests {
     private static final int TIMEOUT = 2000;

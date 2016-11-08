@@ -40,6 +40,7 @@ public class RegisterScreenController {
 
     /**
      * Registers the main application with this controller
+     *
      * @param main the main application
      */
     public void registerMainApp(MainFXApplication main) {
@@ -47,7 +48,8 @@ public class RegisterScreenController {
     }
 
     /**
-     * When the user attempts to register, validate their input and notify the main
+     * When the user attempts to register, validate their
+     * input and notify the main
      * app of the registration
      */
     @FXML
@@ -66,8 +68,10 @@ public class RegisterScreenController {
         } else {
             //Create account with appropriate permissions
             try {
-                PermissionLevel pl = PermissionLevel.values()[permissionBox.getSelectionModel().getSelectedIndex()];
-                User newUser = new User(username, Token.fromCredentials(username, password), pl);
+                PermissionLevel pl = PermissionLevel.values()
+                        [permissionBox.getSelectionModel().getSelectedIndex()];
+                User newUser = new User(username,
+                        Token.fromCredentials(username, password), pl);
 
                 if (main.notifyRegistration(newUser)) {
                     main.setLoginScene();
@@ -76,7 +80,7 @@ public class RegisterScreenController {
                 }
             } catch (NoSuchAlgorithmException nse) {
                 nse.printStackTrace();
-                errorMessage.setText("Hash algorithm not found. Cannot log in.");
+                errorMessage.setText("Hash algorithm not found. Can't log in.");
             }
         }
     }

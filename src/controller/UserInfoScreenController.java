@@ -4,7 +4,6 @@ import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import model.Profile;
-import model.User;
 
 /**
  * Handles the user profile screen of the app.
@@ -33,6 +32,7 @@ public class UserInfoScreenController {
 
     /**
      * Registers the main application with this controller
+     *
      * @param main the main application
      */
     public void registerMainApp(MainFXApplication main) {
@@ -60,13 +60,13 @@ public class UserInfoScreenController {
     public void onProfileSaved() {
         main.getActiveUser().setProfile(
                 new Profile(
-                    nameField.getText(),
-                    emailField.getText(),
-                    streetField.getText(),
-                    cityField.getText(),
-                    stateField.getText(),
-                    countryField.getText(),
-                    orgField.getText()));
+                        nameField.getText(),
+                        emailField.getText(),
+                        streetField.getText(),
+                        cityField.getText(),
+                        stateField.getText(),
+                        countryField.getText(),
+                        orgField.getText()));
         main.setMainScene();
     }
 

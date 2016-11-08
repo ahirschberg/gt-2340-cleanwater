@@ -27,6 +27,7 @@ public class LoginScreenController {
 
     /**
      * Gives the controller a reference to the main app
+     *
      * @param main the main app
      */
     public void registerMainApp(MainFXApplication main) {
@@ -40,15 +41,18 @@ public class LoginScreenController {
     @FXML
     public void onLoginSelected() {
         try {
-            if (main.notifyLogin(Token.fromCredentials(usernameField.getText(), passwordField.getText()))) {
+            if (main.notifyLogin(Token.fromCredentials(usernameField
+                    .getText(), passwordField.getText()))) {
                 main.setMainScene();
             } else {
                 message.setText("Username or password incorrect.");
             }
         } catch (NoSuchAlgorithmException e) {
-            MainFXApplication.LOGGER.log(Level.SEVERE, "No algorithm detected for token.");
+            MainFXApplication.LOGGER.log(Level
+                    .SEVERE, "No algorithm detected for token.");
             e.printStackTrace();
-            message.setText("ERROR: Cannot hash password. See console for details.");
+            message.setText("ERROR: Cannot hash password."
+                    + " See console for details.");
         }
     }
 

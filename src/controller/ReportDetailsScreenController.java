@@ -4,10 +4,7 @@ import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import model.Report;
 import model.SourceReport;
-
-import java.util.Optional;
 
 public class ReportDetailsScreenController {
     private MainFXApplication main;
@@ -30,12 +27,15 @@ public class ReportDetailsScreenController {
 
         reportTitle.setText("Water report for " + report.getLocation());
         reportInfo.getItems().clear();
-        reportInfo.getItems().addAll("Location: " + report.getLocation(), "Condition: " + report.getWaterCondition(),
-                "Water Type: " + report.getWaterType() + "Date: " + report.getCreationDatetime().toString());
+        reportInfo.getItems().addAll("Location: " + report.getLocation(),
+                "Condition: " + report.getWaterCondition(),
+                "Water Type: " + report.getWaterType()
+                        + "Date: " + report.getCreationDatetime().toString());
     }
 
     /**
      * Registers the main application with this controller
+     *
      * @param main the main application
      */
     public void registerMainApp(MainFXApplication main) {
@@ -52,8 +52,7 @@ public class ReportDetailsScreenController {
     }
 
     @FXML
-    /**
-     * Take the user to the map of reports
-     */
-    public void onMapSelected() { main.setMapScene(); }
+    public void onMapSelected() {
+        main.setMapScene();
+    }
 }

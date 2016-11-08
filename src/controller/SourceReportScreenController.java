@@ -5,7 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import model.*;
+import model.Location;
+import model.SourceReport;
 
 /**
  * Handles the source report screen of the app.
@@ -31,12 +32,15 @@ public class SourceReportScreenController {
 
     @FXML
     public void initialize() {
-        waterTypeBox.getItems().addAll("Bottled", "Well", "Stream", "Lake", "Spring", "Other");
-        waterConditionBox.getItems().addAll("Waste", "Treatable-Clear", "Treatable-Muddy", "Potable");
+        waterTypeBox.getItems().addAll("Bottled", "Well", "Stream",
+                "Lake", "Spring", "Other");
+        waterConditionBox.getItems().addAll("Waste", "Treatable-Clear",
+                "Treatable-Muddy", "Potable");
     }
 
     /**
      * Registers the main application with this controller
+     *
      * @param main the main application
      */
     public void registerMainApp(MainFXApplication main) {
@@ -44,17 +48,14 @@ public class SourceReportScreenController {
     }
 
     @FXML
-    /**
-     * Submits the report with map of location and all entered info
-     * Unless fields are empty, in which case it gives the user an error
-     */
     public void onSubmitSelected() {
         String latString = latitudeField.getText();
         String longString = longitudeField.getText();
         double latitude;
         double longitude;
         String waterType = waterTypeBox.getSelectionModel().getSelectedItem();
-        String waterCondition = waterConditionBox.getSelectionModel().getSelectedItem();
+        String waterCondition = waterConditionBox
+                .getSelectionModel().getSelectedItem();
 
         try {
             latitude = Double.parseDouble(latString);
@@ -70,7 +71,8 @@ public class SourceReportScreenController {
             } else if (waterCondition == null) {
                 errorMessage.setText("Please enter a water condition");
             } else {
-                main.getReportManager().addSourceReport(new SourceReport(new Location(latitude, longitude),
+                main.getReportManager().addSourceReport(new
+                        SourceReport(new Location(latitude, longitude),
                         waterType, waterCondition));
                 reportNum++;
                 main.setMainScene();

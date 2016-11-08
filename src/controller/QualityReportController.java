@@ -8,7 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import model.Location;
 import model.PurityReport;
-import model.Report;
 
 public class QualityReportController {
     private int reportNum;
@@ -32,8 +31,9 @@ public class QualityReportController {
 
     @FXML
     public void initialize() {
-       waterTypeBox.getItems().addAll("Safe", "Treatable", "Unsafe");
+        waterTypeBox.getItems().addAll("Safe", "Treatable", "Unsafe");
     }
+
     /**
      * Gives the controller a reference to the main app
      *
@@ -52,9 +52,6 @@ public class QualityReportController {
     }
 
     @FXML
-    /**
-     * Enters the report into the database if all fields are filled and valid
-     */
     public void onSubmitSelected() {
         String latString = latitudeField.getText();
         String longString = longitudeField.getText();
@@ -78,8 +75,9 @@ public class QualityReportController {
 
             if (waterPurity == null) {
                 errorMessage.setText("Please enter a water purity level");
-            } else{
-                main.getReportManager().addPurityReport(new PurityReport(new Location(latitude, longitude),
+            } else {
+                main.getReportManager().addPurityReport(new PurityReport(
+                        new Location(latitude, longitude),
                         virusPPMNum, contaminantPPMNum, waterPurity));
                 reportNum++;
                 main.setMainScene();
