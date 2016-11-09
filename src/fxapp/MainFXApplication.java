@@ -71,6 +71,10 @@ public class MainFXApplication extends Application {
         launch(args);
     }
 
+    /**
+     * Called at start of application, initializes appropriate controllers.
+     * @param primaryStage the FX stage of the application
+     */
     public void start(Stage primaryStage) {
         try {
             this.databaseManager = new DatabaseManager();
@@ -111,6 +115,9 @@ public class MainFXApplication extends Application {
         setScene(userInfoScene, "Cleanwater - Edit Profile");
     }
 
+    /**
+     * Set scene to submit quality reports
+     */
     public void setQualityReportScene() {
         setScene(qualityReportScene, "Cleanwater - Submit quality report");
     }
@@ -130,15 +137,25 @@ public class MainFXApplication extends Application {
         setScene(viewReportsScene, "Cleanwater - View Source Reports");
     }
 
+    /**
+     * Set scene to view purity reports
+     */
     public void setViewPurityScene() {
         viewReports.setReportsList(reportManager.getPurityReports());
         setScene(viewReportsScene, "Cleanwater - View Purity Reports");
     }
 
+    /**
+     * Sets scene to create historical graph.
+     */
     public void setHistReportDataScene() {
         setScene(histReportDataScene, "Cleanwater - Enter data for graph");
     }
 
+    /**
+     * Sets scene to view historical graph
+     * @param d historical data to view graph of
+     */
     public void setHistReportScene(HistoricalData d) {
         histReportController.setData(d);
         histReportController.setReportsList(reportManager.getPurityReports());
@@ -171,6 +188,11 @@ public class MainFXApplication extends Application {
         }
     }
 
+    /**
+     * Changes active views
+     * @param s scene to view
+     * @param title window titlebar title
+     */
     private void setScene(Scene s, String title) {
         activeScreen.hide();
         activeScreen.setScene(s);
@@ -178,6 +200,10 @@ public class MainFXApplication extends Application {
         activeScreen.show();
     }
 
+    /**
+     * Initializes views
+     * @param mainScreen primary stage of the application
+     */
     private void initRootLayout(Stage mainScreen) {
         activeScreen = mainScreen;
         try {

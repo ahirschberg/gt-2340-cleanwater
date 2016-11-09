@@ -70,6 +70,14 @@ public class DatabaseManager {
         ));
     }
 
+    /**
+     * Creates an object to allow persistance
+     * @param klass Class which needs to persist
+     * @param <M> the class which needs to persist
+     * @param tableName name of table
+     * @param reviver Persistance reviver
+     * @return The created persistance helper
+     */
     private <M> Persistent<M> createPersistenceHelper(Class<M> klass,
                                               String tableName,
                                               Persistent.Reviver<M> reviver) {
@@ -78,6 +86,10 @@ public class DatabaseManager {
         return p;
     }
 
+    /**
+     * Initializes the database
+     * @throws ClassNotFoundException if org.sqlite.JDBC is not found
+     */
     public DatabaseManager() throws ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
         helpers = new LinkedList<>();
@@ -85,6 +97,9 @@ public class DatabaseManager {
         makePersistence();
     }
 
+    /**
+     * makes data persist in sql tables
+     */
     private void makePersistence() {
         users.addColumn("username string UNIQUE", User::getUsername);
         users.addColumn("token string UNIQUE", User::getToken);
@@ -131,10 +146,21 @@ public class DatabaseManager {
         purityReports.init();
     }
 
+    /**
+     * Loads database from file
+     * @return connection to the database file
+     * @throws SQLException If database cannot be loaded
+     */
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:sqlite:cleanwater.db");
     }
 
+    /**
+     * Gets first persistence helper for a given class.
+     * @param c the class which the persistence helper stores.
+     * @param <M> the class which the persistance helper stores.
+     * @return The persistence helper
+     */
     @SuppressWarnings("unchecked")
     public <M> Persistent<M> getPersistence(final Class<M> c) {
         return helpers.stream().filter((p) ->

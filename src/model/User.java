@@ -13,26 +13,50 @@ public class User {
     private PermissionLevel permissionLevel;
     private Profile profile;
 
+    /**
+     * stores classwide pointer to report database
+     * @param db report database
+     */
     public static void registerDatabaseManager(DatabaseManager db) {
         User.db = db;
     }
 
+    /**
+     * gets authentication token
+     * @return authentication token
+     */
     public Token getToken() {
         return token;
     }
 
+    /**
+     * gets permission level
+     * @return level of permission
+     */
     public PermissionLevel getPermissionLevel() {
         return this.permissionLevel;
     }
 
+    /**
+     * gets username
+     * @return username
+     */
     public String getUsername() {
         return this.username;
     }
 
+    /**
+     * gets user profile 
+     * @return user profile
+     */
     public Profile getProfile() {
         return this.profile;
     }
 
+    /**
+     * Sets user profile to given
+     * @param profile new user profile
+     */
     public void setProfile(Profile profile) {
         try {
             int id = db.getPersistence(Profile.class).store(profile);
@@ -51,10 +75,23 @@ public class User {
         this.profile = profile;
     }
 
+    /**
+     * initializes user
+     * @param username username of user
+     * @param token authentication token
+     * @param permissionLevel permission level of user
+     */
     public User(String username, Token token, PermissionLevel permissionLevel) {
         this(username, token, permissionLevel, new Profile());
     }
 
+    /**
+     * initializes user
+     * @param username username of user
+     * @param token authentication token
+     * @param permissionLevel permission level of user
+     * @param profile profile of user
+     */
     public User(String username, Token token,
                 PermissionLevel permissionLevel, Profile profile) {
         this.username = username;

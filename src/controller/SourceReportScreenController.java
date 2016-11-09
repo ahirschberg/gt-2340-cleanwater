@@ -30,6 +30,10 @@ public class SourceReportScreenController {
     @FXML
     private Text errorMessage;
 
+    /**
+     * called automatically on view initalization
+     * initializes combobox
+     */
     @FXML
     public void initialize() {
         waterTypeBox.getItems().addAll("Bottled", "Well", "Stream",
@@ -47,6 +51,10 @@ public class SourceReportScreenController {
         this.main = main;
     }
 
+    /**
+     * Called when submit is pressed
+     * submits source report.
+     */
     @FXML
     public void onSubmitSelected() {
         String latString = latitudeField.getText();

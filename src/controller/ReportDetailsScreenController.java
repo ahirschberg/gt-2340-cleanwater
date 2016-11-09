@@ -15,6 +15,9 @@ public class ReportDetailsScreenController {
     @FXML
     private Label reportTitle;
 
+    /**
+     * Called automatically on view initialization
+     */
     @FXML
     public void initialize() {
 
@@ -22,6 +25,7 @@ public class ReportDetailsScreenController {
 
     /**
      * Sets the report info. Unfinished
+     * @param report The report from which the info comes.
      */
     public void setReportInfo(SourceReport report) {
 
@@ -51,6 +55,10 @@ public class ReportDetailsScreenController {
         main.setMainScene();
     }
 
+    /**
+     * Map button action
+     * takes the user to the map.
+     */
     @FXML
     public void onMapSelected() {
         main.setMapScene();

@@ -87,6 +87,7 @@ public class Persistent<M> {
      *
      * @param model the model to store
      * @throws SQLException exception
+     * @return Key of stored model
      */
     public int store(M model) throws SQLException {
         try (Connection conn = dbManager.getConnection()) {
@@ -166,16 +167,31 @@ public class Persistent<M> {
         }
     }
 
+    /**
+     * Gets data from SQL table in string form.
+     * @param mapper Function to map data columns and strings.
+     * @return The string requested.
+     */
     private String getSQLStrings(Function<DataColumn, String> mapper) {
         return String.join(", ", columns.stream()
                 .map(mapper)
                 .collect(Collectors.toList()));
     }
 
+    /**
+     * Get's SQL string placeholders.
+     * @return the placeholders.
+     */
     private String getPlaceholders() {
         return getSQLStrings((DataColumn col) -> "?");
     }
 
+    /**
+     * Gets a list based on a SQL statement
+     * @param statement query statement
+     * @return the list requested
+     * @throws SQLException on an invalid SQL statement
+     */
     private List<M> retrieveWithQuery(PreparedStatement statement)
             throws SQLException {
         ResultSet model = statement.executeQuery();
@@ -191,6 +207,11 @@ public class Persistent<M> {
 
         private Function<? super M, ?> property;
 
+        /**
+         * Initializes the data column
+         * @param schema SQL schema to use
+         * @param property function to retrieve data to store.
+         */
         public DataColumn(String schema, Function<? super M, ?> property) {
             this.schema = schema;
             this.property = property;

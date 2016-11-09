@@ -19,12 +19,29 @@ public class SourceReport extends Report {
                         String waterCondition) {
         this(++sourceReportNum, location, waterType, waterCondition);
     }
-
+    
+    /**
+     * Creates a new Source Report
+     *
+     * @param location       the location the report refers to
+     * @param waterType      the type of water source
+     * @param waterCondition the quality of water source
+     * @param num            report number
+     */
     public SourceReport(int num, Location location,
                         String waterType, String waterCondition) {
         this(num, location, waterType, waterCondition, new Date());
     }
-
+    
+    /**
+     * Creates a new Source Report
+     *
+     * @param location       the location the report refers to
+     * @param waterType      the type of water source
+     * @param waterCondition the quality of water source
+     * @param num            report number
+     * @param creationDatetime date and time report was created.
+     */
     public SourceReport(int num, Location location, String waterType,
                         String waterCondition, Date creationDatetime) {
         super(num, location, creationDatetime);
@@ -43,6 +60,10 @@ public class SourceReport extends Report {
         return waterType;
     }
 
+    /**
+     * converts report to string format
+     * @return the generated string
+     */
     public String toString() {
         return String.format("%s Source Report %s %s, %s",
                 getCreationDatetime().toString(),

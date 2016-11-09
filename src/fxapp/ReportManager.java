@@ -18,6 +18,10 @@ public class ReportManager {
     private List<PurityReport> purityReports;
     private DatabaseManager db;
 
+    /**
+     * Initializes report manager
+     * @param db database manager to initialize reports with.
+     */
     public ReportManager(DatabaseManager db) {
         try {
             sourceReports = db.getPersistence(SourceReport.class).retrieveAll();
@@ -50,6 +54,10 @@ public class ReportManager {
         }
     }
 
+    /**
+     * Adds a purity report to the manager
+     * @param report report to add
+     */
     public void addPurityReport(PurityReport report) {
         try {
             db.getPersistence(PurityReport.class).store(report);
@@ -70,10 +78,18 @@ public class ReportManager {
         return Stream.concat(sourceReports.stream(), purityReports.stream());
     }
 
+    /**
+     * Retrieves the stored source reports.
+     * @return the source reports
+     */
     public Stream<? extends Report> getSourceReports() {
         return sourceReports.stream();
     }
-
+    
+    /**
+     * Retrieves the stored purity reports.
+     * @return the purity reports
+     */
     public Stream<? extends Report> getPurityReports() {
         return purityReports.stream();
     }

@@ -42,6 +42,10 @@ public class HistReportController {
         this.historicalData = historicalData;
     }
 
+    /**
+     * gets stored ppm's
+     * @return historical parts per million's
+     */
     public double[] getPPM() {
         return ppms;
     }
@@ -58,10 +62,18 @@ public class HistReportController {
         }
     }
 
+    /**
+     * Called automatically when view is initialized
+     */
     @FXML
     public void initialize() {
     }
 
+    /**
+     * sets report list to a filtered version of the given report list
+     * based on historical data
+     * @param reports the reports list to be filtered.
+     */
     public void setReportsList(Stream<? extends Report> reports) {
         reportsList.clear();
         for (int i = 0; i < 12; i++) {
@@ -83,6 +95,9 @@ public class HistReportController {
                         .add(Report.getPurityReport()));
     }
 
+    /**
+     * Creates graph from current report list.
+     */
     public void setGraph() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         if (historicalChart != null) {

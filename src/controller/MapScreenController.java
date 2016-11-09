@@ -32,11 +32,18 @@ public class MapScreenController implements Initializable,
 
     private GoogleMap map;
 
+    /**
+     * Called automatically on view initialization
+     * sets up map view
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mapView.addMapInializedListener(this);
     }
 
+    /**
+     * initializes map
+     */
     @Override
     public void mapInitialized() {
         MapOptions options = new MapOptions();

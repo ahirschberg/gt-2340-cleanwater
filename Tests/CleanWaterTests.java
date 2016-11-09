@@ -38,6 +38,12 @@ public class CleanWaterTests {
             return clean;
         }
     }
+    
+    /**
+     * asserts two double arrays are equivalent
+     * @param expected expected array
+     * @param passed actual array
+     */
     private void assertEquals( double[] expected, double[] passed) {
         if (expected.length != passed.length) {
             Assert.fail("Lists not equal length");
@@ -58,6 +64,9 @@ public class CleanWaterTests {
         }
     }
 
+    /**
+     * Called before junit tests run, initializes test variables
+     */
     @Before
     public void init() {
         histReport = new HistReportController();
@@ -73,6 +82,10 @@ public class CleanWaterTests {
         //        "You used print statements somewhere in your code. That's forbidden!",
           //      cleanOutputStream.isClean());
     //}
+    
+    /**
+     * tests historical report graphs
+     */
     @Test(timeout = TIMEOUT)
     public void addOneToEachMonth() {
         histReport.setData(virusData);
@@ -96,6 +109,9 @@ public class CleanWaterTests {
         assertEquals(expected, returned);
     }
 
+    /**
+     * Tests historical report graphs
+     */
     @Test(timeout = TIMEOUT)
     public void multipleSameMonth() {
         histReport.setData(virusData);
@@ -123,6 +139,9 @@ public class CleanWaterTests {
         assertEquals(expected, returned);
     }
 
+    /**
+     * Tests invalid data passed to historical report graph
+     */
     @Test(timeout = TIMEOUT)
     public void allInvalidData() {
         histReport.setData(contaminantData);
@@ -146,6 +165,9 @@ public class CleanWaterTests {
         assertEquals(expected, returned);
     }
 
+    /**
+     * Tests mix of valid and invalid data passed to historical report graphs
+     */
     @Test(timeout = TIMEOUT)
     public void someInvalidData() {
         histReport.setData(virusData);
@@ -169,6 +191,9 @@ public class CleanWaterTests {
         assertEquals(expected, returned);
     }
 
+    /**
+     * Tests historical report graphs when no data is given to them.
+     */
     @Test(timeout = TIMEOUT)
     public void noData() {
         histReport.setData(virusData);

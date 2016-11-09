@@ -13,34 +13,66 @@ public class Profile {
     private String country;
     private String org;
 
+    /**
+     * retrieves name
+     * @return name
+     */
     public String getName() {
         return name;
     }
-
+    
+    /**
+     * retrieves email
+     * @return email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * retrieves street
+     * @return street
+     */
     public String getStreet() {
         return street;
     }
-
+    
+    /**
+     * retrieves city
+     * @return city
+     */
     public String getCity() {
         return city;
     }
 
+    /**
+     * retrieves state
+     * @return state
+     */
     public String getState() {
         return state;
     }
 
+    /**
+     * retrieves country
+     * @return country
+     */
     public String getCountry() {
         return country;
     }
 
+    /**
+     * retrieves organization 
+     * @return organization
+     */
     public String getOrg() {
         return org;
     }
 
+    /**
+     * retrieves address
+     * @return address
+     */
     public String getAddress() {
         return street
                 + "\n"
@@ -50,11 +82,24 @@ public class Profile {
                 + "\n"
                 + country;
     }
-
+    
+    /**
+     * initializes empty profile
+     */
     public Profile() {
         this("", "", "", "", "", "", "");
     }
 
+    /**
+     * initializes profile with given info
+     * @param name user's name
+     * @param email user's email
+     * @param street user's street
+     * @param city user's city
+     * @param state user's state
+     * @param country user's country
+     * @param org user's organization
+     */
     public Profile(String name, String email,
                    String street, String city,
                    String state, String country, String org) {
