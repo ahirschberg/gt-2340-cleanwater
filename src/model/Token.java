@@ -36,6 +36,10 @@ public class Token {
         return this.data;
     }
 
+    public String getData() {
+        return this.data;
+    }
+
     /**
      * Generate a UID from a user's credentials, and store it in a new token
      *
@@ -44,15 +48,4 @@ public class Token {
      * @return A new token object with the UID as its hash
      * @throws NoSuchAlgorithmException if the SHA-1 algorithm does not exist
      */
-    public static Token fromCredentials(String user,
-                String password) throws NoSuchAlgorithmException {
-        byte[] token = java.security.MessageDigest
-                .getInstance("SHA-1").digest((user + password).getBytes());
-        StringBuilder tokenBuilder = new StringBuilder();
-        for (byte b : token) {
-            tokenBuilder.append(Integer.toString((b & 0xff)
-                    + 0x100, 16).substring(1));
-        }
-        return new Token(tokenBuilder.toString());
-    }
 }

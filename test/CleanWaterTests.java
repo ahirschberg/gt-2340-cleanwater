@@ -1,14 +1,18 @@
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.util.*;
-import java.util.stream.Stream;
-
+package test;
 import controller.HistReportController;
 import model.HistoricalData;
 import model.Location;
 import model.PurityReport;
 import model.Report;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
