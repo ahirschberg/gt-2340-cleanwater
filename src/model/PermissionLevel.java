@@ -1,11 +1,6 @@
 package model;
 
 
-import java.util.Arrays;
-
-/**
- * Created by alex on 10/15/16.
- */
 public enum PermissionLevel {
     USER(0),
     WORKER(1),
@@ -13,6 +8,7 @@ public enum PermissionLevel {
     ADMIN(3);
 
     public final int level;
+
     PermissionLevel(int level) {
         this.level = level;
     }

@@ -13,6 +13,7 @@ public class MainScreenController {
 
     /**
      * Registers the main application with this controller
+     *
      * @param main the main application
      */
     public void registerMainApp(MainFXApplication main) {
@@ -44,15 +45,17 @@ public class MainScreenController {
     public void onViewSourceReports() {
         main.setViewReportsScene();
     }
-    
+
     @FXML
     public void onViewPurityReports() {
         User currentUser = main.getActiveUser();
         PermissionLevel permissionLevel = currentUser.getPermissionLevel();
-        if (permissionLevel == PermissionLevel.WORKER || permissionLevel == PermissionLevel.MANAGER) {
+        if (permissionLevel == PermissionLevel.WORKER
+                || permissionLevel == PermissionLevel.MANAGER) {
             main.setViewPurityScene();
         }
     }
+
     @FXML
     public void onViewHistoricalReports() {
         User currentUser = main.getActiveUser();
@@ -61,6 +64,7 @@ public class MainScreenController {
             main.setHistReportDataScene();
         }
     }
+
     @FXML
     public void onViewMap() {
         main.setMapScene();
@@ -70,7 +74,8 @@ public class MainScreenController {
     public void onSubmitQualityReport() {
         User currentUser = main.getActiveUser();
         PermissionLevel permissionLevel = currentUser.getPermissionLevel();
-        if (permissionLevel == PermissionLevel.WORKER || permissionLevel == PermissionLevel.MANAGER) {
+        if (permissionLevel == PermissionLevel.WORKER
+                || permissionLevel == PermissionLevel.MANAGER) {
             main.setQualityReportScene();
         }
     }

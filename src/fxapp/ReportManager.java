@@ -17,15 +17,16 @@ public class ReportManager {
     private List<SourceReport> sourceReports;
     private List<PurityReport> purityReports;
     private DatabaseManager db;
+
     public ReportManager(DatabaseManager db) {
         try {
-            sourceReports = db.<SourceReport>getPersistence(SourceReport.class).retrieveAll();
+            sourceReports = db.getPersistence(SourceReport.class).retrieveAll();
         } catch (SQLException e) {
             e.printStackTrace();
             sourceReports = new LinkedList<>();
         }
         try {
-            purityReports = db.<PurityReport>getPersistence(PurityReport.class).retrieveAll();
+            purityReports = db.getPersistence(PurityReport.class).retrieveAll();
         } catch (SQLException e) {
             e.printStackTrace();
             purityReports = new ArrayList<>();
@@ -35,6 +36,7 @@ public class ReportManager {
 
     /**
      * Adds a report
+     *
      * @param report the report to add
      */
     public void addSourceReport(SourceReport report) {
@@ -42,32 +44,36 @@ public class ReportManager {
             db.getPersistence(SourceReport.class).store(report);
             sourceReports.add(report);
         } catch (SQLException e) {
-            System.err.println("Error: could not store report in database: " + report);
+            System.err.println("Error: could not store report in database: "
+                    + report);
             e.printStackTrace();
         }
     }
+
     public void addPurityReport(PurityReport report) {
         try {
             db.getPersistence(PurityReport.class).store(report);
             purityReports.add(report);
         } catch (SQLException e) {
-            System.err.println("Error: could not store report in database: " + report);
+            System.err.println("Error: could not store report in database: "
+                    + report);
             e.printStackTrace();
         }
     }
 
     /**
      * Returns all water reports
+     *
      * @return stream of all reports
      */
     public Stream<Report> getAllReports() {
         return Stream.concat(sourceReports.stream(), purityReports.stream());
     }
-    
+
     public Stream<? extends Report> getSourceReports() {
         return sourceReports.stream();
     }
-    
+
     public Stream<? extends Report> getPurityReports() {
         return purityReports.stream();
     }

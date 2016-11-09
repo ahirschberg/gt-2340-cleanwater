@@ -1,6 +1,10 @@
 package fxapp;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
@@ -8,6 +12,7 @@ import java.util.stream.Collectors;
 
 /**
  * Handles storing and retrieving a specific type of model
+ *
  * @param <M> the model to store
  */
 public class Persistent<M> {
@@ -19,12 +24,15 @@ public class Persistent<M> {
 
     /**
      * Creates a new Persistent model
-     * @param type the type to persist
+     *
+     * @param type      the type to persist
      * @param dbManager the database manager
      * @param tableName the name of the table to link the model to
-     * @param reviver the function to use when creating the POJO from a database row
+     * @param reviver   the function to use when creating the POJO
+     *                  from a database row
      */
-    public Persistent(Class<M> type, DatabaseManager dbManager, String tableName, Reviver<M> reviver) {
+    public Persistent(Class<M> type, DatabaseManager dbManager,
+                      String tableName, Reviver<M> reviver) {
         this.type = type;
         this.tableName = tableName;
         columns = new LinkedList<>();
@@ -34,7 +42,8 @@ public class Persistent<M> {
 
     /**
      * Adds a column-property link during initialization of Persistent model.
-     * @param schema the SQL property's schema
+     *
+     * @param schema   the SQL property's schema
      * @param property a lambda that acts as a getter for the property
      */
     public void addColumn(String schema, Function<M, ?> property) {
@@ -42,17 +51,21 @@ public class Persistent<M> {
     }
 
     /**
-     * Creates the model's table from the given schema if one does not already exist.
+     * Creates the model's table from the given schema if
+     * one does not already exist.
      */
     public void init() {
-        try(Connection conn = dbManager.getConnection()) {
+        try (Connection conn = dbManager.getConnection()) {
             PreparedStatement checkTableExists
-                    = conn.prepareStatement("SELECT name FROM sqlite_master WHERE type='table' AND name=(?);");
+                    = conn.prepareStatement("SELECT name FROM sqlite_master "
+                    + "WHERE type='table' AND name=(?);");
             checkTableExists.setString(1, tableName);
             ResultSet rs = checkTableExists.executeQuery();
             if (!rs.next()) {
                 conn.createStatement().executeUpdate(
-                        "create table " + tableName + "(" + getSQLStrings((DataColumn col) -> col.schema) + ");");
+                        "create table " + tableName + "("
+                                + getSQLStrings((DataColumn col)
+                                    -> col.schema) + ");");
             }
             checkTableExists.close();
         } catch (SQLException e) {
@@ -62,6 +75,7 @@ public class Persistent<M> {
 
     /**
      * Gets the generic type of the Persistence.
+     *
      * @return the generic type
      */
     public Class<M> getType() {
@@ -70,15 +84,18 @@ public class Persistent<M> {
 
     /**
      * Stores the model in the database.
+     *
      * @param model the model to store
-     * @throws SQLException
+     * @throws SQLException exception
      */
     public int store(M model) throws SQLException {
         try (Connection conn = dbManager.getConnection()) {
 
             try (PreparedStatement prep
-                         = conn.prepareStatement("insert into " + tableName + " values ("
-                    + getPlaceholders() + ");", Statement.RETURN_GENERATED_KEYS)) {
+                         = conn.prepareStatement("insert into "
+                    + tableName + " values ("
+                    + getPlaceholders() + ");", Statement
+                    .RETURN_GENERATED_KEYS)) {
                 int index = 1;
                 for (DataColumn column : columns) {
                     if (column.property != null) {
@@ -102,14 +119,17 @@ public class Persistent<M> {
 
     /**
      * Retrieves all models with the given data in the given column
+     *
      * @param columnName the column of the data to compare
-     * @param data the data to compare
+     * @param data       the data to compare
      * @return all matching data, instantiated as models
-     * @throws SQLException
+     * @throws SQLException exception
      */
-    public List<M> retrieve(String columnName, Object data) throws SQLException {
+    public List<M> retrieve(String columnName, Object data)
+            throws SQLException {
         try (Connection conn = dbManager.getConnection()) {
-            PreparedStatement prep = conn.prepareStatement("select * from " + tableName + " WHERE " + columnName + "=(?)");
+            PreparedStatement prep = conn.prepareStatement("select * from "
+                    + tableName + " WHERE " + columnName + "=(?)");
             prep.setObject(1, data);
             return retrieveWithQuery(prep);
         }
@@ -117,10 +137,11 @@ public class Persistent<M> {
 
     /**
      * Retrieves the first model with the given data in the given column.
+     *
      * @param columnName the column of the data to compare
-     * @param data the data to compare
+     * @param data       the data to compare
      * @return the first match, instantiated as a model
-     * @throws SQLException
+     * @throws SQLException exception
      */
     public M retrieveOne(String columnName, Object data) throws SQLException {
         List<M> all = retrieve(columnName, data);
@@ -133,12 +154,14 @@ public class Persistent<M> {
 
     /**
      * Retrieves all models
+     *
      * @return all data, instantiated as models.
-     * @throws SQLException
+     * @throws SQLException exception
      */
     public List<M> retrieveAll() throws SQLException {
         try (Connection conn = dbManager.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tableName);
+            PreparedStatement ps = conn
+                    .prepareStatement("SELECT * FROM " + tableName);
             return retrieveWithQuery(ps);
         }
     }
@@ -153,10 +176,11 @@ public class Persistent<M> {
         return getSQLStrings((DataColumn col) -> "?");
     }
 
-    private List<M> retrieveWithQuery(PreparedStatement statement) throws SQLException {
+    private List<M> retrieveWithQuery(PreparedStatement statement)
+            throws SQLException {
         ResultSet model = statement.executeQuery();
         List<M> resultant = new LinkedList<>();
-        while(model.next()) {
+        while (model.next()) {
             resultant.add(reviver.make(model));
         }
         return resultant;
@@ -166,6 +190,7 @@ public class Persistent<M> {
         private String schema;
 
         private Function<? super M, ?> property;
+
         public DataColumn(String schema, Function<? super M, ?> property) {
             this.schema = schema;
             this.property = property;
@@ -177,9 +202,10 @@ public class Persistent<M> {
 
         /**
          * Creates a model from a row in the database
+         *
          * @param modelRow the row of data to instantiate
          * @return a model instantiated with the row data
-         * @throws SQLException
+         * @throws SQLException exception
          */
         N make(ResultSet modelRow) throws SQLException;
     }

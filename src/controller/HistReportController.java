@@ -4,17 +4,21 @@ import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import model.*;
+import model.HistoricalData;
+import model.PermissionLevel;
+import model.PurityReport;
+import model.Report;
+import model.User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.stream.Stream;
-
-import static java.util.Calendar.MONTH;
 
 public class HistReportController {
     private MainFXApplication main;
     private HistoricalData historicalData;
-    private ArrayList<Queue<PurityReport>> reportsList= new ArrayList<>(12);
+    private ArrayList<Queue<PurityReport>> reportsList = new ArrayList<>(12);
     private double[] ppms = new double[12];
 
     @FXML
@@ -22,6 +26,7 @@ public class HistReportController {
 
     /**
      * Registers the main application with this controller
+     *
      * @param main the main application
      */
     public void registerMainApp(MainFXApplication main) {
@@ -30,10 +35,15 @@ public class HistReportController {
 
     /**
      * Sets the scene with the current and updated data
+     *
      * @param historicalData data to set the scene with
      */
     public void setData(HistoricalData historicalData) {
         this.historicalData = historicalData;
+    }
+
+    public double[] getPPM() {
+        return ppms;
     }
 
     /**
@@ -47,6 +57,7 @@ public class HistReportController {
             main.setHistReportDataScene();
         }
     }
+
     @FXML
     public void initialize() {
     }
@@ -57,22 +68,37 @@ public class HistReportController {
             Queue<PurityReport> queue = new LinkedList<>();
             reportsList.add(queue);
         }
-        reports = reports.filter(Report -> Report.getLocation().getLatitude() > historicalData.getLatMin()
-                && Report.getLocation().getLatitude() < historicalData.getLatMax()
-                && Report.getLocation().getLongitude() > historicalData.getLongMin()
-                && Report.getLocation().getLongitude() < historicalData.getLongMax());
-        reports = reports.filter(Report -> Report.getReportYear() == historicalData.getYear());
-        reports.forEach(Report -> reportsList.get(Report.getReportMonth()).add(Report.getPurityReport()));
+        reports = reports.filter(Report ->
+                Report.getLocation().getLatitude() >= historicalData.getLatMin()
+                && Report.getLocation().getLatitude()
+                        <= historicalData.getLatMax()
+                && Report.getLocation().getLongitude()
+                        >= historicalData.getLongMin()
+                && Report.getLocation().getLongitude()
+                        <= historicalData.getLongMax());
+        reports = reports.filter(Report ->
+                Report.getReportYear() == historicalData.getYear());
+        reports.forEach(Report ->
+                reportsList.get(Report.getReportMonth())
+                        .add(Report.getPurityReport()));
     }
+
     public void setGraph() {
         XYChart.Series<String, Number> series = new XYChart.Series<>();
-        historicalChart.getXAxis().setLabel("Month");
+        if (historicalChart != null) {
+            historicalChart.getXAxis().setLabel("Month");
+        }
         if (historicalData.getContaminantType().equals("Virus PPM")) {
-            series.setName("Virus PPM from latitude " + historicalData.getLatMin() + "-" + historicalData.getLatMax()
-                + " and longitude " + historicalData.getLongMin() + "-" + historicalData.getLongMax());
-            historicalChart.getYAxis().setLabel("PPM");
+            series.setName("Virus PPM from latitude "
+                    + historicalData.getLatMin()
+                    + "-" + historicalData.getLatMax()
+                    + " and longitude " + historicalData.getLongMin()
+                    + "-" + historicalData.getLongMax());
+            if (historicalChart != null) {
+                historicalChart.getYAxis().setLabel("PPM");
+            }
             int counter = 0;
-            for (Queue<PurityReport> queue: reportsList) {
+            for (Queue<PurityReport> queue : reportsList) {
                 double average = 0;
                 int numElements = 0;
                 while (queue.peek() != null) {
@@ -94,13 +120,20 @@ public class HistReportController {
                     series.getData().add(new XYChart.Data<>(str, ppms[i]));
                 }
             }
-            historicalChart.getData().add(series);
+            if (historicalChart != null) {
+                historicalChart.getData().add(series);
+            }
         } else {
-            series.setName("Contaminant PPM from latitude " + historicalData.getLatMin() + "-" + historicalData.getLatMax()
-                    + " and longitude " + historicalData.getLongMin() + "-" + historicalData.getLongMax());
-            historicalChart.getYAxis().setLabel("PPM");
+            series.setName("Contaminant PPM from latitude "
+                    + historicalData.getLatMin()
+                    + "-" + historicalData.getLatMax()
+                    + " and longitude " + historicalData.getLongMin()
+                    + "-" + historicalData.getLongMax());
+            if (historicalChart != null) {
+                historicalChart.getYAxis().setLabel("PPM");
+            }
             int counter = 0;
-            for (Queue<PurityReport> queue: reportsList) {
+            for (Queue<PurityReport> queue : reportsList) {
                 double average = 0;
                 int numElements = 0;
                 while (queue.peek() != null) {
@@ -122,7 +155,9 @@ public class HistReportController {
                     series.getData().add(new XYChart.Data<>(str, ppms[i]));
                 }
             }
-            historicalChart.getData().add(series);
+            if (historicalChart != null) {
+                historicalChart.getData().add(series);
+            }
         }
     }
 }

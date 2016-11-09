@@ -6,9 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-/**
- * Created by jster on 9/20/2016.
- */
 public class User {
     private static DatabaseManager db;
     private String username;
@@ -20,7 +17,9 @@ public class User {
         User.db = db;
     }
 
-    public Token getToken() { return token; }
+    public Token getToken() {
+        return token;
+    }
 
     public PermissionLevel getPermissionLevel() {
         return this.permissionLevel;
@@ -39,7 +38,9 @@ public class User {
             int id = db.getPersistence(Profile.class).store(profile);
             // fixme hack update row until we have better database tools written
             try (Connection conn = db.getConnection()) {
-                PreparedStatement updateProf = conn.prepareStatement("UPDATE users SET profile=(?) WHERE username=(?)");
+                PreparedStatement updateProf = conn
+                        .prepareStatement("UPDATE users SET profile=(?) "
+                               + "WHERE username=(?)");
                 updateProf.setInt(1, id);
                 updateProf.setString(2, getUsername());
                 updateProf.execute();
@@ -53,7 +54,9 @@ public class User {
     public User(String username, Token token, PermissionLevel permissionLevel) {
         this(username, token, permissionLevel, new Profile());
     }
-    public User(String username, Token token, PermissionLevel permissionLevel, Profile profile) {
+
+    public User(String username, Token token,
+                PermissionLevel permissionLevel, Profile profile) {
         this.username = username;
         this.token = token;
         this.permissionLevel = permissionLevel;
