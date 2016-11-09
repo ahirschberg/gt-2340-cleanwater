@@ -38,6 +38,12 @@ public class CleanWaterTests {
             return clean;
         }
     }
+    
+    /**
+     * asserts two double arrays are equivalent
+     * @param expected expected array
+     * @param passed actual array
+     */
     private void assertEquals( double[] expected, double[] passed) {
         if (expected.length != passed.length) {
             Assert.fail("Lists not equal length");
@@ -57,7 +63,20 @@ public class CleanWaterTests {
             }
         }
     }
+    
+    /**
+     * asserts expr is true
+     * @param expr expr to test
+     */
+    private void assertTrue(boolean expr) {
+        if (!expr) {
+            Assert.fail("expression not true");
+        }
+    }
 
+    /**
+     * Called before junit tests run, initializes test variables
+     */
     @Before
     public void init() {
         histReport = new HistReportController();
@@ -73,6 +92,10 @@ public class CleanWaterTests {
         //        "You used print statements somewhere in your code. That's forbidden!",
           //      cleanOutputStream.isClean());
     //}
+    
+    /**
+     * tests historical report graphs
+     */
     @Test(timeout = TIMEOUT)
     public void addOneToEachMonth() {
         histReport.setData(virusData);
@@ -96,6 +119,9 @@ public class CleanWaterTests {
         assertEquals(expected, returned);
     }
 
+    /**
+     * Tests historical report graphs
+     */
     @Test(timeout = TIMEOUT)
     public void multipleSameMonth() {
         histReport.setData(virusData);
@@ -123,6 +149,9 @@ public class CleanWaterTests {
         assertEquals(expected, returned);
     }
 
+    /**
+     * Tests invalid data passed to historical report graph
+     */
     @Test(timeout = TIMEOUT)
     public void allInvalidData() {
         histReport.setData(contaminantData);
@@ -146,6 +175,9 @@ public class CleanWaterTests {
         assertEquals(expected, returned);
     }
 
+    /**
+     * Tests mix of valid and invalid data passed to historical report graphs
+     */
     @Test(timeout = TIMEOUT)
     public void someInvalidData() {
         histReport.setData(virusData);
@@ -169,6 +201,9 @@ public class CleanWaterTests {
         assertEquals(expected, returned);
     }
 
+    /**
+     * Tests historical report graphs when no data is given to them.
+     */
     @Test(timeout = TIMEOUT)
     public void noData() {
         histReport.setData(virusData);
@@ -178,5 +213,29 @@ public class CleanWaterTests {
         double[] returned = histReport.getPPM();
         double[] expected = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
         assertEquals(expected, returned);
+    }
+    
+    /**
+     * Tests the function wasReportCreatedFirst
+     */
+    @Test(timeout=TIMEOUT)
+    public void testReportOrdering() {
+        Calendar c = Calendar.getInstance();
+        
+        c.set(1, 1, 1, 1, 1);
+        PurityReport r1 = new PurityReport(1, new Location(1,1), 13, 13, "safe", c.getTime());
+        
+        c.set(2, 2, 2, 2, 2);
+        PurityReport r2 = new PurityReport(1, new Location(1,1), 13, 13, "safe", c.getTime());
+        
+        c.set(3, 1, 1, 1, 1);
+        PurityReport r3 = new PurityReport(1, new Location(1,1), 13, 13, "safe", c.getTime());
+        
+        c.set(3, 2, 3, 4, 5);
+        PurityReport r4 = new PurityReport(1, new Location(1,1), 13, 13, "safe", c.getTime());
+        
+        assertTrue(r1.wasReportCreatedFirst(r2));
+        assertTrue(r2.wasReportCreatedFirst(r3));
+        assertTrue(r3.wasReportCreatedFirst(r4));
     }
 }

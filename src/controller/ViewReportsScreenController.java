@@ -17,6 +17,9 @@ public class ViewReportsScreenController {
     @FXML
     private ListView<String> reportsList;
 
+    /**
+     * Called automatically on view initialization
+     */
     @FXML
     public void initialize() {
 
@@ -33,6 +36,7 @@ public class ViewReportsScreenController {
 
     /**
      * Updates the reports list with stringified reports.
+     * @param reports to store.
      */
     public void setReportsList(Stream<? extends Report> reports) {
         reportsList.getItems().clear();

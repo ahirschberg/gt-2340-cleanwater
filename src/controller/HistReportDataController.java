@@ -20,6 +20,10 @@ public class HistReportDataController {
         this.main = main;
     }
 
+    /**
+     * Called automatically when view is initialized.
+     * Sets up the combobox for the view.
+     */
     @FXML
     public void initialize() {
         contTypeBox.getItems().addAll("Virus PPM", "Contaminant PPM");

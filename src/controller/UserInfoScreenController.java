@@ -26,6 +26,9 @@ public class UserInfoScreenController {
     @FXML
     private TextField orgField;
 
+    /**
+     * Called automatically on view initialization
+     */
     @FXML
     public void initialize() {
     }

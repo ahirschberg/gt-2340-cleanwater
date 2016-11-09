@@ -29,6 +29,10 @@ public class QualityReportController {
     @FXML
     private Text errorMessage;
 
+    /**
+     * Called automatically on view initalization.
+     * Sets up the combobox.
+     */
     @FXML
     public void initialize() {
         waterTypeBox.getItems().addAll("Safe", "Treatable", "Unsafe");
@@ -51,6 +55,10 @@ public class QualityReportController {
         main.setMainScene();
     }
 
+    /**
+     * Submit button action.
+     * Generates and saves report.
+     */
     @FXML
     public void onSubmitSelected() {
         String latString = latitudeField.getText();

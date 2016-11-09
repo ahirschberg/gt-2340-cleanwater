@@ -33,6 +33,10 @@ public class RegisterScreenController {
     @FXML
     private ComboBox<String> permissionBox;
 
+    /**
+     * Called automatically on initialization.
+     * sets up combo box.
+     */
     @FXML
     public void initialize() {
         permissionBox.getItems().addAll("User", "Worker", "Manager", "Admin");
