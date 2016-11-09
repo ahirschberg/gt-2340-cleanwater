@@ -63,6 +63,16 @@ public class CleanWaterTests {
             }
         }
     }
+    
+    /**
+     * asserts expr is true
+     * @param expr expr to test
+     */
+    private void assertTrue(boolean expr) {
+        if (!expr) {
+            Assert.fail("expression not true");
+        }
+    }
 
     /**
      * Called before junit tests run, initializes test variables
@@ -203,5 +213,29 @@ public class CleanWaterTests {
         double[] returned = histReport.getPPM();
         double[] expected = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
         assertEquals(expected, returned);
+    }
+    
+    /**
+     * Tests the function wasReportCreatedFirst
+     */
+    @Test(timeout=TIMEOUT)
+    public void testReportOrdering() {
+        Calendar c = Calendar.getInstance();
+        
+        c.set(1, 1, 1, 1, 1);
+        PurityReport r1 = new PurityReport(1, new Location(1,1), 13, 13, "safe", c.getTime());
+        
+        c.set(2, 2, 2, 2, 2);
+        PurityReport r2 = new PurityReport(1, new Location(1,1), 13, 13, "safe", c.getTime());
+        
+        c.set(3, 1, 1, 1, 1);
+        PurityReport r3 = new PurityReport(1, new Location(1,1), 13, 13, "safe", c.getTime());
+        
+        c.set(3, 2, 3, 4, 5);
+        PurityReport r4 = new PurityReport(1, new Location(1,1), 13, 13, "safe", c.getTime());
+        
+        assertTrue(r1.wasReportCreatedFirst(r2));
+        assertTrue(r2.wasReportCreatedFirst(r3));
+        assertTrue(r3.wasReportCreatedFirst(r4));
     }
 }
