@@ -1,5 +1,6 @@
 package controller;
 
+import fxapp.AuthenticationManager;
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -17,6 +18,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class RegisterScreenController {
     private MainFXApplication main;
+    private AuthenticationManager authenticationManager;
 
     @FXML
     private TextField usernameField;
@@ -43,8 +45,9 @@ public class RegisterScreenController {
      *
      * @param main the main application
      */
-    public void registerMainApp(MainFXApplication main) {
+    public void register(MainFXApplication main, AuthenticationManager authenticationManager) {
         this.main = main;
+        this.authenticationManager = authenticationManager;
     }
 
     /**
@@ -67,20 +70,15 @@ public class RegisterScreenController {
             errorMessage.setText("Choose an access level");
         } else {
             //Create account with appropriate permissions
-            try {
-                PermissionLevel pl = PermissionLevel.values()
-                        [permissionBox.getSelectionModel().getSelectedIndex()];
-                User newUser = new User(username,
-                        Token.fromCredentials(username, password), pl);
+            PermissionLevel pl = PermissionLevel.values()
+                    [permissionBox.getSelectionModel().getSelectedIndex()];
+            User newUser = new User(username,
+                    authenticationManager.tokenFromCredentials(username, password), pl);
 
-                if (main.notifyRegistration(newUser)) {
-                    main.setLoginScene();
-                } else {
-                    errorMessage.setText("User already exists.");
-                }
-            } catch (NoSuchAlgorithmException nse) {
-                nse.printStackTrace();
-                errorMessage.setText("Hash algorithm not found. Can't log in.");
+            if (main.notifyRegistration(newUser)) {
+                main.setLoginScene();
+            } else {
+                errorMessage.setText("User already exists.");
             }
         }
     }

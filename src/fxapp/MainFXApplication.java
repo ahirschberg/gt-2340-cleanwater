@@ -23,6 +23,7 @@ import model.Token;
 import model.User;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -227,6 +228,8 @@ public class MainFXApplication extends Application {
             BorderPane histDataLayout = histReportDataLoader.load();
             BorderPane histLayout = histReportLoader.load();
 
+            AuthenticationManager authenticationManager = new AuthenticationManager("SHA-1");
+
             // Show the scene containing the root layout.
             loginScene = new Scene(loginLayout);
             mainScene = new Scene(mainLayout);
@@ -255,9 +258,9 @@ public class MainFXApplication extends Application {
             viewReports = viewReportsLoader.getController();
             mapScreenController = mapLoader.getController();
             sourceReportDetails = reportDetailsLoader.getController();
-            controller.registerMainApp(this);
+            controller.register(this, authenticationManager);
             logout.registerMainApp(this);
-            register.registerMainApp(this);
+            register.register(this, authenticationManager);
             qualityReport.registerMainApp(this);
             histData.registerMainApp(this);
             userInfoScreenController.registerMainApp(this);
@@ -270,10 +273,10 @@ public class MainFXApplication extends Application {
 
             setLoginScene();
         } catch (IOException e) {
-            //error on load, so log it
-            LOGGER.log(Level.SEVERE,
-                    "Failed to find the fxml file for LoginScreen!!");
             e.printStackTrace();
+        } catch (NoSuchAlgorithmException nse) {
+            System.err.println("Could not find the requested hash algorithm. Use one your machine supports.");
+            nse.printStackTrace();
         }
     }
 

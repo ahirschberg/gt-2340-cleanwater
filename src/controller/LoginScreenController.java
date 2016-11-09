@@ -1,5 +1,6 @@
 package controller;
 
+import fxapp.AuthenticationManager;
 import fxapp.MainFXApplication;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -15,6 +16,7 @@ import java.util.logging.Level;
  */
 public class LoginScreenController {
     private MainFXApplication main;
+    private AuthenticationManager authenticationManager;
 
     @FXML
     private PasswordField passwordField;
@@ -30,8 +32,9 @@ public class LoginScreenController {
      *
      * @param main the main app
      */
-    public void registerMainApp(MainFXApplication main) {
+    public void register(MainFXApplication main, AuthenticationManager authenticationManager) {
         this.main = main;
+        this.authenticationManager = authenticationManager;
     }
 
     /**
@@ -40,19 +43,11 @@ public class LoginScreenController {
      */
     @FXML
     public void onLoginSelected() {
-        try {
-            if (main.notifyLogin(Token.fromCredentials(usernameField
-                    .getText(), passwordField.getText()))) {
-                main.setMainScene();
-            } else {
-                message.setText("Username or password incorrect.");
-            }
-        } catch (NoSuchAlgorithmException e) {
-            MainFXApplication.LOGGER.log(Level
-                    .SEVERE, "No algorithm detected for token.");
-            e.printStackTrace();
-            message.setText("ERROR: Cannot hash password."
-                    + " See console for details.");
+        if (main.notifyLogin(authenticationManager.tokenFromCredentials(usernameField
+                .getText(), passwordField.getText()))) {
+            main.setMainScene();
+        } else {
+            message.setText("Username or password incorrect.");
         }
     }
 
