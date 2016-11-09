@@ -35,7 +35,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </VBox.margin>
                   </Button>
-                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onHomeSelected" prefHeight="29.0" prefWidth="113.0" text="Back to Home" textAlignment="CENTER">
+                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onHomeSelected" minWidth="-Infinity" prefHeight="29.0" prefWidth="120.0" text="Back to Home" textAlignment="CENTER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>

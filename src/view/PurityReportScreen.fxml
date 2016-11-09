@@ -32,7 +32,7 @@
                   <TextField fx:id="longitudeField" prefHeight="25.0" prefWidth="260.0" />
                </children>
             </HBox>
-            <ComboBox id="waterCondition" fx:id="waterTypeBox" prefWidth="150.0" promptText="Overall Condition" />
+            <ComboBox id="waterCondition" fx:id="waterTypeBox" minWidth="-Infinity" prefWidth="160.0" promptText="Overall Condition" />
             <HBox prefHeight="22.0" prefWidth="580.0">
                <children>
                   <Label text="Virus PPM" />
@@ -52,7 +52,7 @@
             <Text fx:id="errorMessage" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0" />
             <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="580.0" spacing="10.0">
                <children>
-                  <Button alignment="CENTER" defaultButton="true" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onSubmitSelected" prefHeight="26.0" prefWidth="101.0" text="Submit" />
+                  <Button alignment="CENTER" defaultButton="true" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onSubmitSelected" minWidth="-Infinity" prefHeight="26.0" prefWidth="90.0" text="Submit" />
                </children>
             </HBox>
          </children>
@@ -71,7 +71,7 @@
                </font></Label>
             <VBox prefHeight="100.0" prefWidth="170.0">
                <children>
-                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onCancelSelected" prefHeight="29.0" prefWidth="113.0" text="Back to Home" textAlignment="CENTER">
+                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onCancelSelected" minWidth="-Infinity" prefHeight="29.0" prefWidth="120.0" text="Back to Home" textAlignment="CENTER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>

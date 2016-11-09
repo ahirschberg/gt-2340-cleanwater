@@ -18,7 +18,7 @@
             <Label text="Water Location" translateY="-20.0" />
             <TextField fx:id="waterLocationField" translateY="-20.0" />
             <ComboBox fx:id="waterTypeBox" prefWidth="150.0" promptText="Type of Water" />
-            <ComboBox fx:id="waterConditionBox" prefWidth="150.0" promptText="Condition of Water" />
+            <ComboBox fx:id="waterConditionBox" minWidth="-Infinity" prefWidth="170.0" promptText="Condition of Water" />
             <Text fx:id="errorMessage" fill="#902929" strokeType="OUTSIDE" strokeWidth="0.0" />
             <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="580.0" spacing="10.0">
                <children>
@@ -41,7 +41,7 @@
                </font></Label>
             <VBox prefHeight="100.0" prefWidth="170.0">
                <children>
-                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onLoginSelected" prefHeight="29.0" prefWidth="113.0" text="Back to Home" textAlignment="CENTER">
+                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onLoginSelected" minWidth="-Infinity" prefHeight="29.0" prefWidth="120.0" text="Back to Home" textAlignment="CENTER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>

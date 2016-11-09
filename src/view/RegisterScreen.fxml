@@ -52,7 +52,7 @@
                </font></Label>
             <VBox prefHeight="100.0" prefWidth="170.0">
                <children>
-                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onLoginSelected" prefHeight="29.0" prefWidth="113.0" text="Back to Login" textAlignment="CENTER">
+                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onLoginSelected" minWidth="-Infinity" prefHeight="29.0" prefWidth="120.0" text="Back to Login" textAlignment="CENTER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>

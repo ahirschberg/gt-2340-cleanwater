@@ -30,7 +30,7 @@
                </font></Label>
             <VBox prefHeight="100.0" prefWidth="170.0">
                <children>
-                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onHomeSelected" prefHeight="29.0" prefWidth="113.0" text="Back to Home" textAlignment="CENTER">
+                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onHomeSelected" minWidth="-Infinity" prefHeight="29.0" prefWidth="120.0" text="Back to Home" textAlignment="CENTER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
