@@ -64,6 +64,23 @@ public class MainFXApplication extends Application {
     }
 
     /**
+     * sets the active user, for testing
+     * @param user user specified for testing
+     */
+    public void setActiveUser(User user) {
+        loggedInUser = user;
+    }
+
+    /**
+     * gets the active scene, for testing
+     *
+     * @return active scene
+     */
+    public Stage getActiveScene() {
+        return activeScreen;
+    }
+
+    /**
      * Start the application
      *
      * @param args command line arguments
