@@ -1,14 +1,14 @@
 package test;
 import controller.HistReportController;
-import model.HistoricalData;
-import model.Location;
-import model.PurityReport;
-import model.Report;
+import controller.MainScreenController;
+import fxapp.MainFXApplication;
+import model.*;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -27,6 +27,7 @@ public class CleanWaterTests {
     private HistoricalData virusData;
     private HistoricalData contaminantData;
     private List<Report> streamList;
+    private MainScreenController mainController;
 
     private class CleanOutputStream extends OutputStream {
 
@@ -241,5 +242,22 @@ public class CleanWaterTests {
         assertTrue(r1.wasReportCreatedFirst(r2));
         assertTrue(r2.wasReportCreatedFirst(r3));
         assertTrue(r3.wasReportCreatedFirst(r4));
+    }
+
+    /**
+     * Tests the method MainScreenController.onSubmitQualityReport
+     */
+    @Test(timeout=TIMEOUT)
+    public void testOnSubmitQualityReport() {
+        User user = new User("user", null, PermissionLevel.USER);
+        User worker = new User("worker", null, PermissionLevel.WORKER);
+        User manager = new User("worker", null, PermissionLevel.MANAGER);
+        User admin = new User("admin", null, PermissionLevel.ADMIN);
+        MainFXApplication testMain = new MainFXApplication();
+        MainScreenController testMainController = new MainScreenController();
+        testMainController.registerMainApp(testMain);
+        testMain.setActiveUser(manager);
+        testMainController.onSubmitQualityReport();
+        assertTrue(testMain.getActiveScene().getTitle() == "Cleanwater - Submit quality report");
     }
 }
