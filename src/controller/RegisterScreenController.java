@@ -21,19 +21,19 @@ public class RegisterScreenController {
     private AuthenticationManager authenticationManager;
 
     @FXML
-    private TextField usernameField;
+    private final TextField usernameField;
 
     @FXML
-    private PasswordField passwordField;
+    private final PasswordField passwordField;
 
     @FXML
-    private PasswordField confirmPasswordField;
+    private final PasswordField confirmPasswordField;
 
     @FXML
-    private Text errorMessage;
+    private final Text errorMessage;
 
     @FXML
-    private ComboBox<String> permissionBox;
+    private final ComboBox<String> permissionBox;
 
     /**
      * Called automatically on initialization.

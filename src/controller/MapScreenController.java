@@ -28,7 +28,7 @@ public class MapScreenController implements Initializable,
     private MainFXApplication main;
 
     @FXML
-    private GoogleMapView mapView;
+    private final GoogleMapView mapView;
 
     private GoogleMap map;
 

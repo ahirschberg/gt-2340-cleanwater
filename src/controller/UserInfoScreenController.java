@@ -12,19 +12,19 @@ public class UserInfoScreenController {
     private MainFXApplication main;
 
     @FXML
-    private TextField nameField;
+    private final TextField nameField;
     @FXML
-    private TextField emailField;
+    private final TextField emailField;
     @FXML
-    private TextField streetField;
+    private final TextField streetField;
     @FXML
-    private TextField cityField;
+    private final TextField cityField;
     @FXML
-    private TextField stateField;
+    private final TextField stateField;
     @FXML
-    private TextField countryField;
+    private final TextField countryField;
     @FXML
-    private TextField orgField;
+    private final TextField orgField;
 
     /**
      * Called automatically on view initialization
