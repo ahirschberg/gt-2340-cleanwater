@@ -5,13 +5,13 @@ package model;
  */
 public class Profile {
     //Profile
-    private String name;
-    private String email;
-    private String street;
-    private String city;
-    private String state;
-    private String country;
-    private String org;
+    private final String name;
+    private final String email;
+    private final String street;
+    private final String city;
+    private final String state;
+    private final String country;
+    private final String org;
 
     /**
      * retrieves name

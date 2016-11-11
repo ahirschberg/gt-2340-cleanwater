@@ -10,10 +10,10 @@ public class ReportDetailsScreenController {
     private MainFXApplication main;
 
     @FXML
-    private final ListView<String> reportInfo;
+    private ListView<String> reportInfo;
 
     @FXML
-    private final Label reportTitle;
+    private Label reportTitle;
 
     /**
      * Called automatically on view initialization

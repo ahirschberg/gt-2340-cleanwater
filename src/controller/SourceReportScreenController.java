@@ -16,19 +16,19 @@ public class SourceReportScreenController {
     private int reportNum = 1;
 
     @FXML
-    private final TextField latitudeField;
+    private TextField latitudeField;
 
     @FXML
-    private final TextField longitudeField;
+    private TextField longitudeField;
 
     @FXML
-    private final ComboBox<String> waterTypeBox;
+    private ComboBox<String> waterTypeBox;
 
     @FXML
-    private final ComboBox<String> waterConditionBox;
+    private ComboBox<String> waterConditionBox;
 
     @FXML
-    private final Text errorMessage;
+    private Text errorMessage;
 
     /**
      * called automatically on view initalization

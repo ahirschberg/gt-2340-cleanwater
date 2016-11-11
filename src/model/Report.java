@@ -7,9 +7,9 @@ import java.util.Date;
  * A water quality report.
  */
 public abstract class Report {
-    private Location location;
-    private int reportNum;
-    private Date creationDatetime;
+    private final Location location;
+    private final int reportNum;
+    private final Date creationDatetime;
 
     /**
      * Creates a new report
@@ -28,7 +28,7 @@ public abstract class Report {
      * @param location location of water
      * @param creationDatetime date and time of creation of report
      */
-    public Report(int reportNum, Location location, Date creationDatetime) {
+    Report(int reportNum, Location location, Date creationDatetime) {
         this.creationDatetime = creationDatetime;
         this.location = location;
         this.reportNum = reportNum;

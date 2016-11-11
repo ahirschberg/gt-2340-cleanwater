@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
  * @param <M> the model to store
  */
 public class Persistent<M> {
-    private String tableName;
-    private List<DataColumn> columns;
-    private DatabaseManager dbManager;
-    private Reviver<M> reviver;
-    private Class<M> type;
+    private final String tableName;
+    private final List<DataColumn> columns;
+    private final DatabaseManager dbManager;
+    private final Reviver<M> reviver;
+    private final Class<M> type;
 
     /**
      * Creates a new Persistent model
@@ -126,7 +126,7 @@ public class Persistent<M> {
      * @return all matching data, instantiated as models
      * @throws SQLException exception
      */
-    public List<M> retrieve(String columnName, Object data)
+    private List<M> retrieve(String columnName, Object data)
             throws SQLException {
         try (Connection conn = dbManager.getConnection()) {
             PreparedStatement prep = conn.prepareStatement("select * from "
@@ -203,9 +203,9 @@ public class Persistent<M> {
     }
 
     private class DataColumn {
-        private String schema;
+        private final String schema;
 
-        private Function<? super M, ?> property;
+        private final Function<? super M, ?> property;
 
         /**
          * Initializes the data column

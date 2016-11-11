@@ -3,9 +3,9 @@ package model;
 import java.util.Date;
 
 public class PurityReport extends Report {
-    private double virusPPM;
-    private double contaminantPPM;
-    private String waterCondition;
+    private final double virusPPM;
+    private final double contaminantPPM;
+    private final String waterCondition;
     private static int purityReportNum = 0;
 
     /**

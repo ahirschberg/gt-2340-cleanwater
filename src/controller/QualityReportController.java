@@ -13,21 +13,21 @@ public class QualityReportController {
     private int reportNum;
     private MainFXApplication main;
     @FXML
-    private final ComboBox<String> waterTypeBox;
+    private ComboBox<String> waterTypeBox;
     @FXML
-    private final TextField latitudeField;
+    private TextField latitudeField;
 
     @FXML
-    private final TextField longitudeField;
+    private TextField longitudeField;
 
     @FXML
-    private final TextField virusPPM;
+    private TextField virusPPM;
 
     @FXML
-    private final TextField contaminantPPM;
+    private TextField contaminantPPM;
 
     @FXML
-    private final Text errorMessage;
+    private Text errorMessage;
 
     /**
      * Called automatically on view initalization.

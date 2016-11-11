@@ -15,7 +15,7 @@ public class ViewReportsScreenController {
     private MainFXApplication main;
 
     @FXML
-    private final ListView<String> reportsList;
+    private ListView<String> reportsList;
 
     /**
      * Called automatically on view initialization

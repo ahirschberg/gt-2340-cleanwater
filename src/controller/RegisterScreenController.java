@@ -8,10 +8,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import model.PermissionLevel;
-import model.Token;
+
 import model.User;
 
-import java.security.NoSuchAlgorithmException;
+
 
 /**
  * Handles the registration screen of the app.
@@ -21,19 +21,19 @@ public class RegisterScreenController {
     private AuthenticationManager authenticationManager;
 
     @FXML
-    private final TextField usernameField;
+    private TextField usernameField;
 
     @FXML
-    private final PasswordField passwordField;
+    private PasswordField passwordField;
 
     @FXML
-    private final PasswordField confirmPasswordField;
+    private PasswordField confirmPasswordField;
 
     @FXML
-    private final Text errorMessage;
+    private Text errorMessage;
 
     @FXML
-    private final ComboBox<String> permissionBox;
+    private ComboBox<String> permissionBox;
 
     /**
      * Called automatically on initialization.
@@ -46,10 +46,11 @@ public class RegisterScreenController {
 
     /**
      * Registers the main application with this controller
-     *
+     * @param authenticationManager to be passed in
      * @param main the main application
      */
-    public void register(MainFXApplication main, AuthenticationManager authenticationManager) {
+    public void register(MainFXApplication main,
+                         AuthenticationManager authenticationManager) {
         this.main = main;
         this.authenticationManager = authenticationManager;
     }
@@ -77,7 +78,8 @@ public class RegisterScreenController {
             PermissionLevel pl = PermissionLevel.values()
                     [permissionBox.getSelectionModel().getSelectedIndex()];
             User newUser = new User(username,
-                    authenticationManager.tokenFromCredentials(username, password), pl);
+                    authenticationManager
+                            .tokenFromCredentials(username, password), pl);
 
             if (main.notifyRegistration(newUser)) {
                 main.setLoginScene();
