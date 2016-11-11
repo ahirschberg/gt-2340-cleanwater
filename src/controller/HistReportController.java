@@ -18,11 +18,11 @@ import java.util.stream.Stream;
 public class HistReportController {
     private MainFXApplication main;
     private HistoricalData historicalData;
-    private ArrayList<Queue<PurityReport>> reportsList = new ArrayList<>(12);
-    private double[] ppms = new double[12];
+    private final ArrayList<Queue<PurityReport>> reportsList = new ArrayList<>(12);
+    private final double[] ppms = new double[12];
 
     @FXML
-    private LineChart<String, Number> historicalChart;
+    private final LineChart<String, Number> historicalChart;
 
     /**
      * Registers the main application with this controller

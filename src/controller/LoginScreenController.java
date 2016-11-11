@@ -19,13 +19,13 @@ public class LoginScreenController {
     private AuthenticationManager authenticationManager;
 
     @FXML
-    private PasswordField passwordField;
+    private final PasswordField passwordField;
 
     @FXML
-    private TextField usernameField;
+    private final TextField usernameField;
 
     @FXML
-    private Text message;
+    private final Text message;
 
     /**
      * Gives the controller a reference to the main app

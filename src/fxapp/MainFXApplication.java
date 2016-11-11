@@ -55,32 +55,6 @@ public class MainFXApplication extends Application {
     private ReportDetailsScreenController sourceReportDetails;
 
     /**
-     * Gets the active user
-     *
-     * @return logged in user
-     */
-    public User getActiveUser() {
-        return loggedInUser;
-    }
-
-    /**
-     * sets the active user, for testing
-     * @param user user specified for testing
-     */
-    public void setActiveUser(User user) {
-        loggedInUser = user;
-    }
-
-    /**
-     * gets the active scene, for testing
-     *
-     * @return active scene
-     */
-    public Stage getActiveScene() {
-        return activeScreen;
-    }
-
-    /**
      * Start the application
      *
      * @param args command line arguments
@@ -216,6 +190,38 @@ public class MainFXApplication extends Application {
         activeScreen.setScene(s);
         activeScreen.setTitle(title);
         activeScreen.show();
+    }
+
+    /**
+     * Gets the active user
+     *
+     * @return logged in user
+     */
+    public User getActiveUser() {
+        return loggedInUser;
+    }
+
+    /**
+     * sets the active user, for testing
+     * @param user user specified for testing
+     */
+    public void setActiveUser(User user) {
+        loggedInUser = user;
+    }
+
+    /**
+     * gets active screen, for testing
+     * @return active screen
+     */
+    public Stage getActiveScreen() {
+        return activeScreen;
+    }
+
+    /**
+     * launches test environ, for testing
+     */
+    public void launchTestEnv() {
+        launch();
     }
 
     /**
