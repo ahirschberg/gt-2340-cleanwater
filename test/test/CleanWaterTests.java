@@ -1,14 +1,12 @@
 package test;
 import controller.HistReportController;
 import controller.MainScreenController;
-import fxapp.MainFXApplication;
 import model.*;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -17,6 +15,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Created by JEREMY DIBATTISTA
+ */
 public class CleanWaterTests {
     private static final int TIMEOUT = 2000;
 
@@ -45,7 +46,6 @@ public class CleanWaterTests {
     
     /**
      * asserts two objects are equal
-     * @param expr expr to test
      */
     static void assertEquals(int expected, int actual) {
         if (expected != actual) {
@@ -229,20 +229,4 @@ public class CleanWaterTests {
         assertEquals(expected, returned);
     }
 
-    /**
-     * Tests the method MainScreenController.onSubmitQualityReport
-     */
-    @Test(timeout=TIMEOUT)
-    public void testOnSubmitQualityReport() {
-        User user = new User("user", null, PermissionLevel.USER);
-        User worker = new User("worker", null, PermissionLevel.WORKER);
-        User manager = new User("worker", null, PermissionLevel.MANAGER);
-        User admin = new User("admin", null, PermissionLevel.ADMIN);
-        MainFXApplication testMain = new MainFXApplication();
-        MainScreenController testMainController = new MainScreenController();
-        testMainController.registerMainApp(testMain);
-        testMain.setActiveUser(manager);
-        testMainController.onSubmitQualityReport();
-        assertTrue(testMain.getActiveScene().getTitle() == "Cleanwater - Submit quality report");
-    }
 }
