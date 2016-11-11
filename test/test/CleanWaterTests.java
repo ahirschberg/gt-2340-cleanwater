@@ -1,5 +1,7 @@
 package test;
 import controller.HistReportController;
+import controller.MainScreenController;
+import fxapp.MainFXApplication;
 import model.*;
 
 import java.io.IOException;
@@ -24,6 +26,7 @@ public class CleanWaterTests {
     private HistoricalData virusData;
     private HistoricalData contaminantData;
     private List<Report> streamList;
+    private MainScreenController mainController;
 
     private class CleanOutputStream extends OutputStream {
 
@@ -41,11 +44,21 @@ public class CleanWaterTests {
     }
     
     /**
+     * asserts two objects are equal
+     * @param expr expr to test
+     */
+    static void assertEquals(int expected, int actual) {
+        if (expected != actual) {
+            Assert.fail("Expected " + expected + " got: " + actual);
+        }
+    }
+    
+    /**
      * asserts two double arrays are equivalent
      * @param expected expected array
      * @param passed actual array
      */
-    private void assertEquals( double[] expected, double[] passed) {
+    static void assertEquals( double[] expected, double[] passed) {
         if (expected.length != passed.length) {
             Assert.fail("Lists not equal length");
         } else {
@@ -69,7 +82,7 @@ public class CleanWaterTests {
      * asserts expr is true
      * @param expr expr to test
      */
-    private void assertTrue(boolean expr) {
+    static void assertTrue(boolean expr) {
         if (!expr) {
             Assert.fail("expression not true");
         }
@@ -215,28 +228,21 @@ public class CleanWaterTests {
         double[] expected = {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
         assertEquals(expected, returned);
     }
-    
+
     /**
-     * Tests the function wasReportCreatedFirst
+     * Tests the method MainScreenController.onSubmitQualityReport
      */
     @Test(timeout=TIMEOUT)
-    public void testReportOrdering() {
-        Calendar c = Calendar.getInstance();
-        
-        c.set(1, 1, 1, 1, 1);
-        PurityReport r1 = new PurityReport(1, new Location(1,1), 13, 13, "safe", c.getTime());
-        
-        c.set(2, 2, 2, 2, 2);
-        PurityReport r2 = new PurityReport(1, new Location(1,1), 13, 13, "safe", c.getTime());
-        
-        c.set(3, 1, 1, 1, 1);
-        PurityReport r3 = new PurityReport(1, new Location(1,1), 13, 13, "safe", c.getTime());
-        
-        c.set(3, 2, 3, 4, 5);
-        PurityReport r4 = new PurityReport(1, new Location(1,1), 13, 13, "safe", c.getTime());
-        
-        assertTrue(r1.wasReportCreatedFirst(r2));
-        assertTrue(r2.wasReportCreatedFirst(r3));
-        assertTrue(r3.wasReportCreatedFirst(r4));
+    public void testOnSubmitQualityReport() {
+        User user = new User("user", null, PermissionLevel.USER);
+        User worker = new User("worker", null, PermissionLevel.WORKER);
+        User manager = new User("worker", null, PermissionLevel.MANAGER);
+        User admin = new User("admin", null, PermissionLevel.ADMIN);
+        MainFXApplication testMain = new MainFXApplication();
+        MainScreenController testMainController = new MainScreenController();
+        testMainController.registerMainApp(testMain);
+        testMain.setActiveUser(manager);
+        testMainController.onSubmitQualityReport();
+        assertTrue(testMain.getActiveScene().getTitle() == "Cleanwater - Submit quality report");
     }
 }
