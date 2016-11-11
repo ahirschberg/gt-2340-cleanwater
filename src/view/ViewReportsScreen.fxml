@@ -11,36 +11,34 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ViewReportsScreenController">
    <center>
-      <VBox alignment="CENTER_LEFT" prefHeight="197.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
-         <children>
-            <ListView prefHeight="200.0" prefWidth="200.0" fx:id="reportsList"/>
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </VBox>
+       <VBox alignment="CENTER_LEFT" prefHeight="197.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+           <padding>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+           </padding>
+           <ListView prefHeight="200.0" prefWidth="200.0" fx:id="reportsList"/>
+       </VBox>
    </center>
    <top>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label />
-            <Label alignment="CENTER" prefHeight="34.0" prefWidth="559.0" text="Reports Submitted:" textAlignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-            <VBox prefHeight="100.0" prefWidth="170.0">
-               <children>
-                  <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onHomeSelected" minWidth="-Infinity" prefHeight="29.0" prefWidth="120.0" text="Back to Home" textAlignment="CENTER">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
+       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+           <Label/>
+           <Label alignment="CENTER" prefHeight="34.0" prefWidth="559.0" text="Reports Submitted:"
+                  textAlignment="CENTER">
+              <font>
+                  <Font size="18.0"/>
+              </font>
+           </Label>
+           <VBox prefHeight="100.0" prefWidth="170.0">
+               <Button cancelButton="true" depthTest="ENABLE" mnemonicParsing="false" onAction="#onHomeSelected"
+                       minWidth="-Infinity" prefHeight="29.0" prefWidth="120.0" text="Back to Home"
+                       textAlignment="CENTER">
+                   <opaqueInsets>
+                       <Insets/>
+                   </opaqueInsets>
+                   <VBox.margin>
+                       <Insets right="5.0" top="5.0"/>
+                   </VBox.margin>
+               </Button>
+           </VBox>
+       </HBox>
    </top>
 </BorderPane>

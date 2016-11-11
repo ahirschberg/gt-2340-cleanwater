@@ -5,19 +5,34 @@ import model.Token;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * Created by alex on 11/9/16.
- */
+
 public class AuthenticationManager {
-    private MessageDigest messageDigest;
-    public AuthenticationManager(String algorithm) throws NoSuchAlgorithmException {
+    private final MessageDigest messageDigest;
+
+    /**
+     * authentication manager
+     * @param algorithm to pass in
+     * @throws NoSuchAlgorithmException does not exist
+     */
+    public AuthenticationManager(String algorithm)
+            throws NoSuchAlgorithmException {
         this(MessageDigest.getInstance(algorithm));
     }
 
-    public AuthenticationManager(MessageDigest digest) {
+    /**
+     * manager
+     * @param digest to pass in
+     */
+    private AuthenticationManager(MessageDigest digest) {
         this.messageDigest = digest;
     }
 
+    /**
+     * token gen
+     * @param user to generate from
+     * @param password user password
+     * @return Token for user
+     */
     public Token tokenFromCredentials(String user, String password) {
         byte[] token = messageDigest.digest((user + password).getBytes());
         StringBuilder tokenBuilder = new StringBuilder();

@@ -4,10 +4,10 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
 
 
 public class Location {
-    private double latitude;
+    private final double latitude;
 
 
-    private double longitude;
+    private final double longitude;
 
     /**
      * initializes location

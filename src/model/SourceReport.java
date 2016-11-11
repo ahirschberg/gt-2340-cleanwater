@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class SourceReport extends Report {
 
-    private String waterType;
-    private String waterCondition;
+    private final String waterType;
+    private final String waterCondition;
     private static int sourceReportNum = 0;
 
     /**

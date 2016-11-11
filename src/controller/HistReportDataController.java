@@ -30,25 +30,25 @@ public class HistReportDataController {
     }
 
     @FXML
-    private final TextField latitudeFieldMin;
+    private  TextField latitudeFieldMin;
 
     @FXML
-    private final TextField latitudeFieldMax;
+    private  TextField latitudeFieldMax;
 
     @FXML
-    private final TextField longitudeFieldMin;
+    private  TextField longitudeFieldMin;
 
     @FXML
-    private final TextField longitudeFieldMax;
+    private  TextField longitudeFieldMax;
 
     @FXML
-    private final TextField yearField;
+    private  TextField yearField;
 
     @FXML
-    private final ComboBox<String> contTypeBox;
+    private ComboBox<String> contTypeBox;
 
     @FXML
-    private final Text errorMessage;
+    private Text errorMessage;
 
     /**
      * Submits report if all fields are filled out and valid

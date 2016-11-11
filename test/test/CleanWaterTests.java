@@ -19,7 +19,6 @@ public class CleanWaterTests {
     private static final int TIMEOUT = 2000;
 
     private final PrintStream originalSystemOut = System.out;
-    private CleanOutputStream cleanOutputStream;
     private Stream<Report> reptStream;
     private HistReportController  histReport;
     private HistoricalData virusData;
@@ -85,7 +84,7 @@ public class CleanWaterTests {
         virusData = new HistoricalData(0,10,0,10,2016,"Virus PPM");
         contaminantData = new HistoricalData(0,5,0,5,2016,"Contaminant PPM");
         streamList = new ArrayList<>();
-        cleanOutputStream = new CleanOutputStream();
+        CleanOutputStream cleanOutputStream = new CleanOutputStream();
         System.setOut(new PrintStream(cleanOutputStream));
     }
     //@After

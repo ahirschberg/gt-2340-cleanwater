@@ -1,12 +1,11 @@
 package model;
 
-import java.security.NoSuchAlgorithmException;
 
 /**
  * This model contains a user's unique identifying information (UID).
  */
 public class Token {
-    private String data;
+    private final String data;
 
     /**
      * Initialize a new token with the given credentials
@@ -36,16 +35,12 @@ public class Token {
         return this.data;
     }
 
+    /**
+     * gets data local variable
+     * @return data token
+     */
     public String getData() {
         return this.data;
     }
 
-    /**
-     * Generate a UID from a user's credentials, and store it in a new token
-     *
-     * @param user     the username credential
-     * @param password the password credential
-     * @return A new token object with the UID as its hash
-     * @throws NoSuchAlgorithmException if the SHA-1 algorithm does not exist
-     */
 }

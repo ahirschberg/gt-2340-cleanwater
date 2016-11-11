@@ -8,9 +8,9 @@ import java.sql.SQLException;
 
 public class User {
     private static DatabaseManager db;
-    private String username;
-    private Token token;
-    private PermissionLevel permissionLevel;
+    private final String username;
+    private final Token token;
+    private final PermissionLevel permissionLevel;
     private Profile profile;
 
     /**

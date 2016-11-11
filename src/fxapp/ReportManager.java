@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 public class ReportManager {
     private List<SourceReport> sourceReports;
     private List<PurityReport> purityReports;
-    private DatabaseManager db;
+    private final DatabaseManager db;
 
     /**
      * Initializes report manager
