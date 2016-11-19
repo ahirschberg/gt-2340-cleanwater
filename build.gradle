@@ -1,0 +1,62 @@
+buildscript {
+    repositories {
+        flatDir {
+            dirs 'lib/'
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.xerial:sqlite-jdbc:3.14.2.1'
+        classpath group: 'com.lynden', name: 'GMapsFX', version: '2.0.9'
+    }
+}
+plugins {
+    id 'jvm-component'
+    id 'java-lang'
+    id 'junit-test-suite'
+}
+
+model {
+    testSuites {
+        test(JUnitTestSuiteSpec) {
+            jUnitVersion '4.12'
+        }
+    }
+}
+//Set a default task, so if I don't give a task, this (these) will be executed
+defaultTasks  'jar'
+
+//Import a bunch of java related tasks like compileJava, compileJavaTest, clean, javadoc, jar
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "fxapp.MainFXApplication"
+//Define the contents of the jar file
+jar {
+    manifest {
+        attributes 'Main-Class': 'fxapp.MainFXApplication'
+    }
+}
+dependencies {
+    repositories {
+        flatDir {
+            dirs 'lib/'
+        }
+        mavenCentral()
+    }
+    // compile fileTree(dir: 'lib', include: ['*.jar'])
+    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.14.2.1'
+        // compile 'org.xerial:sqlite-jdbc:3.14.2.1'
+    compile group: 'com.lynden', name: 'GMapsFX', version: '2.0.9'
+    testCompile "junit:junit:4.12"  // Or whatever version
+}
+
+sourceSets {
+  main {
+    resources {
+        srcDirs = ["src/main/java"]
+        includes = ["**/*.fxml"]
+    }
+  }
+}
+
