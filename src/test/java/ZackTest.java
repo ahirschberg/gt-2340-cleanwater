@@ -1,4 +1,3 @@
-package test;
 
 import controller.MainScreenController;
 import fxapp.MainFXApplication;

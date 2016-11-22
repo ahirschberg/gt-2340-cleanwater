@@ -1,11 +1,8 @@
-package test;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import org.junit.Assert;
 import org.junit.Test;
-import test.CleanWaterTests;
 
 import model.Location;
 import model.PurityReport;

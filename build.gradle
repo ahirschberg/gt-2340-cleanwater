@@ -26,7 +26,7 @@ model {
     }
 }
 //Set a default task, so if I don't give a task, this (these) will be executed
-defaultTasks  'jar'
+defaultTasks  'clean', 'jar', 'run'
 
 //Import a bunch of java related tasks like compileJava, compileJavaTest, clean, javadoc, jar
 apply plugin: 'java'
@@ -47,9 +47,7 @@ dependencies {
         }
         mavenCentral()
     }
-    // compile fileTree(dir: 'lib', include: ['*.jar'])
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.14.2.1'
-        // compile 'org.xerial:sqlite-jdbc:3.14.2.1'
     compile group: 'com.lynden', name: 'GMapsFX', version: '2.0.9'
     testCompile "junit:junit:4.12"  // Or whatever version
 }
@@ -62,4 +60,3 @@ sourceSets {
     }
   }
 }
-

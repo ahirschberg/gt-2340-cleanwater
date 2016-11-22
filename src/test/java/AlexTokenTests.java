@@ -1,5 +1,3 @@
-package test;
-
 import fxapp.AuthenticationManager;
 import model.Token;
 import org.junit.Before;

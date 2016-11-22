@@ -1,4 +1,3 @@
-package test;
 import controller.HistReportController;
 import controller.MainScreenController;
 import fxapp.MainFXApplication;
