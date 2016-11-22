@@ -14,6 +14,8 @@ plugins {
     id 'jvm-component'
     id 'java-lang'
     id 'junit-test-suite'
+    id "org.gradle.java"
+    id "com.scuilion.syntastic" version "0.3.8"
 }
 
 model {
@@ -29,6 +31,7 @@ defaultTasks  'jar'
 //Import a bunch of java related tasks like compileJava, compileJavaTest, clean, javadoc, jar
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'idea'
 
 mainClassName = "fxapp.MainFXApplication"
 //Define the contents of the jar file

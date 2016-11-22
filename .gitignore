@@ -8,3 +8,6 @@ lib/
 /bin/
 .classpath
 .project
+.gradle
+build/
+.syntastic_javac_config
