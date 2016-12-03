@@ -61,8 +61,8 @@ public class UserManager {
 	 */
 	public boolean registerNewUser(User newUser) {
 		try {
-			allUsers.add(newUser);
             db.getPersistence(User.class).store(newUser);
+            allUsers.add(newUser);
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
