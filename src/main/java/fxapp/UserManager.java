@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 import model.Token;
+import javafx.collections.ObservableList;
 
 /**
  * Manages all users (not just the active one).
@@ -22,17 +23,13 @@ public class UserManager {
      */
     public UserManager(DatabaseManager db) {
         this.db = db;
-        refreshUserList();
-    }
-
-	public void refreshUserList() {
         try {
             allUsers = db.getPersistence(User.class).retrieveAll();
         } catch (SQLException e) {
             e.printStackTrace();
             allUsers = new LinkedList<>();
         }
-	}
+    }
 
     /**
      * Returns all users.
@@ -57,6 +54,11 @@ public class UserManager {
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}
+		if (loggedInUser != null) {
+			if (loggedInUser.isBanned()) {
+				return null;
+			}
+		}
 		return loggedInUser;
 	}
 
@@ -73,5 +75,35 @@ public class UserManager {
             e.printStackTrace();
             return false;
         }
+	}
+
+	/**
+	 * Bans the users with at given indices
+	 * @param userIndices the indices of the users to ban.
+	 */
+	public void banUsers(ObservableList<Integer> userIndices) {
+		for (Integer userIndex : userIndices) {
+			allUsers.get(userIndex).ban();
+		}
+	}
+	
+	/**
+	 * Unbans the users with at given indices
+	 * @param userIndices the indices of the users to ban.
+	 */
+	public void unbanUsers(ObservableList<Integer> userIndices) {
+		for (Integer userIndex : userIndices) {
+			allUsers.get(userIndex).unban();
+		}
+	}
+	
+	/**
+	 * Deletes the users with at given indices
+	 * @param userIndices the indices of the users to ban.
+	 */
+	public void deleteUsers(ObservableList<Integer> userIndices) {
+		for (Integer userIndex : userIndices) {
+			allUsers.remove(userIndex);
+		}
 	}
 }

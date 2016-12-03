@@ -340,7 +340,7 @@ public class MainFXApplication extends Application {
             histReportController.registerMainApp(this);
             mapScreenController.registerMainApp(this);
             sourceReportDetails.registerMainApp(this);
-            userListScreenController.registerMainApp(this);
+            userListScreenController.register(this, userManager);
 
             setLoginScene();
         } catch (IOException e) {
