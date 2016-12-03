@@ -34,6 +34,13 @@ public class LoginScreenController {
         this.authenticationManager = authenticationManager;
     }
 
+	/**
+	 * Clear the error message on the login screen.
+	 */
+	public void clearMessage() {
+		message.setText("");
+	}
+
     /**
      * Called when the user selects the login button
      * Notifies the main app of the login attempt.
@@ -43,7 +50,11 @@ public class LoginScreenController {
         if (main.notifyLogin(authenticationManager
                 .tokenFromCredentials(usernameField
                 .getText(), passwordField.getText()))) {
-            main.setMainScene();
+	        if (main.getActiveUser().isBanned()) {
+		        message.setText("Account banned, contact an admin.");
+	        } else {
+		        main.setMainScene();
+	        }
         } else {
             message.setText("Username or password incorrect.");
         }

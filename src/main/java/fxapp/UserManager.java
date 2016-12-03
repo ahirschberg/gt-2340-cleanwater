@@ -47,19 +47,12 @@ public class UserManager {
 	 * @param token authentication token.
 	 */
 	public User logInUser(Token token) {
-		User loggedInUser = null;
-		try {
-			loggedInUser = db.getPersistence(User.class)
-				.retrieveOne("token", token.toString());
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		}
-		if (loggedInUser != null) {
-			if (loggedInUser.isBanned()) {
-				return null;
+		for (User curUser : allUsers) {
+			if (curUser.getToken().equals(token)) {
+				return curUser;
 			}
 		}
-		return loggedInUser;
+		return null;
 	}
 
 	/**

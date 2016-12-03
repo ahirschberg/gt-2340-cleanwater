@@ -32,6 +32,7 @@ import java.util.logging.Logger;
  * The main controller for the JavaFX application.
  */
 public class MainFXApplication extends Application {
+	private LoginScreenController loginScreenController;
     private UserInfoScreenController userInfoScreenController;
 	private UserListScreenController userListScreenController;
     private HistReportController histReportController;
@@ -93,6 +94,7 @@ public class MainFXApplication extends Application {
      * Set scene to login controls
      */
     public void setLoginScene() {
+	    loginScreenController.clearMessage();
         setScene(loginScene, "Cleanwater - Login");
     }
 
@@ -313,7 +315,7 @@ public class MainFXApplication extends Application {
             userListScene = new Scene(userListLayout);
 
             // Give the controller access to the main app.
-            LoginScreenController controller = loginLoader.getController();
+            loginScreenController = loginLoader.getController();
             MainScreenController logout = mainLoader.getController();
             RegisterScreenController register = registerLoader.getController();
             QualityReportController qualityReport = qualityReportLoader
@@ -329,7 +331,7 @@ public class MainFXApplication extends Application {
             sourceReportDetails = reportDetailsLoader.getController();
             userListScreenController = userListLoader.getController();
             
-            controller.register(this, authenticationManager);
+            loginScreenController.register(this, authenticationManager);
             logout.registerMainApp(this);
             register.register(this, authenticationManager);
             qualityReport.registerMainApp(this);
