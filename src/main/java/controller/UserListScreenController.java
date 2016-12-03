@@ -35,8 +35,14 @@ public class UserListScreenController {
         this.main = main;
     }
 
-	public void populateUserList() {
-		
+	/**
+	 * Sets the list view to be a list of all users
+	 * using User::toString.
+	 */
+	public void populateUserList(Stream<User> users) {
+		userList.getItems().clear();
+		userList.getItems().addAll(users.map(User::toString)
+		                           .collect(Collectors.toList()));
 	}
 
 	/**

@@ -36,6 +36,16 @@ public class User {
 	}
 
 	/**
+	 * Gets a human readable string
+	 * of the user for the admin user list.
+	 */
+	public String toString() {
+		return username + " "
+			+ permissionLevel.toString()
+			+ (banned ? " [BANNED]" : "");
+	}
+
+	/**
      * stores classwide pointer to report database
      * @param db report database
      */

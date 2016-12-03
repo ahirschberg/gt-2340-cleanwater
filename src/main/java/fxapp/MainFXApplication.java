@@ -139,7 +139,7 @@ public class MainFXApplication extends Application {
      * That responsiblity is delegated to the caller.
      */
     public void setUserListScene() {
-	    userListScreenController.populateUserList();
+	    userListScreenController.populateUserList(userManager.getAllUsers());
         setScene(userListScene, "Cleanwater - User List");
     }
 
