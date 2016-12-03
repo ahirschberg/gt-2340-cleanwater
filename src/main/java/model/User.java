@@ -12,8 +12,30 @@ public class User {
     private final Token token;
     private final PermissionLevel permissionLevel;
     private Profile profile;
+	private boolean banned;
 
-    /**
+	/**
+	 * Returns whether the user is banned.
+	 */
+	public boolean isBanned() {
+		return banned;
+	}
+
+	/**
+	 * Bans the user
+	 */
+	public void ban() {
+		banned = true;
+	}
+
+	/**
+	 * Unbans the user.
+	 */
+	public void unban() {
+		banned = false;
+	}
+
+	/**
      * stores classwide pointer to report database
      * @param db report database
      */
@@ -94,9 +116,24 @@ public class User {
      */
     public User(String username, Token token,
                 PermissionLevel permissionLevel, Profile profile) {
+	    this(username, token, permissionLevel, profile, false);
+    }
+	
+    /**
+     * initializes user
+     * @param username username of user
+     * @param token authentication token
+     * @param permissionLevel permission level of user
+     * @param profile profile of user
+     * @param banned whether the user is banned
+     */
+    public User(String username, Token token,
+                PermissionLevel permissionLevel, Profile profile,
+                boolean banned) {
         this.username = username;
         this.token = token;
         this.permissionLevel = permissionLevel;
         this.profile = profile;
+        this.banned = banned;
     }
 }

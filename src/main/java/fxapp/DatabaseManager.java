@@ -35,7 +35,8 @@ public class DatabaseManager {
                     rs.getString("username"),
                     new Token(rs.getString("token")),
                     PermissionLevel.fromInt(rs.getInt("permission")),
-                    (p == null) ? new Profile() : p
+                    (p == null) ? new Profile() : p,
+                    rs.getInt("banned") == 0 ? false : true
             );
         });
 
@@ -106,6 +107,7 @@ public class DatabaseManager {
         users.addColumn("permission integer",
             (User u) -> u.getPermissionLevel().level);
         users.addColumn("profile integer UNIQUE", null);
+        users.addColumn("banned integer", User::isBanned);
         users.init();
 
         profiles.addColumn("id integer PRIMARY KEY AUTOINCREMENT", null);

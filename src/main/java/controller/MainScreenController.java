@@ -93,6 +93,19 @@ public class MainScreenController {
     }
 
     /**
+     * View list of users.
+     * Only admins can access this.
+     */
+    @FXML
+    public void onViewUserList() {
+	    User currentUser = main.getActiveUser();
+	    PermissionLevel permissionLevel = currentUser.getPermissionLevel();
+	    if (permissionLevel == PermissionLevel.ADMIN) {
+	        main.setUserListScene();
+        }
+    }
+
+    /**
      * Submit quality report button action.
      * takes user to view for submitting quality report
      */
