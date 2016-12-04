@@ -74,19 +74,9 @@ public class UserManager {
 	 * Bans the users with at given indices
 	 * @param userIndices the indices of the users to ban.
 	 */
-	public void banUsers(ObservableList<Integer> userIndices) {
-		for (Integer userIndex : userIndices) {
-			allUsers.get(userIndex).ban();
-		}
-	}
-	
-	/**
-	 * Unbans the users with at given indices
-	 * @param userIndices the indices of the users to ban.
-	 */
-	public void unbanUsers(ObservableList<Integer> userIndices) {
-		for (Integer userIndex : userIndices) {
-			allUsers.get(userIndex).unban();
+	public void setBannedStatus(ObservableList<User> selectedUsers, boolean banned) {
+		for (User u: selectedUsers) {
+			u.setBanned(banned);
 		}
 	}
 	
@@ -94,9 +84,14 @@ public class UserManager {
 	 * Deletes the users with at given indices
 	 * @param userIndices the indices of the users to ban.
 	 */
-	public void deleteUsers(ObservableList<Integer> userIndices) {
-		for (Integer userIndex : userIndices) {
-			allUsers.remove(userIndex);
+	public void deleteUsers(ObservableList<User> selectedUsers) {
+        for (User u : selectedUsers) {
+			allUsers.remove(u);
+            try {
+                db.getPersistence(User.class).delete(u);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 		}
 	}
 }

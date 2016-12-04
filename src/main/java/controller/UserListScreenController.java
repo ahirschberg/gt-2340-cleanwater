@@ -19,7 +19,7 @@ public class UserListScreenController {
 	private UserManager userManager;
 
 	@FXML
-	private ListView<String> userList;
+	private ListView<User> userList;
 
 	/**
 	 * Called automatically on view initialization
@@ -45,8 +45,7 @@ public class UserListScreenController {
 	 */
 	public void populateUserList(Stream<User> users) {
 		userList.getItems().clear();
-		userList.getItems().addAll(users.map(User::toString)
-		                           .collect(Collectors.toList()));
+		userList.getItems().addAll(users.collect(Collectors.toList()));
 	}
 
 	/**
@@ -62,31 +61,31 @@ public class UserListScreenController {
 	 */
 	@FXML
 	public void onBan() {
-		ObservableList<Integer> selectedUserIndices = userList
-			.getSelectionModel().getSelectedIndices();
-		userManager.banUsers(selectedUserIndices);
+		ObservableList<User> selectedUsers = userList
+			.getSelectionModel().getSelectedItems();
+		userManager.setBannedStatus(selectedUsers, true);
 		populateUserList(userManager.getAllUsers());
 	}
-	
+
 	/**
 	 * Unbans the selected users.
 	 */
 	@FXML
 	public void onUnban() {
-		ObservableList<Integer> selectedUserIndices = userList
-			.getSelectionModel().getSelectedIndices();
-		userManager.unbanUsers(selectedUserIndices);
+		ObservableList<User> selectedUsers = userList
+			.getSelectionModel().getSelectedItems();
+		userManager.setBannedStatus(selectedUsers, false);
 		populateUserList(userManager.getAllUsers());
-	}
-	
+    }
+
 	/**
 	 * Deletes the selected users.
 	 */
 	@FXML
 	public void onDelete() {
-		ObservableList<Integer> selectedUserIndices = userList
-			.getSelectionModel().getSelectedIndices();
-		userManager.deleteUsers(selectedUserIndices);
+		ObservableList<User> selectedUsers = userList
+			.getSelectionModel().getSelectedItems();
+		userManager.deleteUsers(selectedUsers);
 		populateUserList(userManager.getAllUsers());
 	}
 }

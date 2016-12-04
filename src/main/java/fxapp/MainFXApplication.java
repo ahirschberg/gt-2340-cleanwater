@@ -202,10 +202,8 @@ public class MainFXApplication extends Application {
      * @param title window titlebar title
      */
     private void setScene(Scene s, String title) {
-        activeScreen.hide();
         activeScreen.setScene(s);
         activeScreen.setTitle(title);
-        activeScreen.show();
     }
 
     /**
@@ -345,6 +343,7 @@ public class MainFXApplication extends Application {
             userListScreenController.register(this, userManager);
 
             setLoginScene();
+            activeScreen.show();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException nse) {

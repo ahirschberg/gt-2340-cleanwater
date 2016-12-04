@@ -22,18 +22,16 @@ public class User {
 	}
 
 	/**
-	 * Bans the user
+	 * Sets the user's ban status
 	 */
-	public void ban() {
-		banned = true;
-	}
-
-	/**
-	 * Unbans the user.
-	 */
-	public void unban() {
-		banned = false;
-	}
+	public void setBanned(boolean banned) {
+		this.banned = banned;
+        try {
+            db.getPersistence(User.class).update(this, "banned", banned);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
 	/**
 	 * Gets a human readable string
@@ -78,7 +76,7 @@ public class User {
     }
 
     /**
-     * gets user profile 
+     * gets user profile
      * @return user profile
      */
     public Profile getProfile() {
@@ -92,15 +90,7 @@ public class User {
     public void setProfile(Profile profile) {
         try {
             int id = db.getPersistence(Profile.class).store(profile);
-            // fixme hack update row until we have better database tools written
-            try (Connection conn = db.getConnection()) {
-                PreparedStatement updateProf = conn
-                        .prepareStatement("UPDATE users SET profile=(?) "
-                               + "WHERE username=(?)");
-                updateProf.setInt(1, id);
-                updateProf.setString(2, getUsername());
-                updateProf.execute();
-            }
+            db.getPersistence(User.class).update(this, "profile", id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -128,7 +118,7 @@ public class User {
                 PermissionLevel permissionLevel, Profile profile) {
 	    this(username, token, permissionLevel, profile, false);
     }
-	
+
     /**
      * initializes user
      * @param username username of user
