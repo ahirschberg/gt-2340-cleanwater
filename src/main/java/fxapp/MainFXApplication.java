@@ -10,6 +10,7 @@ import controller.RegisterScreenController;
 import controller.ReportDetailsScreenController;
 import controller.SourceReportScreenController;
 import controller.UserInfoScreenController;
+import controller.UserListScreenController;
 import controller.ViewReportsScreenController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +32,9 @@ import java.util.logging.Logger;
  * The main controller for the JavaFX application.
  */
 public class MainFXApplication extends Application {
+	private LoginScreenController loginScreenController;
     private UserInfoScreenController userInfoScreenController;
+	private UserListScreenController userListScreenController;
     private HistReportController histReportController;
     private MapScreenController mapScreenController;
     public static final Logger LOGGER = Logger.getLogger("MainFXApplication");
@@ -42,12 +45,14 @@ public class MainFXApplication extends Application {
     private Scene registerScene;
     private Scene userInfoScene;
     private Scene viewReportsScene;
+	private Scene userListScene;
     private Scene sourceReportScene;
     private Scene mapScene;
     private Scene qualityReportScene;
     private ReportManager reportManager;
     private ViewReportsScreenController viewReports;
     private DatabaseManager databaseManager;
+	private UserManager userManager;
     private Scene sourceReportDetailsScene;
     private Scene histReportDataScene;
     private Scene histReportScene;
@@ -73,6 +78,7 @@ public class MainFXApplication extends Application {
             cne.printStackTrace();
         }
         this.reportManager = new ReportManager(databaseManager);
+        this.userManager = new UserManager(databaseManager);
         initRootLayout(primaryStage);
         User.registerDatabaseManager(databaseManager);
     }
@@ -88,6 +94,7 @@ public class MainFXApplication extends Application {
      * Set scene to login controls
      */
     public void setLoginScene() {
+	    loginScreenController.clearMessage();
         setScene(loginScene, "Cleanwater - Login");
     }
 
@@ -126,6 +133,16 @@ public class MainFXApplication extends Application {
     public void setViewReportsScene() {
         viewReports.setReportsList(reportManager.getSourceReports());
         setScene(viewReportsScene, "Cleanwater - View Source Reports");
+    }
+
+    /**
+     * Set scene to admin-only user list.
+     * This function does not check if the current user is admin level privelege.
+     * That responsiblity is delegated to the caller.
+     */
+    public void setUserListScene() {
+	    userListScreenController.populateUserList(userManager.getAllUsers());
+        setScene(userListScene, "Cleanwater - User List");
     }
 
     /**
@@ -185,10 +202,8 @@ public class MainFXApplication extends Application {
      * @param title window titlebar title
      */
     private void setScene(Scene s, String title) {
-        activeScreen.hide();
         activeScreen.setScene(s);
         activeScreen.setTitle(title);
-        activeScreen.show();
     }
 
     /**
@@ -242,6 +257,7 @@ public class MainFXApplication extends Application {
             FXMLLoader histReportLoader = new FXMLLoader();
             FXMLLoader qualityReportLoader = new FXMLLoader();
             FXMLLoader reportDetailsLoader = new FXMLLoader();
+            FXMLLoader userListLoader = new FXMLLoader();
             loginLoader.setLocation(MainFXApplication
                     .class.getResource("../view/LoginScreen.fxml"));
             mainLoader.setLocation(MainFXApplication
@@ -264,6 +280,8 @@ public class MainFXApplication extends Application {
                     .class.getResource("../view/HistReportDataScreen.fxml"));
             histReportLoader.setLocation(MainFXApplication
                     .class.getResource("../view/HistReportScreen.fxml"));
+            userListLoader.setLocation(MainFXApplication
+                    .class.getResource("../view/UserListScreen.fxml"));
             BorderPane loginLayout = loginLoader.load();
             BorderPane mainLayout = mainLoader.load();
             BorderPane registerLayout = registerLoader.load();
@@ -275,6 +293,7 @@ public class MainFXApplication extends Application {
             BorderPane reportDetailsLayout = reportDetailsLoader.load();
             BorderPane histDataLayout = histReportDataLoader.load();
             BorderPane histLayout = histReportLoader.load();
+            BorderPane userListLayout = userListLoader.load();
 
             AuthenticationManager authenticationManager =
                     new AuthenticationManager("SHA-1");
@@ -291,9 +310,10 @@ public class MainFXApplication extends Application {
             qualityReportScene = new Scene(qualReportLayout);
             histReportDataScene = new Scene(histDataLayout);
             histReportScene = new Scene(histLayout);
+            userListScene = new Scene(userListLayout);
 
             // Give the controller access to the main app.
-            LoginScreenController controller = loginLoader.getController();
+            loginScreenController = loginLoader.getController();
             MainScreenController logout = mainLoader.getController();
             RegisterScreenController register = registerLoader.getController();
             QualityReportController qualityReport = qualityReportLoader
@@ -307,7 +327,9 @@ public class MainFXApplication extends Application {
             viewReports = viewReportsLoader.getController();
             mapScreenController = mapLoader.getController();
             sourceReportDetails = reportDetailsLoader.getController();
-            controller.register(this, authenticationManager);
+            userListScreenController = userListLoader.getController();
+            
+            loginScreenController.register(this, authenticationManager);
             logout.registerMainApp(this);
             register.register(this, authenticationManager);
             qualityReport.registerMainApp(this);
@@ -318,9 +340,10 @@ public class MainFXApplication extends Application {
             histReportController.registerMainApp(this);
             mapScreenController.registerMainApp(this);
             sourceReportDetails.registerMainApp(this);
-
+            userListScreenController.register(this, userManager);
 
             setLoginScene();
+            activeScreen.show();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException nse) {
@@ -337,14 +360,8 @@ public class MainFXApplication extends Application {
      * @return true if the user's token is valid, false otherwise
      */
     public boolean notifyLogin(Token token) {
-        loggedInUser = null;
-        try {
-            loggedInUser = databaseManager.getPersistence(User.class)
-                    .retrieveOne("token", token.toString());
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-        return loggedInUser != null;
+	    loggedInUser = userManager.logInUser(token);
+	    return loggedInUser != null;
     }
 
     /**
@@ -354,13 +371,7 @@ public class MainFXApplication extends Application {
      * @return boolean registered or not
      */
     public boolean notifyRegistration(User registered) {
-        try {
-            databaseManager.getPersistence(User.class).store(registered);
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+	    return userManager.registerNewUser(registered);
     }
 
     /**

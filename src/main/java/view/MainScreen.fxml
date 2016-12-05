@@ -8,79 +8,74 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainScreenController">
    <top>
        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-           <Label alignment="CENTER" prefHeight="37.0" prefWidth="663.0" text="Welcome to the Clean Water System!"
-                  textAlignment="CENTER" textFill="#494cf2">
+           <Label alignment="CENTER" prefHeight="37.0" prefWidth="663.0" text="Welcome to the Clean Water System!" textAlignment="CENTER" textFill="#494cf2">
               <font>
-                  <Font size="18.0"/>
+                  <Font size="18.0" />
               </font>
               <padding>
-                  <Insets left="10.0" top="10.0"/>
+                  <Insets left="10.0" top="10.0" />
               </padding>
            </Label>
            <VBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="278.0">
-               <Label alignment="CENTER" contentDisplay="TOP" prefHeight="17.0" prefWidth="111.0"
-                      text="User Settings">
+               <Label alignment="CENTER" contentDisplay="TOP" prefHeight="17.0" prefWidth="111.0" text="User Settings">
                    <VBox.margin>
-                       <Insets top="10.0"/>
+                       <Insets top="10.0" />
                    </VBox.margin>
                </Label>
-               <Button mnemonicParsing="false" onAction="#onProfileEdit" prefHeight="25.0" prefWidth="115.0"
-                       text="Edit Profile">
+               <Button mnemonicParsing="false" onAction="#onProfileEdit" prefHeight="25.0" prefWidth="115.0" text="Edit Profile">
                    <VBox.margin>
-                       <Insets bottom="5.0" top="5.0"/>
+                       <Insets bottom="5.0" top="5.0" />
                    </VBox.margin>
                    <opaqueInsets>
-                       <Insets left="5.0" right="5.0" top="5.0"/>
+                       <Insets left="5.0" right="5.0" top="5.0" />
                    </opaqueInsets>
                </Button>
-               <Button mnemonicParsing="false" onAction="#onLogoutPressed" prefHeight="25.0" prefWidth="115.0"
-                       text="Log Out"/>
+               <Button mnemonicParsing="false" onAction="#onLogoutPressed" prefHeight="25.0" prefWidth="115.0" text="Log Out" />
            </VBox>
        </HBox>
    </top>
    <right>
        <VBox alignment="CENTER" prefHeight="414.0" prefWidth="211.0" BorderPane.alignment="CENTER">
-           <Button mnemonicParsing="false" onAction="#onViewSourceReports" minWidth="-Infinity" prefHeight="40.0"
-                   prefWidth="240.0" text="View Water Availability" textAlignment="CENTER">
+           <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#onViewSourceReports" prefHeight="40.0" prefWidth="240.0" text="View Water Availability" textAlignment="CENTER">
               <font>
-                  <Font size="18.0"/>
+                  <Font size="18.0" />
               </font>
            </Button>
-           <Button mnemonicParsing="false" onAction="#onViewMap" minWidth="-Infinity" prefHeight="40.0"
-                   prefWidth="240.0" text="View Water Map">
+           <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#onViewMap" prefHeight="40.0" prefWidth="240.0" text="View Water Map">
               <font>
-                  <Font size="18.0"/>
+                  <Font size="18.0" />
               </font>
            </Button>
-           <Button mnemonicParsing="false" onAction="#onViewPurityReports" minWidth="-Infinity" prefHeight="40.0"
-                   prefWidth="240.0" text="View Water Purity Reports">
+           <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#onViewPurityReports" prefHeight="40.0" prefWidth="240.0" text="View Water Purity Reports">
               <font>
-                  <Font size="16.0"/>
+                  <Font size="16.0" />
               </font>
            </Button>
-           <Button mnemonicParsing="false" onAction="#onViewHistoricalReports" minWidth="-Infinity" prefHeight="40.0"
-                   prefWidth="240.0" text="View Historical Reports">
+           <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#onViewHistoricalReports" prefHeight="40.0" prefWidth="240.0" text="View Historical Reports">
               <font>
-                  <Font size="18.0"/>
+                  <Font size="18.0" />
               </font>
            </Button>
+         <Button mnemonicParsing="false" onAction="#onViewUserList" prefHeight="39.0" prefWidth="270.0" text="View User List">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Button>
        </VBox>
    </right>
    <left>
        <VBox alignment="CENTER" prefHeight="500.0" prefWidth="257.0" BorderPane.alignment="CENTER">
-           <Button mnemonicParsing="false" onAction="#onSubmitSourceReport" minWidth="-Infinity" prefHeight="39.0"
-                   prefWidth="270.0" text="Submit Water Source Report" textAlignment="CENTER">
+           <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#onSubmitSourceReport" prefHeight="39.0" prefWidth="270.0" text="Submit Water Source Report" textAlignment="CENTER">
               <font>
-                  <Font size="18.0"/>
+                  <Font size="18.0" />
               </font>
            </Button>
-           <Button id="purityRPTButton" mnemonicParsing="false" onAction="#onSubmitQualityReport" minWidth="-Infinity"
-                   prefHeight="39.0" prefWidth="270.0" text="Submit Water Purity Report" textAlignment="CENTER">
+           <Button id="purityRPTButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSubmitQualityReport" prefHeight="39.0" prefWidth="270.0" text="Submit Water Purity Report" textAlignment="CENTER">
               <font>
-                  <Font size="18.0"/>
+                  <Font size="18.0" />
               </font>
            </Button>
        </VBox>

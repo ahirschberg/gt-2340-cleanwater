@@ -11,3 +11,4 @@ lib/
 .gradle
 build/
 .syntastic_javac_config
+tags

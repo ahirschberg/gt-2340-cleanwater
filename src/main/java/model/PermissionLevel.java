@@ -38,4 +38,19 @@ public enum PermissionLevel {
         }
         throw new IllegalArgumentException("No permission with level " + level);
     }
+
+    public String toString() {
+	    switch(this.level) {
+	    case 0:
+		    return "User";
+	    case 1:
+		    return "Manager";
+	    case 2:
+		    return "Worker";
+	    case 3:
+		    return "Admin";
+	    default:
+		    return "ERROR";
+	    }
+    }
 }

@@ -47,7 +47,18 @@ public class Persistent<M> {
      * @param property a lambda that acts as a getter for the property
      */
     public void addColumn(String schema, Function<M, ?> property) {
-        columns.add(new DataColumn(schema, property));
+        addColumn(schema, property, false);
+    }
+    /**
+     * Adds a column-property link during initialization of Persistent model.
+     *
+     * @param schema   the SQL property's schema
+     * @param property a lambda that acts as a getter for the property
+     * @param isUnique whether the value can be used as an id
+     */
+    public void addColumn(String schema,
+            Function<M, ?> property, boolean isUnique) {
+        columns.add(new DataColumn(schema, property, isUnique));
     }
 
     /**
@@ -118,6 +129,33 @@ public class Persistent<M> {
         }
     }
 
+    public void update(M model, String fieldName, Object value) throws SQLException {
+        try (Connection conn = dbManager.getConnection()) {
+            DataColumn pk = getPKColumn();
+            try (PreparedStatement prep = conn.prepareStatement("UPDATE "
+                        + tableName + " SET "
+                        + fieldName + "=(?)"
+                        + " WHERE " + fieldNameFromSchema(pk.schema) + "=(?)")) {
+                prep.setObject(1, value);
+                prep.setObject(2, pk.property.apply(model));
+                prep.execute();
+                        }
+        }
+    }
+
+    public void delete(M model) throws SQLException {
+        try (Connection conn = dbManager.getConnection()) {
+            DataColumn pk = getPKColumn();
+            try (PreparedStatement prep = conn.prepareStatement(
+                        "DELETE FROM " + tableName 
+                        + " WHERE " + fieldNameFromSchema(pk.schema)
+                        + "=(?)")) {
+                prep.setObject(1, pk.property.apply(model));
+                prep.execute();
+                        }
+        }
+    }
+
     /**
      * Retrieves all models with the given data in the given column
      *
@@ -127,13 +165,13 @@ public class Persistent<M> {
      * @throws SQLException exception
      */
     private List<M> retrieve(String columnName, Object data)
-            throws SQLException {
-        try (Connection conn = dbManager.getConnection()) {
-            PreparedStatement prep = conn.prepareStatement("select * from "
-                    + tableName + " WHERE " + columnName + "=(?)");
-            prep.setObject(1, data);
-            return retrieveWithQuery(prep);
-        }
+    throws SQLException {
+    try (Connection conn = dbManager.getConnection()) {
+        PreparedStatement prep = conn.prepareStatement("select * from "
+                + tableName + " WHERE " + columnName + "=(?)");
+        prep.setObject(1, data);
+        return retrieveWithQuery(prep);
+    }
     }
 
     /**
@@ -162,7 +200,7 @@ public class Persistent<M> {
     public List<M> retrieveAll() throws SQLException {
         try (Connection conn = dbManager.getConnection()) {
             PreparedStatement ps = conn
-                    .prepareStatement("SELECT * FROM " + tableName);
+                .prepareStatement("SELECT * FROM " + tableName);
             return retrieveWithQuery(ps);
         }
     }
@@ -193,7 +231,7 @@ public class Persistent<M> {
      * @throws SQLException on an invalid SQL statement
      */
     private List<M> retrieveWithQuery(PreparedStatement statement)
-            throws SQLException {
+        throws SQLException {
         ResultSet model = statement.executeQuery();
         List<M> resultant = new LinkedList<>();
         while (model.next()) {
@@ -202,19 +240,28 @@ public class Persistent<M> {
         return resultant;
     }
 
+    private String fieldNameFromSchema(String schema) {
+        return schema.split(" ")[0];
+    }
+    private DataColumn getPKColumn() {
+        return columns.stream().filter(col -> col.isUnique)
+            .findFirst().get();
+    }
     private class DataColumn {
         private final String schema;
-
         private final Function<? super M, ?> property;
+        private final boolean isUnique;
 
         /**
          * Initializes the data column
          * @param schema SQL schema to use
          * @param property function to retrieve data to store.
          */
-        public DataColumn(String schema, Function<? super M, ?> property) {
+        public DataColumn(String schema, Function<? super M, ?> property,
+                boolean isUnique) {
             this.schema = schema;
             this.property = property;
+            this.isUnique = isUnique;
         }
     }
 

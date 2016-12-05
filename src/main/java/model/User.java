@@ -12,8 +12,38 @@ public class User {
     private final Token token;
     private final PermissionLevel permissionLevel;
     private Profile profile;
+	private boolean banned;
 
-    /**
+	/**
+	 * Returns whether the user is banned.
+	 */
+	public boolean isBanned() {
+		return banned;
+	}
+
+	/**
+	 * Sets the user's ban status
+	 */
+	public void setBanned(boolean banned) {
+		this.banned = banned;
+        try {
+            db.getPersistence(User.class).update(this, "banned", banned);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+	/**
+	 * Gets a human readable string
+	 * of the user for the admin user list.
+	 */
+	public String toString() {
+		return username + " "
+			+ permissionLevel.toString()
+			+ (banned ? " [BANNED]" : "");
+	}
+
+	/**
      * stores classwide pointer to report database
      * @param db report database
      */
@@ -46,7 +76,7 @@ public class User {
     }
 
     /**
-     * gets user profile 
+     * gets user profile
      * @return user profile
      */
     public Profile getProfile() {
@@ -60,15 +90,7 @@ public class User {
     public void setProfile(Profile profile) {
         try {
             int id = db.getPersistence(Profile.class).store(profile);
-            // fixme hack update row until we have better database tools written
-            try (Connection conn = db.getConnection()) {
-                PreparedStatement updateProf = conn
-                        .prepareStatement("UPDATE users SET profile=(?) "
-                               + "WHERE username=(?)");
-                updateProf.setInt(1, id);
-                updateProf.setString(2, getUsername());
-                updateProf.execute();
-            }
+            db.getPersistence(User.class).update(this, "profile", id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -94,9 +116,24 @@ public class User {
      */
     public User(String username, Token token,
                 PermissionLevel permissionLevel, Profile profile) {
+	    this(username, token, permissionLevel, profile, false);
+    }
+
+    /**
+     * initializes user
+     * @param username username of user
+     * @param token authentication token
+     * @param permissionLevel permission level of user
+     * @param profile profile of user
+     * @param banned whether the user is banned
+     */
+    public User(String username, Token token,
+                PermissionLevel permissionLevel, Profile profile,
+                boolean banned) {
         this.username = username;
         this.token = token;
         this.permissionLevel = permissionLevel;
         this.profile = profile;
+        this.banned = banned;
     }
 }

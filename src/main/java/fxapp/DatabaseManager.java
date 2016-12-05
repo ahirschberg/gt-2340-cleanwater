@@ -1,6 +1,5 @@
 package fxapp;
 
-
 import model.Location;
 import model.PermissionLevel;
 import model.Profile;
@@ -18,7 +17,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DatabaseManager {
+
+    @SuppressWarnings("rawtypes")
     private List<Persistent> helpers;
+
     private Persistent<User> users;
     private Persistent<Profile> profiles;
     private Persistent<SourceReport> sourceReports;
@@ -35,7 +37,8 @@ public class DatabaseManager {
                     rs.getString("username"),
                     new Token(rs.getString("token")),
                     PermissionLevel.fromInt(rs.getInt("permission")),
-                    (p == null) ? new Profile() : p
+                    (p == null) ? new Profile() : p,
+                    rs.getInt("banned") != 0
             );
         });
 
@@ -101,14 +104,15 @@ public class DatabaseManager {
      * makes data persist in sql tables
      */
     private void makePersistence() {
-        users.addColumn("username string UNIQUE", User::getUsername);
-        users.addColumn("token string UNIQUE", User::getToken);
+        users.addColumn("username string UNIQUE", User::getUsername, true);
+        users.addColumn("token string UNIQUE", User::getToken, true);
         users.addColumn("permission integer",
             (User u) -> u.getPermissionLevel().level);
         users.addColumn("profile integer UNIQUE", null);
+        users.addColumn("banned integer", User::isBanned);
         users.init();
 
-        profiles.addColumn("id integer PRIMARY KEY AUTOINCREMENT", null);
+        profiles.addColumn("id integer PRIMARY KEY AUTOINCREMENT", null, true);
         profiles.addColumn("name string", Profile::getName);
         profiles.addColumn("email string", Profile::getEmail);
         profiles.addColumn("street string", Profile::getStreet);
@@ -118,7 +122,7 @@ public class DatabaseManager {
         profiles.addColumn("org string", Profile::getOrg);
         profiles.init();
 
-        sourceReports.addColumn("id integer", SourceReport::getReportNum);
+        sourceReports.addColumn("id integer", SourceReport::getReportNum, true);
         sourceReports.addColumn("latitude real",
             (SourceReport sr) -> sr.getLocation().getLatitude());
         sourceReports.addColumn("longitude real",
@@ -131,7 +135,7 @@ public class DatabaseManager {
             (SourceReport sr) -> sr.getCreationDatetime().getTime());
         sourceReports.init();
 
-        purityReports.addColumn("id integer", PurityReport::getReportNum);
+        purityReports.addColumn("id integer", PurityReport::getReportNum, true);
         purityReports.addColumn("latitude real",
             (PurityReport sr) -> sr.getLocation().getLatitude());
         purityReports.addColumn("longitude real",
